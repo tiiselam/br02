@@ -321,18 +321,6 @@ namespace winCompuertaGP
             }
         }
 
-        public Dictionary<string, string> IdsDocumento
-        {
-            get
-            {
-                return idsDocumento;
-            }
-
-            set
-            {
-                idsDocumento = value;
-            }
-        }
         public string rutaCarpeta { get => _rutaCarpeta; set => _rutaCarpeta = value; }
         public string ClienteDefaultCUSTCLAS { get => _clienteDefaultCUSTCLAS; set => _clienteDefaultCUSTCLAS = value; }
         public int FacturaSopFilaInicial { get => _facturaSopFilaInicial; set => _facturaSopFilaInicial = value; }
