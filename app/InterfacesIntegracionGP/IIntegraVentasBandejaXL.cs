@@ -8,7 +8,7 @@ namespace InterfacesDeIntegracionGP
 {
     public interface IIntegraVentasBandejaXL
     {
-        void ProcesaCarpetaEnTrabajo(List<string> archivosSeleccionados, string transicion);
+        void ProcesaCarpetaEnTrabajo(string tipoArchivo, string transicion, List<string> archivosSeleccionados);
 
     }
 }

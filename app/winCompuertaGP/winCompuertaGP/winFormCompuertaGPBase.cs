@@ -368,7 +368,7 @@ namespace winCompuertaGP
         {
             try
             {
-                openFileDialog1.Filter = "Excel Files|*.xls|*.xlsx";
+                openFileDialog1.Filter = "CSV files|*.csv"; // "Excel Files|*.xls|*.xlsx";
                 openFileDialog1.Multiselect = true;
                 DialogResult dr = openFileDialog1.ShowDialog();
 
@@ -376,22 +376,15 @@ namespace winCompuertaGP
                 {
                     string[] filenames = openFileDialog1.FileNames;
                     var nombreArchivos = filenames
-                            .Select(y => new { archivo = System.IO.Path.GetFileName(y) });
+                            .Select(y => new {  archivo = System.IO.Path.GetFileName(y),
+                                                carpeta = System.IO.Path.GetFullPath(y) });
                     List<string> lNombreArchivos = nombreArchivos.Select(a => a.archivo).ToList();
-
-                    //var f = from ff in filenames
-                    //        select new
-                    //        {
-                    //            archivo = System.IO.Path.GetFileName(ff),
-                    //            //directorio = System.IO.Path.GetDirectoryName(ff),
-                    //        };
-                    //List<string> lNombreArchivos = f.Select(x => x.archivo).ToList();
-
+                    string carpetaOrigen = nombreArchivos.Select(a => a.carpeta).FirstOrDefault();
                     IntegraVentasBandejaXL bandejaXL = new IntegraVentasBandejaXL(configuracion);
 
                     bandejaXL.ProgressHandler += reportaProgreso;
 
-                    bandejaXL.ProcesaCarpetaEnTrabajo(lNombreArchivos);
+                    bandejaXL.ProcesaCarpetaEnTrabajo("csv", "", lNombreArchivos);
 
                     filtrarPreFacturas();
                 }

@@ -855,7 +855,7 @@
             this.gpFactura.Padding = new System.Windows.Forms.Padding(3);
             this.gpFactura.Size = new System.Drawing.Size(1079, 467);
             this.gpFactura.TabIndex = 0;
-            this.gpFactura.Text = "FACTURAS";
+            this.gpFactura.Text = "NOTA FISCAL";
             this.gpFactura.UseVisualStyleBackColor = true;
             // 
             // panel1
@@ -1095,7 +1095,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "winFormCompuertaGPBase";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
-            this.Text = "Integraciones Dynamics GP";
+            this.Text = " ";
             this.Load += new System.EventHandler(this.winformPreFactura_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvFacturas)).EndInit();
             this.menuStrip1.ResumeLayout(false);
