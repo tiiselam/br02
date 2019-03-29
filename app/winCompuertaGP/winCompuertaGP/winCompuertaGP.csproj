@@ -44,10 +44,6 @@
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="IntegradorDeGP, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\STD_IntegraEconnectGP\dgp01\app\consolaIntegraGP\bin\Debug\IntegradorDeGP.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -153,6 +149,14 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\STD_IntegraEconnectGP\dgp01\app\IntegradorBaseDeGP\IntegradorDeGP.csproj">
+      <Project>{3c6b5813-9f6f-4c48-b1c0-a38348eaac53}</Project>
+      <Name>IntegradorDeGP</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\cfdiEntidadesGP\cfdiEntidadesGP.csproj">
+      <Project>{c048237b-bab0-4906-9791-5e359857a275}</Project>
+      <Name>cfdiEntidadesGP</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Comun\Comun.csproj">
       <Project>{d43004bd-e235-41be-b272-a05fc4fb9a96}</Project>
       <Name>Comun</Name>

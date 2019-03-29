@@ -12,6 +12,8 @@ namespace IntegradorDeGP
         string rutaCarpeta { get; set; }
         int FacturaSopFilaInicial { get; set; }
         int FacturaSopColumnaMensajes { get; set; }
+        string FacturaSopSerieYNumbeSeparados { get; set; }
+        int FacturaSopSerie { get; set; }
 
         int FacturaSopnumbe { get; set; }
         int FacturaSopDocdate { get; set; }

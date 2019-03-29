@@ -31,7 +31,9 @@ namespace winCompuertaGP
         private string _clienteDefaultCUSTCLAS;
         private int _facturaSopFilaInicial;
         private int _facturaSopColumnaMensajes;
+        private int _facturaSopSerie;
         private int _facturaSopSopnumbe;
+        private string _facturaSopSerieYNumbeSeparados;
         private int _facturaSopDocdate;
         private int _facturaSopDuedate;
         private int _facturaSopTXRGNNUM;
@@ -130,7 +132,9 @@ namespace winCompuertaGP
             {
                 _facturaSopFilaInicial = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopCa/filaInicial/text()").Value);
                 _facturaSopColumnaMensajes = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopCa/columnaMensajes/text()").Value);
+                _facturaSopSerie = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopCa/serie/text()").Value);
                 _facturaSopSopnumbe = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopCa/sopnumbe/text()").Value);
+                _facturaSopSerieYNumbeSeparados = elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopCa/facturaSopSerieYNumbeSeparados/text()").Value;
                 _facturaSopDocdate = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopCa/docdate/text()").Value);
                 _facturaSopDuedate = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopCa/duedate/text()").Value);
                 _facturaSopTXRGNNUM = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopCa/TXRGNNUM/text()").Value);
@@ -325,12 +329,17 @@ namespace winCompuertaGP
         public string ClienteDefaultCUSTCLAS { get => _clienteDefaultCUSTCLAS; set => _clienteDefaultCUSTCLAS = value; }
         public int FacturaSopFilaInicial { get => _facturaSopFilaInicial; set => _facturaSopFilaInicial = value; }
         public int FacturaSopColumnaMensajes { get => _facturaSopColumnaMensajes; set => _facturaSopColumnaMensajes = value; }
+        public int FacturaSopSerie { get => _facturaSopSerie; set => _facturaSopSerie = value; }
         public int FacturaSopnumbe { get => _facturaSopSopnumbe; set => _facturaSopSopnumbe = value; }
         public int FacturaSopDocdate { get => _facturaSopDocdate; set => _facturaSopDocdate = value; }
         public int FacturaSopDuedate { get => _facturaSopDuedate; set => _facturaSopDuedate = value; }
         public int FacturaSopTXRGNNUM { get => _facturaSopTXRGNNUM; set => _facturaSopTXRGNNUM = value; }
         public int FacturaSopCUSTNAME { get => _facturaSopCUSTNAME; set => _facturaSopCUSTNAME = value; }
         public int FacturaSopUNITPRCE { get => _facturaSopUNITPRCE; set => _facturaSopUNITPRCE = value; }
+        /// <summary>
+        /// Indica si Serie y Sopnumbe están separados
+        /// </summary>
+        public string FacturaSopSerieYNumbeSeparados { get => _facturaSopSerieYNumbeSeparados; set => _facturaSopSerieYNumbeSeparados = value; }
     }
 
 }

@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegradorDeGP", "..\..\..\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManipulaArchivos", "..\..\..\..\_DevLibrary\CLManipulaArchivos\ManipulaArchivos.csproj", "{B7362735-0897-4218-95F0-A83F53BDAC72}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cfdiEntidadesGP", "..\cfdiEntidadesGP\cfdiEntidadesGP.csproj", "{C048237B-BAB0-4906-9791-5E359857A275}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +83,14 @@ Global
 		{B7362735-0897-4218-95F0-A83F53BDAC72}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B7362735-0897-4218-95F0-A83F53BDAC72}.Release|x86.ActiveCfg = Release|Any CPU
 		{B7362735-0897-4218-95F0-A83F53BDAC72}.Release|x86.Build.0 = Release|Any CPU
+		{C048237B-BAB0-4906-9791-5E359857A275}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C048237B-BAB0-4906-9791-5E359857A275}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C048237B-BAB0-4906-9791-5E359857A275}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C048237B-BAB0-4906-9791-5E359857A275}.Debug|x86.Build.0 = Debug|Any CPU
+		{C048237B-BAB0-4906-9791-5E359857A275}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C048237B-BAB0-4906-9791-5E359857A275}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C048237B-BAB0-4906-9791-5E359857A275}.Release|x86.ActiveCfg = Release|Any CPU
+		{C048237B-BAB0-4906-9791-5E359857A275}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

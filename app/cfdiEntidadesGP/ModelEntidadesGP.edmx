@@ -1,0 +1,187 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="GBRAModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GBRA.dbo.vwCfdiTransaccionesDeVenta' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vwCfdiTransaccionesDeVenta">
+          <Key>
+            <PropertyRef Name="soptype" />
+            <PropertyRef Name="sopnumbe" />
+          </Key>
+          <Property Name="estadoContabilizado" Type="varchar" MaxLength="13" Nullable="false" />
+          <Property Name="soptype" Type="smallint" Nullable="false" />
+          <Property Name="docid" Type="varchar" MaxLength="15" />
+          <Property Name="sopnumbe" Type="varchar" MaxLength="21" Nullable="false" />
+          <Property Name="fechahora" Type="datetime" />
+          <Property Name="CUSTNMBR" Type="char" MaxLength="15" Nullable="false" />
+          <Property Name="nombreCliente" Type="nvarchar(max)" />
+          <Property Name="idImpuestoCliente" Type="nvarchar(max)" />
+          <Property Name="total" Type="numeric" Precision="19" Scale="2" />
+          <Property Name="montoActualOriginal" Type="numeric" Precision="30" Scale="5" />
+          <Property Name="voidstts" Type="smallint" />
+          <Property Name="estado" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="mensaje" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="comprobanteXml" Type="xml" />
+          <Property Name="ID_Certificado" Type="varchar" MaxLength="21" />
+          <Property Name="ruta_certificado" Type="varchar" MaxLength="251" />
+          <Property Name="ruta_clave" Type="varchar" MaxLength="251" />
+          <Property Name="contrasenia_clave" Type="varchar" MaxLength="31" />
+          <Property Name="ruta_certificadoPac" Type="varchar" MaxLength="251" Nullable="false" />
+          <Property Name="ruta_clavePac" Type="varchar" MaxLength="251" Nullable="false" />
+          <Property Name="contrasenia_clavePac" Type="varchar" MaxLength="31" Nullable="false" />
+          <Property Name="rfc" Type="varchar" MaxLength="8000" />
+          <Property Name="regimen" Type="varchar" MaxLength="21" Nullable="false" />
+          <Property Name="rutaXml" Type="nvarchar(max)" />
+          <Property Name="codigoPostal" Type="nvarchar(max)" />
+          <Property Name="estadoActual" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="mensajeEA" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="isocurrc" Type="varchar" MaxLength="15" />
+          <Property Name="addenda" Type="int" />
+        </EntityType>
+        <EntityContainer Name="GBRAModelStoreContainer">
+          <EntitySet Name="vwCfdiTransaccionesDeVenta" EntityType="Self.vwCfdiTransaccionesDeVenta" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vwCfdiTransaccionesDeVenta].[estadoContabilizado] AS [estadoContabilizado], 
+    [vwCfdiTransaccionesDeVenta].[soptype] AS [soptype], 
+    [vwCfdiTransaccionesDeVenta].[docid] AS [docid], 
+    [vwCfdiTransaccionesDeVenta].[sopnumbe] AS [sopnumbe], 
+    [vwCfdiTransaccionesDeVenta].[fechahora] AS [fechahora], 
+    [vwCfdiTransaccionesDeVenta].[CUSTNMBR] AS [CUSTNMBR], 
+    [vwCfdiTransaccionesDeVenta].[nombreCliente] AS [nombreCliente], 
+    [vwCfdiTransaccionesDeVenta].[idImpuestoCliente] AS [idImpuestoCliente], 
+    [vwCfdiTransaccionesDeVenta].[total] AS [total], 
+    [vwCfdiTransaccionesDeVenta].[montoActualOriginal] AS [montoActualOriginal], 
+    [vwCfdiTransaccionesDeVenta].[voidstts] AS [voidstts], 
+    [vwCfdiTransaccionesDeVenta].[estado] AS [estado], 
+    [vwCfdiTransaccionesDeVenta].[mensaje] AS [mensaje], 
+    [vwCfdiTransaccionesDeVenta].[comprobanteXml] AS [comprobanteXml], 
+    [vwCfdiTransaccionesDeVenta].[ID_Certificado] AS [ID_Certificado], 
+    [vwCfdiTransaccionesDeVenta].[ruta_certificado] AS [ruta_certificado], 
+    [vwCfdiTransaccionesDeVenta].[ruta_clave] AS [ruta_clave], 
+    [vwCfdiTransaccionesDeVenta].[contrasenia_clave] AS [contrasenia_clave], 
+    [vwCfdiTransaccionesDeVenta].[ruta_certificadoPac] AS [ruta_certificadoPac], 
+    [vwCfdiTransaccionesDeVenta].[ruta_clavePac] AS [ruta_clavePac], 
+    [vwCfdiTransaccionesDeVenta].[contrasenia_clavePac] AS [contrasenia_clavePac], 
+    [vwCfdiTransaccionesDeVenta].[rfc] AS [rfc], 
+    [vwCfdiTransaccionesDeVenta].[regimen] AS [regimen], 
+    [vwCfdiTransaccionesDeVenta].[rutaXml] AS [rutaXml], 
+    [vwCfdiTransaccionesDeVenta].[codigoPostal] AS [codigoPostal], 
+    [vwCfdiTransaccionesDeVenta].[estadoActual] AS [estadoActual], 
+    [vwCfdiTransaccionesDeVenta].[mensajeEA] AS [mensajeEA], 
+    [vwCfdiTransaccionesDeVenta].[isocurrc] AS [isocurrc], 
+    [vwCfdiTransaccionesDeVenta].[addenda] AS [addenda]
+    FROM [dbo].[vwCfdiTransaccionesDeVenta] AS [vwCfdiTransaccionesDeVenta]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="GBRAModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="vwCfdiTransaccionesDeVenta">
+          <Key>
+            <PropertyRef Name="soptype" />
+            <PropertyRef Name="sopnumbe" />
+          </Key>
+          <Property Name="estadoContabilizado" Type="String" MaxLength="13" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="soptype" Type="Int16" Nullable="false" />
+          <Property Name="docid" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="sopnumbe" Type="String" MaxLength="21" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="fechahora" Type="DateTime" Precision="3" />
+          <Property Name="CUSTNMBR" Type="String" MaxLength="15" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="nombreCliente" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="idImpuestoCliente" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="total" Type="Decimal" Precision="19" Scale="2" />
+          <Property Name="montoActualOriginal" Type="Decimal" Precision="30" Scale="5" />
+          <Property Name="voidstts" Type="Int16" />
+          <Property Name="estado" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="mensaje" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="comprobanteXml" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ID_Certificado" Type="String" MaxLength="21" FixedLength="false" Unicode="false" />
+          <Property Name="ruta_certificado" Type="String" MaxLength="251" FixedLength="false" Unicode="false" />
+          <Property Name="ruta_clave" Type="String" MaxLength="251" FixedLength="false" Unicode="false" />
+          <Property Name="contrasenia_clave" Type="String" MaxLength="31" FixedLength="false" Unicode="false" />
+          <Property Name="ruta_certificadoPac" Type="String" MaxLength="251" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ruta_clavePac" Type="String" MaxLength="251" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="contrasenia_clavePac" Type="String" MaxLength="31" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="rfc" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="regimen" Type="String" MaxLength="21" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="rutaXml" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="codigoPostal" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="estadoActual" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="mensajeEA" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="isocurrc" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="addenda" Type="Int32" />
+        </EntityType>
+        <EntityContainer Name="GBRAEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="vwCfdiTransaccionesDeVenta" EntityType="Self.vwCfdiTransaccionesDeVenta" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="GBRAModelStoreContainer" CdmEntityContainer="GBRAEntities">
+          <EntitySetMapping Name="vwCfdiTransaccionesDeVenta">
+            <EntityTypeMapping TypeName="GBRAModel.vwCfdiTransaccionesDeVenta">
+              <MappingFragment StoreEntitySet="vwCfdiTransaccionesDeVenta">
+                <ScalarProperty Name="estadoContabilizado" ColumnName="estadoContabilizado" />
+                <ScalarProperty Name="soptype" ColumnName="soptype" />
+                <ScalarProperty Name="docid" ColumnName="docid" />
+                <ScalarProperty Name="sopnumbe" ColumnName="sopnumbe" />
+                <ScalarProperty Name="fechahora" ColumnName="fechahora" />
+                <ScalarProperty Name="CUSTNMBR" ColumnName="CUSTNMBR" />
+                <ScalarProperty Name="nombreCliente" ColumnName="nombreCliente" />
+                <ScalarProperty Name="idImpuestoCliente" ColumnName="idImpuestoCliente" />
+                <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="montoActualOriginal" ColumnName="montoActualOriginal" />
+                <ScalarProperty Name="voidstts" ColumnName="voidstts" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="mensaje" ColumnName="mensaje" />
+                <ScalarProperty Name="comprobanteXml" ColumnName="comprobanteXml" />
+                <ScalarProperty Name="ID_Certificado" ColumnName="ID_Certificado" />
+                <ScalarProperty Name="ruta_certificado" ColumnName="ruta_certificado" />
+                <ScalarProperty Name="ruta_clave" ColumnName="ruta_clave" />
+                <ScalarProperty Name="contrasenia_clave" ColumnName="contrasenia_clave" />
+                <ScalarProperty Name="ruta_certificadoPac" ColumnName="ruta_certificadoPac" />
+                <ScalarProperty Name="ruta_clavePac" ColumnName="ruta_clavePac" />
+                <ScalarProperty Name="contrasenia_clavePac" ColumnName="contrasenia_clavePac" />
+                <ScalarProperty Name="rfc" ColumnName="rfc" />
+                <ScalarProperty Name="regimen" ColumnName="regimen" />
+                <ScalarProperty Name="rutaXml" ColumnName="rutaXml" />
+                <ScalarProperty Name="codigoPostal" ColumnName="codigoPostal" />
+                <ScalarProperty Name="estadoActual" ColumnName="estadoActual" />
+                <ScalarProperty Name="mensajeEA" ColumnName="mensajeEA" />
+                <ScalarProperty Name="isocurrc" ColumnName="isocurrc" />
+                <ScalarProperty Name="addenda" ColumnName="addenda" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

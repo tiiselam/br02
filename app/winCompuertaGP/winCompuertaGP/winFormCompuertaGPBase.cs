@@ -10,12 +10,13 @@ using System.Linq;
 using Comun;
 using IntegradorDeGP;
 using InterfacesDeIntegracionGP;
+using cfdiEntidadesGP;
 
 namespace winCompuertaGP
 {
     public partial class winFormCompuertaGPBase : Form
     {
-        private Main mainController;
+        private MainDB mainController;
         private ParametrosDB configuracion;
         private object[] idDetallePrefacturaSeleccionada;
 
@@ -41,8 +42,8 @@ namespace winCompuertaGP
                 cmbBEstado.SelectedIndex = 0;
 
 
-                mainController = new Main("");
-                mainController.eventoErrorDB += MainController_eventoErrorDB;
+                mainController = new MainDB("");
+                mainController.eventoErrDB += MainController_eventoErrorDB;
                 configuracion = new ParametrosDB();
                 cargarEmpresas();
                 
@@ -66,7 +67,7 @@ namespace winCompuertaGP
 
         }
 
-        private void MainController_eventoErrorDB(object sender, ErrorEventArgs e)
+        private void MainController_eventoErrorDB(object sender, ErrorEventArgsEntidadesGP e)
         {
             txtbxMensajes.Text += e.mensajeError + Environment.NewLine;
         }
@@ -122,7 +123,7 @@ namespace winCompuertaGP
                 //ActualizarStatus();
 
                 // Recargar los datos del grid
-                filtrarPreFacturas();
+                filtrarFacturas();
             }
             else
                 txtbxMensajes.Text = "Contacte al administrador. No se pudo establecer la conexión para la compañía seleccionada. [cargarDatosEmpresa]";
@@ -165,7 +166,7 @@ namespace winCompuertaGP
                 var errores = validarFiltrosPreFacturas();
                 if (errores == "")
                 {
-                    var c = filtrarPreFacturas();
+                    var c = filtrarFacturas();
                     txtbxMensajes.Text = "";
                     txtbxMensajes.AppendText("Total de documentos encontrados: " + c + Environment.NewLine);
                 }
@@ -184,7 +185,7 @@ namespace winCompuertaGP
             fechaFin = DateTime.Today.AddHours(23).AddMinutes(59).AddSeconds(59);
             checkBoxFecha.Checked = false;
             tsDropDownFiltro.Text = hoytsMenuItem4.Text;
-            filtrarPreFacturas();
+            filtrarFacturas();
         }
 
         private void ayertsMenuItem5_Click(object sender, EventArgs e)
@@ -193,7 +194,7 @@ namespace winCompuertaGP
             fechaFin = DateTime.Today.AddDays(-1).AddHours(23).AddMinutes(59).AddSeconds(59);
             checkBoxFecha.Checked = false;
             tsDropDownFiltro.Text = ayertsMenuItem5.Text;
-            filtrarPreFacturas();
+            filtrarFacturas();
         }
 
         private void ultimos7tsMenuItem6_Click(object sender, EventArgs e)
@@ -202,7 +203,7 @@ namespace winCompuertaGP
             fechaFin = DateTime.Today.AddHours(23).AddMinutes(59).AddSeconds(59);
             checkBoxFecha.Checked = false;
             tsDropDownFiltro.Text = ultimos7tsMenuItem6.Text;
-            filtrarPreFacturas();
+            filtrarFacturas();
         }
 
         private void ultimos30tsMenuItem7_Click(object sender, EventArgs e)
@@ -211,7 +212,7 @@ namespace winCompuertaGP
             fechaFin = DateTime.Today.AddHours(23).AddMinutes(59).AddSeconds(59);
             checkBoxFecha.Checked = false;
             tsDropDownFiltro.Text = ultimos30tsMenuItem7.Text;
-            filtrarPreFacturas();
+            filtrarFacturas();
         }
 
         private void ultimos60tsMenuItem8_Click(object sender, EventArgs e)
@@ -220,7 +221,7 @@ namespace winCompuertaGP
             fechaFin = DateTime.Today.AddHours(23).AddMinutes(59).AddSeconds(59);
             checkBoxFecha.Checked = false;
             tsDropDownFiltro.Text = ultimos60tsMenuItem8.Text;
-            filtrarPreFacturas();
+            filtrarFacturas();
         }
 
         private void mesActualtsMenuItem9_Click(object sender, EventArgs e)
@@ -231,7 +232,7 @@ namespace winCompuertaGP
             fechaFin = fechaFin.AddDays(-ultimoDia);
             checkBoxFecha.Checked = false;
             tsDropDownFiltro.Text = mesActualtsMenuItem9.Text;
-            filtrarPreFacturas();
+            filtrarFacturas();
         }
 
         private void tsDropDownFiltro_TextChanged(object sender, EventArgs e)
@@ -239,7 +240,7 @@ namespace winCompuertaGP
             txtbxMensajes.Text = "";
         }
 
-        private int filtrarPreFacturas()
+        private int filtrarFacturas()
         {
             bool cbFechaMarcada = checkBoxFecha.Checked;
             DateTime fini = dtPickerDesde.Value.Date.AddHours(0).AddMinutes(0).AddSeconds(0);
@@ -251,7 +252,7 @@ namespace winCompuertaGP
                 ffin = fechaFin;
             }
 
-            var datos = mainController.getPrefacturas(
+            var datos = mainController.getFacturas(
                                                         checkBoxPacientes_numero_pf.Checked,
                                                         textBoxPacientes_numero_pf_desde.Text,
                                                         textBoxPacientes_numero_pf_hasta.Text,
@@ -377,16 +378,16 @@ namespace winCompuertaGP
                     string[] filenames = openFileDialog1.FileNames;
                     var nombreArchivos = filenames
                             .Select(y => new {  archivo = System.IO.Path.GetFileName(y),
-                                                carpeta = System.IO.Path.GetFullPath(y) });
+                                                carpeta = System.IO.Path.GetDirectoryName(y) });
                     List<string> lNombreArchivos = nombreArchivos.Select(a => a.archivo).ToList();
                     string carpetaOrigen = nombreArchivos.Select(a => a.carpeta).FirstOrDefault();
                     IntegraVentasBandejaXL bandejaXL = new IntegraVentasBandejaXL(configuracion);
 
                     bandejaXL.ProgressHandler += reportaProgreso;
 
-                    bandejaXL.ProcesaCarpetaEnTrabajo("csv", "", lNombreArchivos);
+                    bandejaXL.ProcesaCarpetaEnTrabajo(carpetaOrigen, lNombreArchivos);
 
-                    filtrarPreFacturas();
+                    filtrarFacturas();
                 }
             }
             catch (Exception ex)
@@ -544,7 +545,7 @@ namespace winCompuertaGP
         private void tsbActualizarStatus_Click(object sender, EventArgs e)
         {
             ActualizarStatus();
-            filtrarPreFacturas();
+            filtrarFacturas();
         }
 
 
@@ -573,7 +574,7 @@ namespace winCompuertaGP
                     string docStatus = dgvFacturas.SelectedRows[0].Cells[8].Value.ToString();
 
                     this.ActualizarStatus(int.Parse(idLog), docStatus, "ELIMINA_FACTURA_EN_GP");
-                    filtrarPreFacturas();
+                    filtrarFacturas();
                     reportaProgreso(0, "Proceso finalizado.");
                 }
                 catch (Exception gr)
@@ -600,7 +601,7 @@ namespace winCompuertaGP
                     string docStatus = dgvFacturas.SelectedRows[0].Cells[8].Value.ToString();
 
                     this.ActualizarStatus(int.Parse(idLog), docStatus, "ANULA_FACTURA_RM_EN_GP");
-                    filtrarPreFacturas();
+                    filtrarFacturas();
                     reportaProgreso(0, "Proceso finalizado.");
                 }
                 catch (Exception gr)

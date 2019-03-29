@@ -8,7 +8,7 @@ using System.Data.Entity;
 
 namespace winCompuertaGP.BLL
 {
-    public class Main
+    public class Mainold
     {
         public string connectionString { get; set; }
 
@@ -16,7 +16,7 @@ namespace winCompuertaGP.BLL
         public DateTime fechaDesdePref { get; set; }
         public DateTime fechaHastaPref { get; set; }
 
-        public Main(string connectionString)
+        public Mainold(string connectionString)
         {
             this.connectionString = connectionString;
         }

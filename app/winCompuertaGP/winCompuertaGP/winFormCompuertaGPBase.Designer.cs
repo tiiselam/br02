@@ -31,18 +31,6 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(winFormCompuertaGPBase));
             this.dgvFacturas = new System.Windows.Forms.DataGridView();
-            this.dgvPacientes_check = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FECHADOC = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TIPODOCARN = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.NUMDOCARN = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TIPODOCGP = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.NUMDOCGP = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.IDCLIENTE = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.COL8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.OBSERVACIONES = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MENSAJE = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MENSAJELARGO = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cmbBEstado = new System.Windows.Forms.ComboBox();
             this.checkBoxEstado = new System.Windows.Forms.CheckBox();
             this.checkBoxPacientes_numero_pf = new System.Windows.Forms.CheckBox();
@@ -121,6 +109,17 @@
             this.panel8 = new System.Windows.Forms.Panel();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.M = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.docid = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.soptype = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.sopnumbe = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fechahora = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nombreCliente = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.idImpuestoCliente = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.total = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.estado = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MENSAJE = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.mensajeEA = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvFacturas)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.tsConfirma1.SuspendLayout();
@@ -151,145 +150,29 @@
             this.dgvFacturas.AllowUserToAddRows = false;
             this.dgvFacturas.AllowUserToDeleteRows = false;
             this.dgvFacturas.AllowUserToOrderColumns = true;
-            this.dgvFacturas.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvFacturas.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.dgvFacturas.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dgvPacientes_check,
-            this.ID,
-            this.FECHADOC,
-            this.TIPODOCARN,
-            this.NUMDOCARN,
-            this.TIPODOCGP,
-            this.NUMDOCGP,
-            this.IDCLIENTE,
-            this.COL8,
-            this.OBSERVACIONES,
+            this.M,
+            this.docid,
+            this.soptype,
+            this.sopnumbe,
+            this.fechahora,
+            this.nombreCliente,
+            this.idImpuestoCliente,
+            this.total,
+            this.estado,
             this.MENSAJE,
-            this.MENSAJELARGO});
+            this.mensajeEA});
             this.dgvFacturas.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvFacturas.Location = new System.Drawing.Point(0, 0);
             this.dgvFacturas.Name = "dgvFacturas";
             this.dgvFacturas.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.dgvFacturas.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders;
-            this.dgvFacturas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvFacturas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dgvFacturas.Size = new System.Drawing.Size(1073, 311);
             this.dgvFacturas.TabIndex = 50;
             this.dgvFacturas.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvPacientes_CellDoubleClick);
             this.dgvFacturas.CurrentCellDirtyStateChanged += new System.EventHandler(this.dgvPacientes_CurrentCellDirtyStateChanged);
-            // 
-            // dgvPacientes_check
-            // 
-            this.dgvPacientes_check.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.dgvPacientes_check.FalseValue = "False";
-            this.dgvPacientes_check.HeaderText = "";
-            this.dgvPacientes_check.MinimumWidth = 20;
-            this.dgvPacientes_check.Name = "dgvPacientes_check";
-            this.dgvPacientes_check.ThreeState = true;
-            this.dgvPacientes_check.TrueValue = "True";
-            this.dgvPacientes_check.Visible = false;
-            this.dgvPacientes_check.Width = 20;
-            // 
-            // ID
-            // 
-            this.ID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.ID.DataPropertyName = "ID";
-            this.ID.FillWeight = 20F;
-            this.ID.HeaderText = "ID";
-            this.ID.Name = "ID";
-            this.ID.Width = 43;
-            // 
-            // FECHADOC
-            // 
-            this.FECHADOC.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.FECHADOC.DataPropertyName = "FECHADOC";
-            this.FECHADOC.FillWeight = 60F;
-            this.FECHADOC.HeaderText = "Fecha PF";
-            this.FECHADOC.Name = "FECHADOC";
-            this.FECHADOC.ReadOnly = true;
-            this.FECHADOC.Width = 78;
-            // 
-            // TIPODOCARN
-            // 
-            this.TIPODOCARN.DataPropertyName = "TIPODOCARN";
-            this.TIPODOCARN.HeaderText = "TIPODOCARN";
-            this.TIPODOCARN.Name = "TIPODOCARN";
-            this.TIPODOCARN.ReadOnly = true;
-            this.TIPODOCARN.Visible = false;
-            // 
-            // NUMDOCARN
-            // 
-            this.NUMDOCARN.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.NUMDOCARN.DataPropertyName = "NUMDOCARN";
-            this.NUMDOCARN.FillWeight = 60F;
-            this.NUMDOCARN.HeaderText = "Pre Factura";
-            this.NUMDOCARN.Name = "NUMDOCARN";
-            this.NUMDOCARN.ReadOnly = true;
-            this.NUMDOCARN.Width = 87;
-            // 
-            // TIPODOCGP
-            // 
-            this.TIPODOCGP.DataPropertyName = "TIPODOCGP";
-            this.TIPODOCGP.HeaderText = "TIPODOCGP";
-            this.TIPODOCGP.Name = "TIPODOCGP";
-            this.TIPODOCGP.ReadOnly = true;
-            this.TIPODOCGP.Visible = false;
-            // 
-            // NUMDOCGP
-            // 
-            this.NUMDOCGP.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.NUMDOCGP.DataPropertyName = "NUMDOCGP";
-            this.NUMDOCGP.FillWeight = 60F;
-            this.NUMDOCGP.HeaderText = "Factura GP";
-            this.NUMDOCGP.Name = "NUMDOCGP";
-            this.NUMDOCGP.ReadOnly = true;
-            this.NUMDOCGP.Width = 86;
-            // 
-            // IDCLIENTE
-            // 
-            this.IDCLIENTE.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.IDCLIENTE.DataPropertyName = "IDCLIENTE";
-            this.IDCLIENTE.FillWeight = 60F;
-            this.IDCLIENTE.HeaderText = "Id Cliente";
-            this.IDCLIENTE.Name = "IDCLIENTE";
-            this.IDCLIENTE.ReadOnly = true;
-            this.IDCLIENTE.Width = 76;
-            // 
-            // COL8
-            // 
-            this.COL8.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.COL8.DataPropertyName = "DOCSTATUS";
-            this.COL8.FillWeight = 60F;
-            this.COL8.HeaderText = "Estado";
-            this.COL8.Name = "COL8";
-            this.COL8.ReadOnly = true;
-            this.COL8.Width = 65;
-            // 
-            // OBSERVACIONES
-            // 
-            this.OBSERVACIONES.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.OBSERVACIONES.DataPropertyName = "OBSERVACIONES";
-            this.OBSERVACIONES.FillWeight = 60F;
-            this.OBSERVACIONES.HeaderText = "Referencia";
-            this.OBSERVACIONES.Name = "OBSERVACIONES";
-            this.OBSERVACIONES.Width = 84;
-            // 
-            // MENSAJE
-            // 
-            this.MENSAJE.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.MENSAJE.DataPropertyName = "MENSAJE";
-            this.MENSAJE.FillWeight = 60F;
-            this.MENSAJE.HeaderText = "Mensaje";
-            this.MENSAJE.Name = "MENSAJE";
-            this.MENSAJE.Width = 72;
-            // 
-            // MENSAJELARGO
-            // 
-            this.MENSAJELARGO.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.MENSAJELARGO.DataPropertyName = "MENSAJELARGO";
-            this.MENSAJELARGO.FillWeight = 337.4448F;
-            this.MENSAJELARGO.HeaderText = "Validaciones";
-            this.MENSAJELARGO.Name = "MENSAJELARGO";
-            this.MENSAJELARGO.ReadOnly = true;
             // 
             // cmbBEstado
             // 
@@ -1082,6 +965,91 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
+            // M
+            // 
+            this.M.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.M.FalseValue = "False";
+            this.M.HeaderText = "M";
+            this.M.MinimumWidth = 20;
+            this.M.Name = "M";
+            this.M.ThreeState = true;
+            this.M.TrueValue = "True";
+            this.M.Width = 20;
+            // 
+            // docid
+            // 
+            this.docid.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.docid.DataPropertyName = "docid";
+            this.docid.FillWeight = 20F;
+            this.docid.HeaderText = "Id. Doc.";
+            this.docid.Name = "docid";
+            this.docid.Width = 70;
+            // 
+            // soptype
+            // 
+            this.soptype.DataPropertyName = "soptype";
+            this.soptype.HeaderText = "Tipo";
+            this.soptype.Name = "soptype";
+            this.soptype.Width = 45;
+            // 
+            // sopnumbe
+            // 
+            this.sopnumbe.DataPropertyName = "sopnumbe";
+            this.sopnumbe.FillWeight = 60F;
+            this.sopnumbe.HeaderText = "Número Doc.";
+            this.sopnumbe.Name = "sopnumbe";
+            this.sopnumbe.ReadOnly = true;
+            // 
+            // fechahora
+            // 
+            this.fechahora.DataPropertyName = "fechahora";
+            this.fechahora.HeaderText = "Fecha";
+            this.fechahora.Name = "fechahora";
+            // 
+            // nombreCliente
+            // 
+            this.nombreCliente.DataPropertyName = "nombreCliente";
+            this.nombreCliente.HeaderText = "Nombre Cliente";
+            this.nombreCliente.Name = "nombreCliente";
+            this.nombreCliente.Width = 150;
+            // 
+            // idImpuestoCliente
+            // 
+            this.idImpuestoCliente.DataPropertyName = "idImpuestoCliente";
+            this.idImpuestoCliente.FillWeight = 60F;
+            this.idImpuestoCliente.HeaderText = "Id de Impuesto";
+            this.idImpuestoCliente.Name = "idImpuestoCliente";
+            this.idImpuestoCliente.ReadOnly = true;
+            this.idImpuestoCliente.Width = 102;
+            // 
+            // total
+            // 
+            this.total.DataPropertyName = "total";
+            this.total.HeaderText = "Total";
+            this.total.Name = "total";
+            // 
+            // estado
+            // 
+            this.estado.DataPropertyName = "estado";
+            this.estado.FillWeight = 60F;
+            this.estado.HeaderText = "Estado";
+            this.estado.Name = "estado";
+            this.estado.ReadOnly = true;
+            // 
+            // MENSAJE
+            // 
+            this.MENSAJE.DataPropertyName = "mensaje";
+            this.MENSAJE.FillWeight = 60F;
+            this.MENSAJE.HeaderText = "Mensaje";
+            this.MENSAJE.Name = "MENSAJE";
+            // 
+            // mensajeEA
+            // 
+            this.mensajeEA.DataPropertyName = "mensajeEA";
+            this.mensajeEA.FillWeight = 60F;
+            this.mensajeEA.HeaderText = "Observaciones";
+            this.mensajeEA.Name = "mensajeEA";
+            // 
             // winFormCompuertaGPBase
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1215,21 +1183,20 @@
         private System.Windows.Forms.BindingSource bindingSource1;
         private System.Windows.Forms.ToolStripSplitButton tsSplitBCambiarStatus;
         private System.Windows.Forms.ToolStripMenuItem tsMenuItemCambiarAListo;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn dgvPacientes_check;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ID;
-        private System.Windows.Forms.DataGridViewTextBoxColumn FECHADOC;
-        private System.Windows.Forms.DataGridViewTextBoxColumn TIPODOCARN;
-        private System.Windows.Forms.DataGridViewTextBoxColumn NUMDOCARN;
-        private System.Windows.Forms.DataGridViewTextBoxColumn TIPODOCGP;
-        private System.Windows.Forms.DataGridViewTextBoxColumn NUMDOCGP;
-        private System.Windows.Forms.DataGridViewTextBoxColumn IDCLIENTE;
-        private System.Windows.Forms.DataGridViewTextBoxColumn COL8;
-        private System.Windows.Forms.DataGridViewTextBoxColumn OBSERVACIONES;
-        private System.Windows.Forms.DataGridViewTextBoxColumn MENSAJE;
-        private System.Windows.Forms.DataGridViewTextBoxColumn MENSAJELARGO;
         private System.Windows.Forms.ToolStripButton tsbActualizarStatus;
         private System.Windows.Forms.ToolStripMenuItem anuleDespuesDeContabilizadaTsMenuItem;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn M;
+        private System.Windows.Forms.DataGridViewTextBoxColumn docid;
+        private System.Windows.Forms.DataGridViewTextBoxColumn soptype;
+        private System.Windows.Forms.DataGridViewTextBoxColumn sopnumbe;
+        private System.Windows.Forms.DataGridViewTextBoxColumn fechahora;
+        private System.Windows.Forms.DataGridViewTextBoxColumn nombreCliente;
+        private System.Windows.Forms.DataGridViewTextBoxColumn idImpuestoCliente;
+        private System.Windows.Forms.DataGridViewTextBoxColumn total;
+        private System.Windows.Forms.DataGridViewTextBoxColumn estado;
+        private System.Windows.Forms.DataGridViewTextBoxColumn MENSAJE;
+        private System.Windows.Forms.DataGridViewTextBoxColumn mensajeEA;
     }
 }
 

@@ -11,5 +11,6 @@ namespace IntegradorDeGP
         string ConnStringTarget { get; set; }
         string ConnectionStringTargetEF { get; set; }
         string RutaLog { get; set; }
+        bool seguridadIntegrada { get; set; }
     }
 }

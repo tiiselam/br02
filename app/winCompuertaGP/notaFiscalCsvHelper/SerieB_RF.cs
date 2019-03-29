@@ -20,7 +20,7 @@ namespace notaFiscalCsvHelper
         [Index(3)]
         public string FixedT { get; set; }
         [Index(4)]
-        public decimal Amount { get; set; }
+        public string Amount { get; set; }
 
         [Index(5)]
         public string CodigoServicio1 { get; set; }
