@@ -17,7 +17,7 @@ namespace notaFiscalCsvHelper
             foreach (string archivoCsv in lNombreArchivos)
             {
 
-                using (var reader = new StreamReader(Path.Combine(carpetaOrigen, archivoCsv)))
+                using (var reader = new StreamReader(Path.Combine(carpetaOrigen, archivoCsv), Encoding.GetEncoding("windows-1254")))
                 using (var csv = new CsvReader(reader))
                 {
                     csv.Configuration.HasHeaderRecord = false;
@@ -35,17 +35,24 @@ namespace notaFiscalCsvHelper
             //using (var package = new ExcelPackage())
             //{
             var package = new ExcelPackage();
+            Decimal unitprice = 0;
             ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("NF");
-                int i = 1;
-                foreach (SerieB_RF record in records)
+            int i = 1;
+            System.Globalization.CultureInfo culInfo = new System.Globalization.CultureInfo("de-DE"); 
+            foreach (SerieB_RF record in records)
                 {
                     worksheet.Cells[i, 1].Value = record.Prefixo;
                     worksheet.Cells[i, 2].Value = record.InvNo;
                     worksheet.Cells[i, 3].Value = record.InvDate;
                     worksheet.Cells[i, 4].Value = record.FixedT;
 
-                    worksheet.Cells[i, 5].Style.Numberformat.Format = "###.###.##0,00";
-                    worksheet.Cells[i, 5].Value = record.Amount;
+//                    worksheet.Cells[i, 5].Style.Numberformat.Format = "###.###.##0,00";
+                    unitprice = Convert.ToDecimal(record.Amount, culInfo);
+//                if (Decimal.TryParse(record.Amount, System.Globalization.NumberStyles.Number, culInfo.NumberFormat, out unitprice))
+                    worksheet.Cells[i, 5].Value = unitprice;
+//                    else
+//                        throw new FormatException("El monto es incorrecto en la fila " + i.ToString() + ", columna 5 " + " [CreaExcel]");
+
                     worksheet.Cells[i, 6].Value = record.CodigoServicio1;
                     worksheet.Cells[i, 7].Value = record.CodigoServicio2;
                     worksheet.Cells[i, 8].Value = record.AliquotaIss;
@@ -65,7 +72,9 @@ namespace notaFiscalCsvHelper
                     worksheet.Cells[i, 22].Value = record.DataVencimento;
                     worksheet.Cells[i, 23].Value = record.ImageNumber;
                     worksheet.Cells[i, 24].Value = record.DescricaoColecao;
-                    worksheet.Cells[i, 25].Value = record.ValorUnitario;
+
+                    unitprice = Convert.ToDecimal(record.ValorUnitario, culInfo);
+                    worksheet.Cells[i, 25].Value = unitprice;
                     worksheet.Cells[i, 26].Value = record.Desconocido2;
                     i++;
                 }

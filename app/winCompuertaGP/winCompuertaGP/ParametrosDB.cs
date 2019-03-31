@@ -38,7 +38,11 @@ namespace winCompuertaGP
         private int _facturaSopDuedate;
         private int _facturaSopTXRGNNUM;
         private int _facturaSopCUSTNAME;
+        private int _facturaSopReferencia;
         private int _facturaSopUNITPRCE;
+        private int _facturaSopDeUNITPRCE;
+        private int _facturaSopItemnmbr;
+        private int _facturaSopItemnmbrDescr;
 
         public ParametrosDB()
         {
@@ -139,7 +143,12 @@ namespace winCompuertaGP
                 _facturaSopDuedate = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopCa/duedate/text()").Value);
                 _facturaSopTXRGNNUM = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopCa/TXRGNNUM/text()").Value);
                 _facturaSopCUSTNAME = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopCa/CUSTNAME/text()").Value);
-                _facturaSopUNITPRCE = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopDe/UNITPRCE/text()").Value);
+                _facturaSopReferencia = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopCa/referencia/text()").Value);
+
+                _facturaSopUNITPRCE = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopCa/UNITPRCE/text()").Value);
+                _facturaSopDeUNITPRCE = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopDe/UNITPRCE/text()").Value);
+                _facturaSopItemnmbr = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopDe/itemnmbr/text()").Value);
+                _facturaSopItemnmbrDescr = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopDe/itemnmbrDescr/text()").Value);
 
             }
             catch (ArgumentException ae)
@@ -340,6 +349,10 @@ namespace winCompuertaGP
         /// Indica si Serie y Sopnumbe están separados
         /// </summary>
         public string FacturaSopSerieYNumbeSeparados { get => _facturaSopSerieYNumbeSeparados; set => _facturaSopSerieYNumbeSeparados = value; }
+        public int FacturaSopReferencia { get => _facturaSopReferencia; set => _facturaSopReferencia = value; }
+        public int FacturaSopItemnmbr { get => _facturaSopItemnmbr; set => _facturaSopItemnmbr = value; }
+        public int FacturaSopItemnmbrDescr { get => _facturaSopItemnmbrDescr; set => _facturaSopItemnmbrDescr = value; }
+        public int FacturaSopDeUNITPRCE { get => _facturaSopDeUNITPRCE; set => _facturaSopDeUNITPRCE = value; }
     }
 
 }

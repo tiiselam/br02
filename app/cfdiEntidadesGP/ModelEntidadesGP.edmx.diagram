@@ -4,8 +4,8 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="910dca8689c0445e910825c3ba9289ae" Name="Diagram1">
-        <EntityTypeShape EntityType="GBRAModel.vwCfdiTransaccionesDeVenta" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+      <Diagram DiagramId="910dca8689c0445e910825c3ba9289ae" Name="Diagram1" ZoomLevel="73">
+        <EntityTypeShape EntityType="GBRAModel.vwCfdiTransaccionesDeVenta" Width="3.25" PointX="0.75" PointY="0.75" IsExpanded="true" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

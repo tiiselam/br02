@@ -4,12 +4,22 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="GBRAModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="GBRAModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <!--Errors Found During Generation:
 warning 6002: The table/view 'GBRA.dbo.vwCfdiTransaccionesDeVenta' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vwCfdiTransaccionesDeVenta">
           <Key>
+            
             <PropertyRef Name="soptype" />
+            
+            
+            
+            
+            
+            
+            
+            
+            
             <PropertyRef Name="sopnumbe" />
           </Key>
           <Property Name="estadoContabilizado" Type="varchar" MaxLength="13" Nullable="false" />
@@ -42,6 +52,8 @@ warning 6002: The table/view 'GBRA.dbo.vwCfdiTransaccionesDeVenta' does not have
           <Property Name="isocurrc" Type="varchar" MaxLength="15" />
           <Property Name="addenda" Type="int" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GBRA.dbo.vwRmClientesBrasil' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityContainer Name="GBRAModelStoreContainer">
           <EntitySet Name="vwCfdiTransaccionesDeVenta" EntityType="Self.vwCfdiTransaccionesDeVenta" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -77,8 +89,7 @@ warning 6002: The table/view 'GBRA.dbo.vwCfdiTransaccionesDeVenta' does not have
     FROM [dbo].[vwCfdiTransaccionesDeVenta] AS [vwCfdiTransaccionesDeVenta]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="GBRAModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">

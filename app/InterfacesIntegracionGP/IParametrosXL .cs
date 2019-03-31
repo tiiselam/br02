@@ -14,6 +14,7 @@ namespace IntegradorDeGP
         int FacturaSopColumnaMensajes { get; set; }
         string FacturaSopSerieYNumbeSeparados { get; set; }
         int FacturaSopSerie { get; set; }
+        int FacturaSopReferencia { get; set; }
 
         int FacturaSopnumbe { get; set; }
         int FacturaSopDocdate { get; set; }
@@ -21,6 +22,9 @@ namespace IntegradorDeGP
         string FormatoFechaXL { get; set; }
         int FacturaSopTXRGNNUM { get; set; }
         int FacturaSopUNITPRCE { get; set; }
+        int FacturaSopDeUNITPRCE { get; set; }
         int FacturaSopCUSTNAME { get; set; }
-    }
+        int FacturaSopItemnmbr { get; set; }
+        int FacturaSopItemnmbrDescr { get; set; }
+}
 }
