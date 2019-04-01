@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GBRADocumentoVentaGP.cs" />
     <Compile Include="ErrorEventArgsEntidadesGP.cs" />
     <Compile Include="GBRAEntities.cs" />
     <Compile Include="MainDB.cs" />
@@ -70,6 +71,9 @@
       <DependentUpon>ModelEntidadesGP.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="vwCfdiGeneraDocumentoDeVentaBRA.cs">
+      <DependentUpon>ModelEntidadesGP.tt</DependentUpon>
+    </Compile>
     <Compile Include="vwCfdiTransaccionesDeVenta.cs">
       <DependentUpon>ModelEntidadesGP.tt</DependentUpon>
     </Compile>

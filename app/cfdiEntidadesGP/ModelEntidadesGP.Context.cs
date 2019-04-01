@@ -26,5 +26,6 @@ namespace cfdiEntidadesGP
         }
     
         public virtual DbSet<vwCfdiTransaccionesDeVenta> vwCfdiTransaccionesDeVenta { get; set; }
+        public virtual DbSet<vwCfdiGeneraDocumentoDeVentaBRA> vwCfdiGeneraDocumentoDeVentaBRA { get; set; }
     }
 }

@@ -165,6 +165,10 @@
       <Project>{926e41ef-73a4-448d-b8cf-3ecc478df49e}</Project>
       <Name>InterfacesDeIntegracionGP</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\ServicioPrefeitura\Prefeitura.csproj">
+      <Project>{79c84b7e-8462-4ad8-a487-f4466da50acf}</Project>
+      <Name>Prefeitura</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

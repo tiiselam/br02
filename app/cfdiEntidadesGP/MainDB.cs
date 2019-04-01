@@ -135,5 +135,27 @@ namespace cfdiEntidadesGP
             }
         }
 
+
+
+        public GBRADocumentoVentaGP GetDatosDocumentoVenta(string Sopnumbe, short Soptype)
+        {
+            GBRADocumentoVentaGP _DocVenta = new GBRADocumentoVentaGP();
+            using (var db = this.getDbContext())
+            {
+                // verificar la conexión con el servidor de bd
+                if (!this.probarConexion())
+                {
+                    ErrorEventArgsEntidadesGP args = new ErrorEventArgsEntidadesGP();
+                    args.mensajeError = "No se pudo establecer la conexión con el servidor al tratar de leer las pre-facturas.";
+                    OnErrorDB(args);
+                }
+                _DocVenta.DocVenta = db.vwCfdiGeneraDocumentoDeVentaBRA
+                    .Where(v => v.SOPNUMBE == Sopnumbe && v.soptype == Soptype)
+                    .First();
+            }
+
+            return _DocVenta;
+        }
+
     }
 }

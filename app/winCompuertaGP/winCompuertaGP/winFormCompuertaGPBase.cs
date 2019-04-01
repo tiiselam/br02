@@ -11,6 +11,7 @@ using Comun;
 using IntegradorDeGP;
 using InterfacesDeIntegracionGP;
 using cfdiEntidadesGP;
+using Web_Service;
 
 namespace winCompuertaGP
 {
@@ -612,5 +613,83 @@ namespace winCompuertaGP
         }
 
         #endregion
+
+        private void toolStripMenuItem6_Click(object sender, EventArgs e)
+        {
+            fechaIni = DateTime.Today.AddDays(-6);
+            fechaFin = DateTime.Today.AddHours(23).AddMinutes(59).AddSeconds(59);
+            checkBoxFecha.Checked = false;
+            tsDropDownFiltro.Text = ultimos7tsMenuItem6.Text;
+            filtrarFacturas();
+
+        }
+
+        private void toolStripMenuItem4_Click(object sender, EventArgs e)
+        {
+            fechaIni = DateTime.Today;
+            fechaFin = DateTime.Today.AddHours(23).AddMinutes(59).AddSeconds(59);
+            checkBoxFecha.Checked = false;
+            tsDropDownFiltro.Text = hoytsMenuItem4.Text;
+            filtrarFacturas();
+
+        }
+
+        private void toolStripMenuItem5_Click(object sender, EventArgs e)
+        {
+            fechaIni = DateTime.Today.AddDays(-1);
+            fechaFin = DateTime.Today.AddDays(-1).AddHours(23).AddMinutes(59).AddSeconds(59);
+            checkBoxFecha.Checked = false;
+            tsDropDownFiltro.Text = ayertsMenuItem5.Text;
+            filtrarFacturas();
+
+        }
+
+        private void toolStripMenuItem7_Click(object sender, EventArgs e)
+        {
+            fechaIni = DateTime.Today.AddDays(-29);
+            fechaFin = DateTime.Today.AddHours(23).AddMinutes(59).AddSeconds(59);
+            checkBoxFecha.Checked = false;
+            tsDropDownFiltro.Text = ultimos30tsMenuItem7.Text;
+            filtrarFacturas();
+
+        }
+
+        private void toolStripMenuItem8_Click(object sender, EventArgs e)
+        {
+            fechaIni = DateTime.Today.AddDays(-59);
+            fechaFin = DateTime.Today.AddHours(23).AddMinutes(59).AddSeconds(59);
+            checkBoxFecha.Checked = false;
+            tsDropDownFiltro.Text = ultimos60tsMenuItem8.Text;
+            filtrarFacturas();
+
+        }
+
+        private void toolStripMenuItem9_Click(object sender, EventArgs e)
+        {
+            fechaIni = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            fechaFin = fechaIni.AddMonths(1);
+            int ultimoDia = fechaFin.Day;
+            fechaFin = fechaFin.AddDays(-ultimoDia);
+            checkBoxFecha.Checked = false;
+            tsDropDownFiltro.Text = mesActualtsMenuItem9.Text;
+            filtrarFacturas();
+
+        }
+
+        private void tsButtonGenerarTxt_Click(object sender, EventArgs e)
+        {
+            var documentoGP = mainController.GetDatosDocumentoVenta("C00000013", 3);
+            //var documentoGP = new GBRADocumentoVentaGP();
+            //documentoGP.GetDatosDocumentoVenta("C00000013", 3);
+
+            //var WSServicio = new cfdiBrasilOperadorServiciosElectronicos.WebServicesNfe();
+            //var WSServicio = new cfdiBrasilOperadorWS.WebServicesNfe();
+            var WSServicio = new Web_Service.WebServicesNfe();
+
+            Web_Service.PedidoEnvioLoteRPS DatosPedido = WSServicio.GeneraDatosRPS(documentoGP);
+
+            string ArchivoSal = WSServicio.EnviarDatosArchivo(DatosPedido, "C:\\jcDownloads\\ARCHIVO_PREFEITURA.txt");
+
+        }
     }
 }

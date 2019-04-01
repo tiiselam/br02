@@ -6,6 +6,55 @@
     <edmx:StorageModels>
     <Schema Namespace="GBRAModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <!--Errors Found During Generation:
+warning 6002: The table/view 'GBRA.dbo.vwCfdiGeneraDocumentoDeVentaBRA' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vwCfdiGeneraDocumentoDeVentaBRA">
+          <Key>
+            <PropertyRef Name="soptype" />
+            <PropertyRef Name="SOPNUMBE" />
+          </Key>
+          <Property Name="correlativo" Type="varchar" MaxLength="20" />
+          <Property Name="soptype" Type="smallint" Nullable="false" />
+          <Property Name="SOPNUMBE" Type="char" MaxLength="21" Nullable="false" />
+          <Property Name="serie" Type="varchar" MaxLength="1" />
+          <Property Name="numero" Type="varchar" MaxLength="21" />
+          <Property Name="emisorTipoDoc" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="emisorNroDoc" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="emisorNombre" Type="char" MaxLength="65" Nullable="false" />
+          <Property Name="InscricaoPrestador" Type="varchar" MaxLength="8" />
+          <Property Name="TipoRPS" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="fechaEmision" Type="datetime" Nullable="false" />
+          <Property Name="horaEmision" Type="varchar" MaxLength="30" />
+          <Property Name="StatusRPS" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="TributacaoRPS" Type="char" MaxLength="21" Nullable="false" />
+          <Property Name="montoTotalVenta" Type="numeric" Precision="19" Scale="5" Nullable="false" />
+          <Property Name="descuentoGlobalMonto" Type="numeric" Precision="19" Scale="5" Nullable="false" />
+          <Property Name="ValorPIS" Type="numeric" Precision="19" Scale="5" />
+          <Property Name="ValorCOFINS" Type="numeric" Precision="19" Scale="5" />
+          <Property Name="ValorINSS" Type="numeric" Precision="19" Scale="5" />
+          <Property Name="ValorIR" Type="numeric" Precision="19" Scale="5" />
+          <Property Name="ValorCSLL" Type="numeric" Precision="19" Scale="5" />
+          <Property Name="CodigoServico" Type="varchar" MaxLength="15" />
+          <Property Name="AliquotaServicos" Type="char" MaxLength="30" />
+          <Property Name="ISSRetido" Type="varchar" MaxLength="21" />
+          <Property Name="CPFCNPJTomador" Type="varchar" MaxLength="25" />
+          <Property Name="InscricaoMunicipalTomador" Type="varchar" MaxLength="25" />
+          <Property Name="InscricaoEstadualTomador" Type="varchar" MaxLength="25" />
+          <Property Name="RazaoSocialTomador" Type="varchar" MaxLength="65" />
+          <Property Name="Emisor_TipoLogradouro" Type="varchar" MaxLength="3" />
+          <Property Name="Emisor_Logradouro" Type="varchar" MaxLength="61" />
+          <Property Name="Emisor_NumeroEndereco" Type="varchar" MaxLength="61" />
+          <Property Name="Emisor_Bairro" Type="varchar" MaxLength="61" />
+          <Property Name="Emisor_Cidade" Type="varchar" MaxLength="35" />
+          <Property Name="Emisor_CEP" Type="varchar" MaxLength="29" />
+          <Property Name="Emisor_UF" Type="varchar" MaxLength="11" />
+          <Property Name="EmailTomador" Type="nvarchar(max)" />
+          <Property Name="Concepto" Type="varchar" MaxLength="8000" />
+          <Property Name="ValorCargaTributaria" Type="int" Nullable="false" />
+          <Property Name="PercentualCargaTributaria" Type="int" Nullable="false" />
+          <Property Name="FonteCargaTributaria" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="ValorTotalRecebido" Type="numeric" Precision="19" Scale="5" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'GBRA.dbo.vwCfdiTransaccionesDeVenta' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vwCfdiTransaccionesDeVenta">
           <Key>
@@ -52,9 +101,52 @@ warning 6002: The table/view 'GBRA.dbo.vwCfdiTransaccionesDeVenta' does not have
           <Property Name="isocurrc" Type="varchar" MaxLength="15" />
           <Property Name="addenda" Type="int" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'GBRA.dbo.vwRmClientesBrasil' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityContainer Name="GBRAModelStoreContainer">
+          <EntitySet Name="vwCfdiGeneraDocumentoDeVentaBRA" EntityType="Self.vwCfdiGeneraDocumentoDeVentaBRA" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vwCfdiGeneraDocumentoDeVentaBRA].[correlativo] AS [correlativo], 
+    [vwCfdiGeneraDocumentoDeVentaBRA].[soptype] AS [soptype], 
+    [vwCfdiGeneraDocumentoDeVentaBRA].[SOPNUMBE] AS [SOPNUMBE], 
+    [vwCfdiGeneraDocumentoDeVentaBRA].[serie] AS [serie], 
+    [vwCfdiGeneraDocumentoDeVentaBRA].[numero] AS [numero], 
+    [vwCfdiGeneraDocumentoDeVentaBRA].[emisorTipoDoc] AS [emisorTipoDoc], 
+    [vwCfdiGeneraDocumentoDeVentaBRA].[emisorNroDoc] AS [emisorNroDoc], 
+    [vwCfdiGeneraDocumentoDeVentaBRA].[emisorNombre] AS [emisorNombre], 
+    [vwCfdiGeneraDocumentoDeVentaBRA].[InscricaoPrestador] AS [InscricaoPrestador], 
+    [vwCfdiGeneraDocumentoDeVentaBRA].[TipoRPS] AS [TipoRPS], 
+    [vwCfdiGeneraDocumentoDeVentaBRA].[fechaEmision] AS [fechaEmision], 
+    [vwCfdiGeneraDocumentoDeVentaBRA].[horaEmision] AS [horaEmision], 
+    [vwCfdiGeneraDocumentoDeVentaBRA].[StatusRPS] AS [StatusRPS], 
+    [vwCfdiGeneraDocumentoDeVentaBRA].[TributacaoRPS] AS [TributacaoRPS], 
+    [vwCfdiGeneraDocumentoDeVentaBRA].[montoTotalVenta] AS [montoTotalVenta], 
+    [vwCfdiGeneraDocumentoDeVentaBRA].[descuentoGlobalMonto] AS [descuentoGlobalMonto], 
+    [vwCfdiGeneraDocumentoDeVentaBRA].[ValorPIS] AS [ValorPIS], 
+    [vwCfdiGeneraDocumentoDeVentaBRA].[ValorCOFINS] AS [ValorCOFINS], 
+    [vwCfdiGeneraDocumentoDeVentaBRA].[ValorINSS] AS [ValorINSS], 
+    [vwCfdiGeneraDocumentoDeVentaBRA].[ValorIR] AS [ValorIR], 
+    [vwCfdiGeneraDocumentoDeVentaBRA].[ValorCSLL] AS [ValorCSLL], 
+    [vwCfdiGeneraDocumentoDeVentaBRA].[CodigoServico] AS [CodigoServico], 
+    [vwCfdiGeneraDocumentoDeVentaBRA].[AliquotaServicos] AS [AliquotaServicos], 
+    [vwCfdiGeneraDocumentoDeVentaBRA].[ISSRetido] AS [ISSRetido], 
+    [vwCfdiGeneraDocumentoDeVentaBRA].[CPFCNPJTomador] AS [CPFCNPJTomador], 
+    [vwCfdiGeneraDocumentoDeVentaBRA].[InscricaoMunicipalTomador] AS [InscricaoMunicipalTomador], 
+    [vwCfdiGeneraDocumentoDeVentaBRA].[InscricaoEstadualTomador] AS [InscricaoEstadualTomador], 
+    [vwCfdiGeneraDocumentoDeVentaBRA].[RazaoSocialTomador] AS [RazaoSocialTomador], 
+    [vwCfdiGeneraDocumentoDeVentaBRA].[Emisor_TipoLogradouro] AS [Emisor_TipoLogradouro], 
+    [vwCfdiGeneraDocumentoDeVentaBRA].[Emisor_Logradouro] AS [Emisor_Logradouro], 
+    [vwCfdiGeneraDocumentoDeVentaBRA].[Emisor_NumeroEndereco] AS [Emisor_NumeroEndereco], 
+    [vwCfdiGeneraDocumentoDeVentaBRA].[Emisor_Bairro] AS [Emisor_Bairro], 
+    [vwCfdiGeneraDocumentoDeVentaBRA].[Emisor_Cidade] AS [Emisor_Cidade], 
+    [vwCfdiGeneraDocumentoDeVentaBRA].[Emisor_CEP] AS [Emisor_CEP], 
+    [vwCfdiGeneraDocumentoDeVentaBRA].[Emisor_UF] AS [Emisor_UF], 
+    [vwCfdiGeneraDocumentoDeVentaBRA].[EmailTomador] AS [EmailTomador], 
+    [vwCfdiGeneraDocumentoDeVentaBRA].[Concepto] AS [Concepto], 
+    [vwCfdiGeneraDocumentoDeVentaBRA].[ValorCargaTributaria] AS [ValorCargaTributaria], 
+    [vwCfdiGeneraDocumentoDeVentaBRA].[PercentualCargaTributaria] AS [PercentualCargaTributaria], 
+    [vwCfdiGeneraDocumentoDeVentaBRA].[FonteCargaTributaria] AS [FonteCargaTributaria], 
+    [vwCfdiGeneraDocumentoDeVentaBRA].[ValorTotalRecebido] AS [ValorTotalRecebido]
+    FROM [dbo].[vwCfdiGeneraDocumentoDeVentaBRA] AS [vwCfdiGeneraDocumentoDeVentaBRA]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vwCfdiTransaccionesDeVenta" EntityType="Self.vwCfdiTransaccionesDeVenta" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vwCfdiTransaccionesDeVenta].[estadoContabilizado] AS [estadoContabilizado], 
@@ -130,7 +222,55 @@ warning 6002: The table/view 'GBRA.dbo.vwRmClientesBrasil' does not have a prima
         </EntityType>
         <EntityContainer Name="GBRAEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="vwCfdiTransaccionesDeVenta" EntityType="Self.vwCfdiTransaccionesDeVenta" />
+          <EntitySet Name="vwCfdiGeneraDocumentoDeVentaBRA" EntityType="GBRAModel.vwCfdiGeneraDocumentoDeVentaBRA" />
         </EntityContainer>
+        <EntityType Name="vwCfdiGeneraDocumentoDeVentaBRA">
+          <Key>
+            <PropertyRef Name="soptype" />
+            <PropertyRef Name="SOPNUMBE" />
+          </Key>
+          <Property Name="correlativo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="soptype" Type="Int16" Nullable="false" />
+          <Property Name="SOPNUMBE" Type="String" Nullable="false" MaxLength="21" FixedLength="true" Unicode="false" />
+          <Property Name="serie" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="numero" Type="String" MaxLength="21" FixedLength="false" Unicode="false" />
+          <Property Name="emisorTipoDoc" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="emisorNroDoc" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="emisorNombre" Type="String" Nullable="false" MaxLength="65" FixedLength="true" Unicode="false" />
+          <Property Name="InscricaoPrestador" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="TipoRPS" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="fechaEmision" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="horaEmision" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="StatusRPS" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="TributacaoRPS" Type="String" Nullable="false" MaxLength="21" FixedLength="true" Unicode="false" />
+          <Property Name="montoTotalVenta" Type="Decimal" Nullable="false" Precision="19" Scale="5" />
+          <Property Name="descuentoGlobalMonto" Type="Decimal" Nullable="false" Precision="19" Scale="5" />
+          <Property Name="ValorPIS" Type="Decimal" Precision="19" Scale="5" />
+          <Property Name="ValorCOFINS" Type="Decimal" Precision="19" Scale="5" />
+          <Property Name="ValorINSS" Type="Decimal" Precision="19" Scale="5" />
+          <Property Name="ValorIR" Type="Decimal" Precision="19" Scale="5" />
+          <Property Name="ValorCSLL" Type="Decimal" Precision="19" Scale="5" />
+          <Property Name="CodigoServico" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="AliquotaServicos" Type="String" MaxLength="30" FixedLength="true" Unicode="false" />
+          <Property Name="ISSRetido" Type="String" MaxLength="21" FixedLength="false" Unicode="false" />
+          <Property Name="CPFCNPJTomador" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="InscricaoMunicipalTomador" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="InscricaoEstadualTomador" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="RazaoSocialTomador" Type="String" MaxLength="65" FixedLength="false" Unicode="false" />
+          <Property Name="Emisor_TipoLogradouro" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="Emisor_Logradouro" Type="String" MaxLength="61" FixedLength="false" Unicode="false" />
+          <Property Name="Emisor_NumeroEndereco" Type="String" MaxLength="61" FixedLength="false" Unicode="false" />
+          <Property Name="Emisor_Bairro" Type="String" MaxLength="61" FixedLength="false" Unicode="false" />
+          <Property Name="Emisor_Cidade" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="Emisor_CEP" Type="String" MaxLength="29" FixedLength="false" Unicode="false" />
+          <Property Name="Emisor_UF" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="EmailTomador" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Concepto" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="ValorCargaTributaria" Type="Int32" Nullable="false" />
+          <Property Name="PercentualCargaTributaria" Type="Int32" Nullable="false" />
+          <Property Name="FonteCargaTributaria" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="ValorTotalRecebido" Type="Decimal" Nullable="false" Precision="19" Scale="5" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -169,6 +309,53 @@ warning 6002: The table/view 'GBRA.dbo.vwRmClientesBrasil' does not have a prima
                 <ScalarProperty Name="mensajeEA" ColumnName="mensajeEA" />
                 <ScalarProperty Name="isocurrc" ColumnName="isocurrc" />
                 <ScalarProperty Name="addenda" ColumnName="addenda" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwCfdiGeneraDocumentoDeVentaBRA">
+            <EntityTypeMapping TypeName="GBRAModel.vwCfdiGeneraDocumentoDeVentaBRA">
+              <MappingFragment StoreEntitySet="vwCfdiGeneraDocumentoDeVentaBRA">
+                <ScalarProperty Name="ValorTotalRecebido" ColumnName="ValorTotalRecebido" />
+                <ScalarProperty Name="FonteCargaTributaria" ColumnName="FonteCargaTributaria" />
+                <ScalarProperty Name="PercentualCargaTributaria" ColumnName="PercentualCargaTributaria" />
+                <ScalarProperty Name="ValorCargaTributaria" ColumnName="ValorCargaTributaria" />
+                <ScalarProperty Name="Concepto" ColumnName="Concepto" />
+                <ScalarProperty Name="EmailTomador" ColumnName="EmailTomador" />
+                <ScalarProperty Name="Emisor_UF" ColumnName="Emisor_UF" />
+                <ScalarProperty Name="Emisor_CEP" ColumnName="Emisor_CEP" />
+                <ScalarProperty Name="Emisor_Cidade" ColumnName="Emisor_Cidade" />
+                <ScalarProperty Name="Emisor_Bairro" ColumnName="Emisor_Bairro" />
+                <ScalarProperty Name="Emisor_NumeroEndereco" ColumnName="Emisor_NumeroEndereco" />
+                <ScalarProperty Name="Emisor_Logradouro" ColumnName="Emisor_Logradouro" />
+                <ScalarProperty Name="Emisor_TipoLogradouro" ColumnName="Emisor_TipoLogradouro" />
+                <ScalarProperty Name="RazaoSocialTomador" ColumnName="RazaoSocialTomador" />
+                <ScalarProperty Name="InscricaoEstadualTomador" ColumnName="InscricaoEstadualTomador" />
+                <ScalarProperty Name="InscricaoMunicipalTomador" ColumnName="InscricaoMunicipalTomador" />
+                <ScalarProperty Name="CPFCNPJTomador" ColumnName="CPFCNPJTomador" />
+                <ScalarProperty Name="ISSRetido" ColumnName="ISSRetido" />
+                <ScalarProperty Name="AliquotaServicos" ColumnName="AliquotaServicos" />
+                <ScalarProperty Name="CodigoServico" ColumnName="CodigoServico" />
+                <ScalarProperty Name="ValorCSLL" ColumnName="ValorCSLL" />
+                <ScalarProperty Name="ValorIR" ColumnName="ValorIR" />
+                <ScalarProperty Name="ValorINSS" ColumnName="ValorINSS" />
+                <ScalarProperty Name="ValorCOFINS" ColumnName="ValorCOFINS" />
+                <ScalarProperty Name="ValorPIS" ColumnName="ValorPIS" />
+                <ScalarProperty Name="descuentoGlobalMonto" ColumnName="descuentoGlobalMonto" />
+                <ScalarProperty Name="montoTotalVenta" ColumnName="montoTotalVenta" />
+                <ScalarProperty Name="TributacaoRPS" ColumnName="TributacaoRPS" />
+                <ScalarProperty Name="StatusRPS" ColumnName="StatusRPS" />
+                <ScalarProperty Name="horaEmision" ColumnName="horaEmision" />
+                <ScalarProperty Name="fechaEmision" ColumnName="fechaEmision" />
+                <ScalarProperty Name="TipoRPS" ColumnName="TipoRPS" />
+                <ScalarProperty Name="InscricaoPrestador" ColumnName="InscricaoPrestador" />
+                <ScalarProperty Name="emisorNombre" ColumnName="emisorNombre" />
+                <ScalarProperty Name="emisorNroDoc" ColumnName="emisorNroDoc" />
+                <ScalarProperty Name="emisorTipoDoc" ColumnName="emisorTipoDoc" />
+                <ScalarProperty Name="numero" ColumnName="numero" />
+                <ScalarProperty Name="serie" ColumnName="serie" />
+                <ScalarProperty Name="SOPNUMBE" ColumnName="SOPNUMBE" />
+                <ScalarProperty Name="soptype" ColumnName="soptype" />
+                <ScalarProperty Name="correlativo" ColumnName="correlativo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
