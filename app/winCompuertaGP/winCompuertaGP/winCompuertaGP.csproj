@@ -9,9 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>winCompuertaGP</RootNamespace>
     <AssemblyName>winCompuertaGP</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -38,11 +39,13 @@
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-      <Private>True</Private>
+    </Reference>
+    <Reference Include="IntegradorDeGP, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\STD_IntegraEconnectGP\dgp01\app\IntegradorBaseDeGP\bin\Debug\IntegradorDeGP.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -60,28 +63,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DAL\IntegraGPEntities.cs" />
+    <Compile Include="BLL\ProcesaCfdi.cs" />
     <Compile Include="Empresa.cs" />
     <Compile Include="ErrorEventArgs.cs" />
-    <Compile Include="BLL\Main.cs" />
-    <Compile Include="DAL\ModelGPIntegraciones.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ModelGPIntegraciones.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\ModelGPIntegraciones.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ModelGPIntegraciones.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\ModelGPIntegraciones.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ModelGPIntegraciones.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\vwIntegracionesVentas.cs">
-      <DependentUpon>ModelGPIntegraciones.tt</DependentUpon>
-    </Compile>
     <Compile Include="ParametrosDB.cs" />
     <Compile Include="winFormCompuertaGP.cs">
       <SubType>Form</SubType>
@@ -113,13 +97,6 @@
     <EmbeddedResource Include="winFormCompuertaGPBase.resx">
       <DependentUpon>winFormCompuertaGPBase.cs</DependentUpon>
     </EmbeddedResource>
-    <EntityDeploy Include="DAL\ModelGPIntegraciones.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ModelGPIntegraciones.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="DAL\ModelGPIntegraciones.edmx.diagram">
-      <DependentUpon>ModelGPIntegraciones.edmx</DependentUpon>
-    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -137,22 +114,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DAL\ModelGPIntegraciones.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ModelGPIntegraciones.edmx</DependentUpon>
-      <LastGenOutput>ModelGPIntegraciones.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="DAL\ModelGPIntegraciones.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ModelGPIntegraciones.edmx</DependentUpon>
-      <LastGenOutput>ModelGPIntegraciones.cs</LastGenOutput>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\STD_IntegraEconnectGP\dgp01\app\IntegradorBaseDeGP\IntegradorDeGP.csproj">
-      <Project>{3c6b5813-9f6f-4c48-b1c0-a38348eaac53}</Project>
-      <Name>IntegradorDeGP</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\cfdiEntidadesGP\cfdiEntidadesGP.csproj">
       <Project>{c048237b-bab0-4906-9791-5e359857a275}</Project>
       <Name>cfdiEntidadesGP</Name>
@@ -165,6 +126,10 @@
       <Project>{926e41ef-73a4-448d-b8cf-3ecc478df49e}</Project>
       <Name>InterfacesDeIntegracionGP</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\MaquinaDeEstados\MaquinaDeEstados.csproj">
+      <Project>{3325d053-41aa-48a1-9166-11dc6afea8d7}</Project>
+      <Name>MaquinaDeEstados</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\ServicioPrefeitura\Prefeitura.csproj">
       <Project>{79c84b7e-8462-4ad8-a487-f4466da50acf}</Project>
       <Name>Prefeitura</Name>
@@ -172,6 +137,9 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DAL\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

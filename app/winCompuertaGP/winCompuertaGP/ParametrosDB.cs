@@ -43,6 +43,14 @@ namespace winCompuertaGP
         private int _facturaSopDeUNITPRCE;
         private int _facturaSopItemnmbr;
         private int _facturaSopItemnmbrDescr;
+        private string _intEstadoCompletado;
+        private string _intEstadosPermitidos;
+        private string _emite;
+        private string _envia;
+        private string _imprime;
+        private string _publica;
+        private string _zip;
+        private string _anula;
 
         public ParametrosDB()
         {
@@ -149,6 +157,16 @@ namespace winCompuertaGP
                 _facturaSopDeUNITPRCE = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopDe/UNITPRCE/text()").Value);
                 _facturaSopItemnmbr = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopDe/itemnmbr/text()").Value);
                 _facturaSopItemnmbrDescr = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopDe/itemnmbrDescr/text()").Value);
+
+                _intEstadoCompletado = elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/intEstadoCompletado/text()").Value;
+                _intEstadosPermitidos = elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/intEstadosPermitidos/text()").Value;
+                _emite = elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/emite/text()").Value;
+                _envia = elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/envia/text()").Value;
+                _imprime = elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/imprime/text()").Value;
+                _publica = elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/publica/text()").Value;
+                _zip = elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/zip/text()").Value;
+                _anula = elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/anula/text()").Value;
+
 
             }
             catch (ArgumentException ae)
@@ -353,6 +371,14 @@ namespace winCompuertaGP
         public int FacturaSopItemnmbr { get => _facturaSopItemnmbr; set => _facturaSopItemnmbr = value; }
         public int FacturaSopItemnmbrDescr { get => _facturaSopItemnmbrDescr; set => _facturaSopItemnmbrDescr = value; }
         public int FacturaSopDeUNITPRCE { get => _facturaSopDeUNITPRCE; set => _facturaSopDeUNITPRCE = value; }
+        public int intEstadoCompletado { get => int.Parse(_intEstadoCompletado); set => _intEstadoCompletado = value.ToString(); }
+        public int intEstadosPermitidos { get => int.Parse(_intEstadosPermitidos); set => _intEstadosPermitidos = value.ToString(); }
+        public bool emite { get => _emite.Equals("1"); set => _emite = value.ToString(); }
+        public bool envia { get => _envia.Equals("1"); set => _envia = value.ToString(); }
+        public bool imprime { get => _imprime.Equals("1"); set => _imprime = value.ToString(); }
+        public bool publica { get => _publica.Equals("1"); set => _publica = value.ToString(); }
+        public bool zip { get => _zip.Equals("1"); set => _zip = value.ToString(); }
+        public bool anula { get => _anula.Equals("1"); set => _anula = value.ToString(); }
     }
 
 }

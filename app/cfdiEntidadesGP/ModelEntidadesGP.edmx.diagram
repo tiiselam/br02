@@ -7,6 +7,7 @@
       <Diagram DiagramId="910dca8689c0445e910825c3ba9289ae" Name="Diagram1" ZoomLevel="73">
         <EntityTypeShape EntityType="GBRAModel.vwCfdiTransaccionesDeVenta" Width="3.25" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="GBRAModel.vwCfdiGeneraDocumentoDeVentaBRA" Width="2.125" PointX="5.375" PointY="0.75" />
+        <EntityTypeShape EntityType="GBRAModel.cfdLogFacturaXML" Width="1.5" PointX="8.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

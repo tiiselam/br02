@@ -31,17 +31,6 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(winFormCompuertaGPBase));
             this.dgvFacturas = new System.Windows.Forms.DataGridView();
-            this.M = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.docid = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.soptype = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sopnumbe = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fechahora = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nombreCliente = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.idImpuestoCliente = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.total = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.estado = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MENSAJE = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.mensajeEA = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cmbBEstado = new System.Windows.Forms.ComboBox();
             this.checkBoxEstado = new System.Windows.Forms.CheckBox();
             this.checkBoxPacientes_numero_pf = new System.Windows.Forms.CheckBox();
@@ -74,6 +63,19 @@
             this.lblUsuario = new System.Windows.Forms.Label();
             this.lblFecha = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
+            this.toolStrip2 = new System.Windows.Forms.ToolStrip();
+            this.toolStrip3 = new System.Windows.Forms.ToolStrip();
+            this.tsDropDownFiltro = new System.Windows.Forms.ToolStripDropDownButton();
+            this.hoytsMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
+            this.ayertsMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
+            this.ultimos7tsMenuItem6 = new System.Windows.Forms.ToolStripMenuItem();
+            this.ultimos30tsMenuItem7 = new System.Windows.Forms.ToolStripMenuItem();
+            this.ultimos60tsMenuItem8 = new System.Windows.Forms.ToolStripMenuItem();
+            this.mesActualtsMenuItem9 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.tsButtonGenerarTxt = new System.Windows.Forms.ToolStripButton();
+            this.tsButtonGeneraXml = new System.Windows.Forms.ToolStripButton();
             this.toolStripAcciones5 = new System.Windows.Forms.ToolStrip();
             this.toolStripButton11 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton12 = new System.Windows.Forms.ToolStripButton();
@@ -86,7 +88,7 @@
             this.toolStripAcciones3 = new System.Windows.Forms.ToolStrip();
             this.tsBtnIntegraFactura = new System.Windows.Forms.ToolStripButton();
             this.toolStripAcciones1 = new System.Windows.Forms.ToolStrip();
-            this.tabControlPreFactura = new System.Windows.Forms.TabControl();
+            this.tabNotaFiscal = new System.Windows.Forms.TabControl();
             this.gpFactura = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel6 = new System.Windows.Forms.Panel();
@@ -110,29 +112,30 @@
             this.panel8 = new System.Windows.Forms.Panel();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
-            this.tsButtonGenerarTxt = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
-            this.toolStrip3 = new System.Windows.Forms.ToolStrip();
-            this.tsDropDownFiltro = new System.Windows.Forms.ToolStripDropDownButton();
-            this.hoytsMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
-            this.ayertsMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
-            this.ultimos7tsMenuItem6 = new System.Windows.Forms.ToolStripMenuItem();
-            this.ultimos30tsMenuItem7 = new System.Windows.Forms.ToolStripMenuItem();
-            this.ultimos60tsMenuItem8 = new System.Windows.Forms.ToolStripMenuItem();
-            this.mesActualtsMenuItem9 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStrip2 = new System.Windows.Forms.ToolStrip();
+            this.checkBoxMark = new System.Windows.Forms.CheckBox();
+            this.M = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.docid = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.soptype = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.sopnumbe = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fechahora = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nombreCliente = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.idImpuestoCliente = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.total = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.estado = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MENSAJE = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.mensajeEA = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvFacturas)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.tsConfirma1.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel5.SuspendLayout();
+            this.toolStrip3.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
             this.toolStripAcciones5.SuspendLayout();
             this.toolStripAcciones4.SuspendLayout();
             this.toolStripAcciones3.SuspendLayout();
-            this.tabControlPreFactura.SuspendLayout();
+            this.tabNotaFiscal.SuspendLayout();
             this.gpFactura.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel6.SuspendLayout();
@@ -145,8 +148,6 @@
             this.panel7.SuspendLayout();
             this.panel8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
-            this.toolStrip1.SuspendLayout();
-            this.toolStrip3.SuspendLayout();
             this.SuspendLayout();
             // 
             // dgvFacturas
@@ -177,91 +178,6 @@
             this.dgvFacturas.TabIndex = 50;
             this.dgvFacturas.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvPacientes_CellDoubleClick);
             this.dgvFacturas.CurrentCellDirtyStateChanged += new System.EventHandler(this.dgvPacientes_CurrentCellDirtyStateChanged);
-            // 
-            // M
-            // 
-            this.M.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.M.FalseValue = "False";
-            this.M.HeaderText = "M";
-            this.M.MinimumWidth = 20;
-            this.M.Name = "M";
-            this.M.ThreeState = true;
-            this.M.TrueValue = "True";
-            this.M.Width = 20;
-            // 
-            // docid
-            // 
-            this.docid.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.docid.DataPropertyName = "docid";
-            this.docid.FillWeight = 20F;
-            this.docid.HeaderText = "Id. Doc.";
-            this.docid.Name = "docid";
-            this.docid.Width = 70;
-            // 
-            // soptype
-            // 
-            this.soptype.DataPropertyName = "soptype";
-            this.soptype.HeaderText = "Tipo";
-            this.soptype.Name = "soptype";
-            this.soptype.Width = 45;
-            // 
-            // sopnumbe
-            // 
-            this.sopnumbe.DataPropertyName = "sopnumbe";
-            this.sopnumbe.FillWeight = 60F;
-            this.sopnumbe.HeaderText = "Número Doc.";
-            this.sopnumbe.Name = "sopnumbe";
-            this.sopnumbe.ReadOnly = true;
-            // 
-            // fechahora
-            // 
-            this.fechahora.DataPropertyName = "fechahora";
-            this.fechahora.HeaderText = "Fecha";
-            this.fechahora.Name = "fechahora";
-            // 
-            // nombreCliente
-            // 
-            this.nombreCliente.DataPropertyName = "nombreCliente";
-            this.nombreCliente.HeaderText = "Nombre Cliente";
-            this.nombreCliente.Name = "nombreCliente";
-            this.nombreCliente.Width = 150;
-            // 
-            // idImpuestoCliente
-            // 
-            this.idImpuestoCliente.DataPropertyName = "idImpuestoCliente";
-            this.idImpuestoCliente.FillWeight = 60F;
-            this.idImpuestoCliente.HeaderText = "Id de Impuesto";
-            this.idImpuestoCliente.Name = "idImpuestoCliente";
-            this.idImpuestoCliente.ReadOnly = true;
-            this.idImpuestoCliente.Width = 102;
-            // 
-            // total
-            // 
-            this.total.DataPropertyName = "total";
-            this.total.HeaderText = "Total";
-            this.total.Name = "total";
-            // 
-            // estado
-            // 
-            this.estado.DataPropertyName = "estado";
-            this.estado.FillWeight = 60F;
-            this.estado.HeaderText = "Estado";
-            this.estado.Name = "estado";
-            this.estado.ReadOnly = true;
-            // 
-            // MENSAJE
-            // 
-            this.MENSAJE.DataPropertyName = "mensaje";
-            this.MENSAJE.FillWeight = 60F;
-            this.MENSAJE.HeaderText = "Mensaje";
-            this.MENSAJE.Name = "MENSAJE";
-            // 
-            // mensajeEA
-            // 
-            this.mensajeEA.DataPropertyName = "mensajeEA";
-            this.mensajeEA.FillWeight = 60F;
-            this.mensajeEA.HeaderText = "Observaciones";
-            this.mensajeEA.Name = "mensajeEA";
             // 
             // cmbBEstado
             // 
@@ -583,6 +499,124 @@
             this.panel5.Size = new System.Drawing.Size(1073, 88);
             this.panel5.TabIndex = 75;
             // 
+            // toolStrip2
+            // 
+            this.toolStrip2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.toolStrip2.Location = new System.Drawing.Point(450, 25);
+            this.toolStrip2.Name = "toolStrip2";
+            this.toolStrip2.Size = new System.Drawing.Size(623, 63);
+            this.toolStrip2.TabIndex = 86;
+            this.toolStrip2.Text = "toolStrip2";
+            // 
+            // toolStrip3
+            // 
+            this.toolStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsDropDownFiltro});
+            this.toolStrip3.Location = new System.Drawing.Point(450, 0);
+            this.toolStrip3.Name = "toolStrip3";
+            this.toolStrip3.Size = new System.Drawing.Size(623, 25);
+            this.toolStrip3.TabIndex = 85;
+            this.toolStrip3.Text = "toolStrip3";
+            // 
+            // tsDropDownFiltro
+            // 
+            this.tsDropDownFiltro.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.hoytsMenuItem4,
+            this.ayertsMenuItem5,
+            this.ultimos7tsMenuItem6,
+            this.ultimos30tsMenuItem7,
+            this.ultimos60tsMenuItem8,
+            this.mesActualtsMenuItem9});
+            this.tsDropDownFiltro.Image = ((System.Drawing.Image)(resources.GetObject("tsDropDownFiltro.Image")));
+            this.tsDropDownFiltro.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsDropDownFiltro.Name = "tsDropDownFiltro";
+            this.tsDropDownFiltro.Size = new System.Drawing.Size(88, 22);
+            this.tsDropDownFiltro.Text = "Hoy          ";
+            // 
+            // hoytsMenuItem4
+            // 
+            this.hoytsMenuItem4.Name = "hoytsMenuItem4";
+            this.hoytsMenuItem4.Size = new System.Drawing.Size(154, 22);
+            this.hoytsMenuItem4.Text = "Hoy          ";
+            this.hoytsMenuItem4.Click += new System.EventHandler(this.toolStripMenuItem4_Click);
+            // 
+            // ayertsMenuItem5
+            // 
+            this.ayertsMenuItem5.Name = "ayertsMenuItem5";
+            this.ayertsMenuItem5.Size = new System.Drawing.Size(154, 22);
+            this.ayertsMenuItem5.Text = "Ayer             ";
+            this.ayertsMenuItem5.Click += new System.EventHandler(this.toolStripMenuItem5_Click);
+            // 
+            // ultimos7tsMenuItem6
+            // 
+            this.ultimos7tsMenuItem6.Name = "ultimos7tsMenuItem6";
+            this.ultimos7tsMenuItem6.Size = new System.Drawing.Size(154, 22);
+            this.ultimos7tsMenuItem6.Tag = "";
+            this.ultimos7tsMenuItem6.Text = "Ultimos 7 días";
+            this.ultimos7tsMenuItem6.Click += new System.EventHandler(this.toolStripMenuItem6_Click);
+            // 
+            // ultimos30tsMenuItem7
+            // 
+            this.ultimos30tsMenuItem7.Name = "ultimos30tsMenuItem7";
+            this.ultimos30tsMenuItem7.Size = new System.Drawing.Size(154, 22);
+            this.ultimos30tsMenuItem7.Text = "Ultimos 30 días";
+            this.ultimos30tsMenuItem7.Click += new System.EventHandler(this.toolStripMenuItem7_Click);
+            // 
+            // ultimos60tsMenuItem8
+            // 
+            this.ultimos60tsMenuItem8.Name = "ultimos60tsMenuItem8";
+            this.ultimos60tsMenuItem8.Size = new System.Drawing.Size(154, 22);
+            this.ultimos60tsMenuItem8.Text = "Ultimos 60 días";
+            this.ultimos60tsMenuItem8.Click += new System.EventHandler(this.toolStripMenuItem8_Click);
+            // 
+            // mesActualtsMenuItem9
+            // 
+            this.mesActualtsMenuItem9.Name = "mesActualtsMenuItem9";
+            this.mesActualtsMenuItem9.Size = new System.Drawing.Size(154, 22);
+            this.mesActualtsMenuItem9.Text = "Mes actual";
+            this.mesActualtsMenuItem9.Click += new System.EventHandler(this.toolStripMenuItem9_Click);
+            // 
+            // toolStrip1
+            // 
+            this.toolStrip1.AutoSize = false;
+            this.toolStrip1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripButton2,
+            this.tsButtonGenerarTxt,
+            this.tsButtonGeneraXml});
+            this.toolStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
+            this.toolStrip1.Location = new System.Drawing.Point(247, 0);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(203, 88);
+            this.toolStrip1.TabIndex = 78;
+            this.toolStrip1.Text = "toolStrip2";
+            // 
+            // toolStripButton2
+            // 
+            this.toolStripButton2.Name = "toolStripButton2";
+            this.toolStripButton2.Size = new System.Drawing.Size(23, 4);
+            // 
+            // tsButtonGenerarTxt
+            // 
+            this.tsButtonGenerarTxt.Image = ((System.Drawing.Image)(resources.GetObject("tsButtonGenerarTxt.Image")));
+            this.tsButtonGenerarTxt.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tsButtonGenerarTxt.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsButtonGenerarTxt.Name = "tsButtonGenerarTxt";
+            this.tsButtonGenerarTxt.Size = new System.Drawing.Size(76, 79);
+            this.tsButtonGenerarTxt.Text = "Generar TXT";
+            this.tsButtonGenerarTxt.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tsButtonGenerarTxt.Click += new System.EventHandler(this.tsButtonGenerarTxt_Click);
+            // 
+            // tsButtonGeneraXml
+            // 
+            this.tsButtonGeneraXml.Image = ((System.Drawing.Image)(resources.GetObject("tsButtonGeneraXml.Image")));
+            this.tsButtonGeneraXml.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tsButtonGeneraXml.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsButtonGeneraXml.Name = "tsButtonGeneraXml";
+            this.tsButtonGeneraXml.Size = new System.Drawing.Size(101, 79);
+            this.tsButtonGeneraXml.Text = "Usar Web Service";
+            this.tsButtonGeneraXml.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            // 
             // toolStripAcciones5
             // 
             this.toolStripAcciones5.AutoSize = false;
@@ -644,6 +678,7 @@
             this.tsSplitBCambiarStatus.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsMenuItemCambiarAListo,
             this.anuleDespuesDeContabilizadaTsMenuItem});
+            this.tsSplitBCambiarStatus.Enabled = false;
             this.tsSplitBCambiarStatus.Image = ((System.Drawing.Image)(resources.GetObject("tsSplitBCambiarStatus.Image")));
             this.tsSplitBCambiarStatus.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsSplitBCambiarStatus.Name = "tsSplitBCambiarStatus";
@@ -667,6 +702,7 @@
             // 
             // tsbActualizarStatus
             // 
+            this.tsbActualizarStatus.Enabled = false;
             this.tsbActualizarStatus.Image = ((System.Drawing.Image)(resources.GetObject("tsbActualizarStatus.Image")));
             this.tsbActualizarStatus.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbActualizarStatus.Name = "tsbActualizarStatus";
@@ -713,20 +749,20 @@
             this.toolStripAcciones1.TabIndex = 50;
             this.toolStripAcciones1.Text = "toolStrip1";
             // 
-            // tabControlPreFactura
+            // tabNotaFiscal
             // 
-            this.tabControlPreFactura.Alignment = System.Windows.Forms.TabAlignment.Left;
-            this.tabControlPreFactura.Controls.Add(this.gpFactura);
-            this.tabControlPreFactura.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControlPreFactura.ItemSize = new System.Drawing.Size(100, 40);
-            this.tabControlPreFactura.Location = new System.Drawing.Point(0, 0);
-            this.tabControlPreFactura.Multiline = true;
-            this.tabControlPreFactura.Name = "tabControlPreFactura";
-            this.tabControlPreFactura.SelectedIndex = 0;
-            this.tabControlPreFactura.Size = new System.Drawing.Size(1127, 475);
-            this.tabControlPreFactura.TabIndex = 78;
-            this.tabControlPreFactura.SelectedIndexChanged += new System.EventHandler(this.tabControlPrefactura_SelectedIndexChanged);
-            this.tabControlPreFactura.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tabControlPreFactura_Selecting);
+            this.tabNotaFiscal.Alignment = System.Windows.Forms.TabAlignment.Left;
+            this.tabNotaFiscal.Controls.Add(this.gpFactura);
+            this.tabNotaFiscal.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabNotaFiscal.ItemSize = new System.Drawing.Size(100, 40);
+            this.tabNotaFiscal.Location = new System.Drawing.Point(0, 0);
+            this.tabNotaFiscal.Multiline = true;
+            this.tabNotaFiscal.Name = "tabNotaFiscal";
+            this.tabNotaFiscal.SelectedIndex = 0;
+            this.tabNotaFiscal.Size = new System.Drawing.Size(1127, 475);
+            this.tabNotaFiscal.TabIndex = 78;
+            this.tabNotaFiscal.SelectedIndexChanged += new System.EventHandler(this.tabControlPrefactura_SelectedIndexChanged);
+            this.tabNotaFiscal.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tabControlPreFactura_Selecting);
             // 
             // gpFactura
             // 
@@ -743,6 +779,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.checkBoxMark);
             this.panel1.Controls.Add(this.dgvFacturas);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(3, 153);
@@ -936,7 +973,7 @@
             // 
             // panel7
             // 
-            this.panel7.Controls.Add(this.tabControlPreFactura);
+            this.panel7.Controls.Add(this.tabNotaFiscal);
             this.panel7.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel7.Location = new System.Drawing.Point(0, 26);
             this.panel7.Name = "panel7";
@@ -965,123 +1002,105 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // toolStrip1
+            // checkBoxMark
             // 
-            this.toolStrip1.AutoSize = false;
-            this.toolStrip1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton2,
-            this.tsButtonGenerarTxt,
-            this.toolStripButton3});
-            this.toolStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
-            this.toolStrip1.Location = new System.Drawing.Point(247, 0);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(203, 88);
-            this.toolStrip1.TabIndex = 78;
-            this.toolStrip1.Text = "toolStrip2";
+            this.checkBoxMark.AutoSize = true;
+            this.checkBoxMark.Checked = true;
+            this.checkBoxMark.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxMark.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.checkBoxMark.Location = new System.Drawing.Point(39, 6);
+            this.checkBoxMark.Name = "checkBoxMark";
+            this.checkBoxMark.Size = new System.Drawing.Size(12, 11);
+            this.checkBoxMark.TabIndex = 51;
+            this.checkBoxMark.UseVisualStyleBackColor = true;
+            this.checkBoxMark.CheckedChanged += new System.EventHandler(this.checkBoxMark_CheckedChanged);
             // 
-            // toolStripButton2
+            // M
             // 
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(23, 4);
+            this.M.FalseValue = "0";
+            this.M.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.M.Frozen = true;
+            this.M.HeaderText = "M";
+            this.M.IndeterminateValue = "-1";
+            this.M.MinimumWidth = 20;
+            this.M.Name = "M";
+            this.M.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.M.TrueValue = "1";
+            this.M.Width = 20;
             // 
-            // tsButtonGenerarTxt
+            // docid
             // 
-            this.tsButtonGenerarTxt.Image = ((System.Drawing.Image)(resources.GetObject("tsButtonGenerarTxt.Image")));
-            this.tsButtonGenerarTxt.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.tsButtonGenerarTxt.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsButtonGenerarTxt.Name = "tsButtonGenerarTxt";
-            this.tsButtonGenerarTxt.Size = new System.Drawing.Size(76, 79);
-            this.tsButtonGenerarTxt.Text = "Generar TXT";
-            this.tsButtonGenerarTxt.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.tsButtonGenerarTxt.Click += new System.EventHandler(this.tsButtonGenerarTxt_Click);
+            this.docid.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.docid.DataPropertyName = "docid";
+            this.docid.FillWeight = 20F;
+            this.docid.HeaderText = "Id. Doc.";
+            this.docid.Name = "docid";
+            this.docid.Width = 70;
             // 
-            // toolStripButton3
+            // soptype
             // 
-            this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
-            this.toolStripButton3.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(101, 79);
-            this.toolStripButton3.Text = "Usar Web Service";
-            this.toolStripButton3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.soptype.DataPropertyName = "soptype";
+            this.soptype.HeaderText = "Tipo";
+            this.soptype.Name = "soptype";
+            this.soptype.Width = 45;
             // 
-            // toolStrip3
+            // sopnumbe
             // 
-            this.toolStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsDropDownFiltro});
-            this.toolStrip3.Location = new System.Drawing.Point(450, 0);
-            this.toolStrip3.Name = "toolStrip3";
-            this.toolStrip3.Size = new System.Drawing.Size(623, 25);
-            this.toolStrip3.TabIndex = 85;
-            this.toolStrip3.Text = "toolStrip3";
+            this.sopnumbe.DataPropertyName = "sopnumbe";
+            this.sopnumbe.FillWeight = 60F;
+            this.sopnumbe.HeaderText = "Número Doc.";
+            this.sopnumbe.Name = "sopnumbe";
+            this.sopnumbe.ReadOnly = true;
             // 
-            // tsDropDownFiltro
+            // fechahora
             // 
-            this.tsDropDownFiltro.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.hoytsMenuItem4,
-            this.ayertsMenuItem5,
-            this.ultimos7tsMenuItem6,
-            this.ultimos30tsMenuItem7,
-            this.ultimos60tsMenuItem8,
-            this.mesActualtsMenuItem9});
-            this.tsDropDownFiltro.Image = ((System.Drawing.Image)(resources.GetObject("tsDropDownFiltro.Image")));
-            this.tsDropDownFiltro.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsDropDownFiltro.Name = "tsDropDownFiltro";
-            this.tsDropDownFiltro.Size = new System.Drawing.Size(88, 22);
-            this.tsDropDownFiltro.Text = "Hoy          ";
+            this.fechahora.DataPropertyName = "fechahora";
+            this.fechahora.HeaderText = "Fecha";
+            this.fechahora.Name = "fechahora";
             // 
-            // hoytsMenuItem4
+            // nombreCliente
             // 
-            this.hoytsMenuItem4.Name = "hoytsMenuItem4";
-            this.hoytsMenuItem4.Size = new System.Drawing.Size(180, 22);
-            this.hoytsMenuItem4.Text = "Hoy          ";
-            this.hoytsMenuItem4.Click += new System.EventHandler(this.toolStripMenuItem4_Click);
+            this.nombreCliente.DataPropertyName = "nombreCliente";
+            this.nombreCliente.HeaderText = "Nombre Cliente";
+            this.nombreCliente.Name = "nombreCliente";
+            this.nombreCliente.Width = 150;
             // 
-            // ayertsMenuItem5
+            // idImpuestoCliente
             // 
-            this.ayertsMenuItem5.Name = "ayertsMenuItem5";
-            this.ayertsMenuItem5.Size = new System.Drawing.Size(180, 22);
-            this.ayertsMenuItem5.Text = "Ayer             ";
-            this.ayertsMenuItem5.Click += new System.EventHandler(this.toolStripMenuItem5_Click);
+            this.idImpuestoCliente.DataPropertyName = "idImpuestoCliente";
+            this.idImpuestoCliente.FillWeight = 60F;
+            this.idImpuestoCliente.HeaderText = "Id de Impuesto";
+            this.idImpuestoCliente.Name = "idImpuestoCliente";
+            this.idImpuestoCliente.ReadOnly = true;
+            this.idImpuestoCliente.Width = 102;
             // 
-            // ultimos7tsMenuItem6
+            // total
             // 
-            this.ultimos7tsMenuItem6.Name = "ultimos7tsMenuItem6";
-            this.ultimos7tsMenuItem6.Size = new System.Drawing.Size(180, 22);
-            this.ultimos7tsMenuItem6.Tag = "";
-            this.ultimos7tsMenuItem6.Text = "Ultimos 7 días";
-            this.ultimos7tsMenuItem6.Click += new System.EventHandler(this.toolStripMenuItem6_Click);
+            this.total.DataPropertyName = "total";
+            this.total.HeaderText = "Total";
+            this.total.Name = "total";
             // 
-            // ultimos30tsMenuItem7
+            // estado
             // 
-            this.ultimos30tsMenuItem7.Name = "ultimos30tsMenuItem7";
-            this.ultimos30tsMenuItem7.Size = new System.Drawing.Size(180, 22);
-            this.ultimos30tsMenuItem7.Text = "Ultimos 30 días";
-            this.ultimos30tsMenuItem7.Click += new System.EventHandler(this.toolStripMenuItem7_Click);
+            this.estado.DataPropertyName = "estado";
+            this.estado.FillWeight = 60F;
+            this.estado.HeaderText = "Estado";
+            this.estado.Name = "estado";
+            this.estado.ReadOnly = true;
             // 
-            // ultimos60tsMenuItem8
+            // MENSAJE
             // 
-            this.ultimos60tsMenuItem8.Name = "ultimos60tsMenuItem8";
-            this.ultimos60tsMenuItem8.Size = new System.Drawing.Size(180, 22);
-            this.ultimos60tsMenuItem8.Text = "Ultimos 60 días";
-            this.ultimos60tsMenuItem8.Click += new System.EventHandler(this.toolStripMenuItem8_Click);
+            this.MENSAJE.DataPropertyName = "mensaje";
+            this.MENSAJE.FillWeight = 60F;
+            this.MENSAJE.HeaderText = "Mensaje";
+            this.MENSAJE.Name = "MENSAJE";
             // 
-            // mesActualtsMenuItem9
+            // mensajeEA
             // 
-            this.mesActualtsMenuItem9.Name = "mesActualtsMenuItem9";
-            this.mesActualtsMenuItem9.Size = new System.Drawing.Size(180, 22);
-            this.mesActualtsMenuItem9.Text = "Mes actual";
-            this.mesActualtsMenuItem9.Click += new System.EventHandler(this.toolStripMenuItem9_Click);
-            // 
-            // toolStrip2
-            // 
-            this.toolStrip2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.toolStrip2.Location = new System.Drawing.Point(450, 25);
-            this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(623, 63);
-            this.toolStrip2.TabIndex = 86;
-            this.toolStrip2.Text = "toolStrip2";
+            this.mensajeEA.DataPropertyName = "mensajeEA";
+            this.mensajeEA.FillWeight = 60F;
+            this.mensajeEA.HeaderText = "Observaciones";
+            this.mensajeEA.Name = "mensajeEA";
             // 
             // winFormCompuertaGPBase
             // 
@@ -1108,15 +1127,20 @@
             this.panel2.ResumeLayout(false);
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
+            this.toolStrip3.ResumeLayout(false);
+            this.toolStrip3.PerformLayout();
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.toolStripAcciones5.ResumeLayout(false);
             this.toolStripAcciones5.PerformLayout();
             this.toolStripAcciones4.ResumeLayout(false);
             this.toolStripAcciones4.PerformLayout();
             this.toolStripAcciones3.ResumeLayout(false);
             this.toolStripAcciones3.PerformLayout();
-            this.tabControlPreFactura.ResumeLayout(false);
+            this.tabNotaFiscal.ResumeLayout(false);
             this.gpFactura.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.panel6.ResumeLayout(false);
             this.panel6.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
@@ -1132,10 +1156,6 @@
             this.panel7.ResumeLayout(false);
             this.panel8.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
-            this.toolStrip3.ResumeLayout(false);
-            this.toolStrip3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1204,24 +1224,13 @@
         protected System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         protected System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
         protected System.Windows.Forms.Panel panel4;
-        protected System.Windows.Forms.TabControl tabControlPreFactura;
+        protected System.Windows.Forms.TabControl tabNotaFiscal;
         private System.Windows.Forms.BindingSource bindingSource1;
         private System.Windows.Forms.ToolStripSplitButton tsSplitBCambiarStatus;
         private System.Windows.Forms.ToolStripMenuItem tsMenuItemCambiarAListo;
         private System.Windows.Forms.ToolStripButton tsbActualizarStatus;
         private System.Windows.Forms.ToolStripMenuItem anuleDespuesDeContabilizadaTsMenuItem;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn M;
-        private System.Windows.Forms.DataGridViewTextBoxColumn docid;
-        private System.Windows.Forms.DataGridViewTextBoxColumn soptype;
-        private System.Windows.Forms.DataGridViewTextBoxColumn sopnumbe;
-        private System.Windows.Forms.DataGridViewTextBoxColumn fechahora;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nombreCliente;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idImpuestoCliente;
-        private System.Windows.Forms.DataGridViewTextBoxColumn total;
-        private System.Windows.Forms.DataGridViewTextBoxColumn estado;
-        private System.Windows.Forms.DataGridViewTextBoxColumn MENSAJE;
-        private System.Windows.Forms.DataGridViewTextBoxColumn mensajeEA;
         private System.Windows.Forms.ToolStrip toolStrip3;
         private System.Windows.Forms.ToolStripDropDownButton tsDropDownFiltro;
         private System.Windows.Forms.ToolStripMenuItem hoytsMenuItem4;
@@ -1233,8 +1242,20 @@
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton toolStripButton2;
         private System.Windows.Forms.ToolStripButton tsButtonGenerarTxt;
-        private System.Windows.Forms.ToolStripButton toolStripButton3;
+        private System.Windows.Forms.ToolStripButton tsButtonGeneraXml;
         private System.Windows.Forms.ToolStrip toolStrip2;
+        private System.Windows.Forms.CheckBox checkBoxMark;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn M;
+        private System.Windows.Forms.DataGridViewTextBoxColumn docid;
+        private System.Windows.Forms.DataGridViewTextBoxColumn soptype;
+        private System.Windows.Forms.DataGridViewTextBoxColumn sopnumbe;
+        private System.Windows.Forms.DataGridViewTextBoxColumn fechahora;
+        private System.Windows.Forms.DataGridViewTextBoxColumn nombreCliente;
+        private System.Windows.Forms.DataGridViewTextBoxColumn idImpuestoCliente;
+        private System.Windows.Forms.DataGridViewTextBoxColumn total;
+        private System.Windows.Forms.DataGridViewTextBoxColumn estado;
+        private System.Windows.Forms.DataGridViewTextBoxColumn MENSAJE;
+        private System.Windows.Forms.DataGridViewTextBoxColumn mensajeEA;
     }
 }
 

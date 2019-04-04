@@ -24,7 +24,7 @@ namespace cfdiEntidadesGP
         public string idImpuestoCliente { get; set; }
         public Nullable<decimal> total { get; set; }
         public Nullable<decimal> montoActualOriginal { get; set; }
-        public Nullable<short> voidstts { get; set; }
+        public short voidstts { get; set; }
         public string estado { get; set; }
         public string mensaje { get; set; }
         public string comprobanteXml { get; set; }

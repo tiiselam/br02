@@ -13,7 +13,7 @@ begin
 	  secuencia INTEGER  NOT NULL IDENTITY ,
 	  estado VARCHAR(20)  NOT NULL DEFAULT 'anulado' , 
 	  mensaje VARCHAR(255)  NOT NULL DEFAULT 'xml no emitido' ,
-	  estadoActual varchar(20) default '000000', 
+	  estadoActual varchar(20) default '000100000000', 
 	  mensajeEA varchar(255) default '',
 	  noAprobacion varchar(21) not null default '',
 	  fechaEmision datetime not null default getdate(), 
@@ -32,7 +32,8 @@ begin
 end
 go
 
-alter table dbo.cfdLogFacturaXML add constraint chk_estado check(estado in ('emitido', 'anulado', 'impreso', 'publicado', 'enviado', 'rechazo_sunat', 'acepta_sunat', 'sunat', 'error'));
+--alter table dbo.cfdLogFacturaXML add constraint chk_estado check(estado in ('emitido', 'anulado', 'impreso', 'publicado', 'enviado', 'rechazo_sunat', 'acepta_sunat', 'sunat', 'error'));
+--alter table dbo.cfdLogFacturaXML drop constraint chk_estado ;
 
 
 go

@@ -1,27 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Windows.Forms;
-using System.IO;
-using winCompuertaGP.BLL;
-using System.Text.RegularExpressions;
-using System.Xml;
 using System.Linq;
-using Comun;
 using IntegradorDeGP;
-using InterfacesDeIntegracionGP;
 using cfdiEntidadesGP;
 using Web_Service;
+using cfd.FacturaElectronica;
 
 namespace winCompuertaGP
 {
     public partial class winFormCompuertaGPBase : Form
     {
+
+        //DataGridView dGridActivo;
+
         private MainDB mainController;
         private ParametrosDB configuracion;
         private object[] idDetallePrefacturaSeleccionada;
 
-        private object celdaActual;
+        //private object celdaActual;
         private List<int> filasActualizadas;
 
         DateTime fechaIni = DateTime.Today;
@@ -30,7 +27,12 @@ namespace winCompuertaGP
         int dePeriodo = DateTime.Now.Year * 100 + 01;
         int aPeriodo = DateTime.Now.Year * 100 + DateTime.Now.Month;
 
-        //bool filtrarDetallePrefactura;
+        IList<vwCfdiTransaccionesDeVenta> listaDeFacturas = null;
+        List<vwCfdiTransaccionesDeVenta> LDocsNoSeleccionados = new List<vwCfdiTransaccionesDeVenta>();   //Docs no marcados del grid
+        short idxChkBox = 0;                    //columna check box del grid
+        short idxIdDoc = 1;                     //columna id de documento del grid
+        short idxSoptype = 2;                   //columna soptype del grid
+        short idxSopnumbe = 3;                  //columna sopnumbe del grid
 
         public winFormCompuertaGPBase()
         {
@@ -51,7 +53,7 @@ namespace winCompuertaGP
                 var empresaDefault = configuracion.Empresas.Where(x => x.Idbd == configuracion.DefaultDB).First();
                 cmbBxCompannia.SelectedIndex = configuracion.Empresas.IndexOf(empresaDefault);
 
-                celdaActual = null;
+                //celdaActual = null;
                 filasActualizadas = new List<int>();
 
                 lblFecha.Text = DateTime.Now.ToShortDateString();
@@ -253,7 +255,7 @@ namespace winCompuertaGP
                 ffin = fechaFin;
             }
 
-            var datos = mainController.getFacturas(
+            listaDeFacturas = mainController.getFacturas(
                                                         checkBoxPacientes_numero_pf.Checked,
                                                         textBoxPacientes_numero_pf_desde.Text,
                                                         textBoxPacientes_numero_pf_hasta.Text,
@@ -270,13 +272,17 @@ namespace winCompuertaGP
                                                         textBoxPacientes_sopnumbe_desde.Text,
                                                         textBoxPacientes_sopnumbe_hasta.Text
                                                     );
-            bindingSource1.DataSource = datos;
+            bindingSource1.DataSource = listaDeFacturas;
             dgvFacturas.AutoGenerateColumns = false;
             dgvFacturas.DataSource = bindingSource1;
             dgvFacturas.AutoResizeColumns();
             //dgvFacturas.RowHeadersVisible = false;
+            dgvFacturas.Refresh();
 
-            return datos.Count;
+            //Restituir las filas marcadas usando la lista de docs no seleccionados
+            InicializaCheckBoxDelGrid(dgvFacturas, idxChkBox, LDocsNoSeleccionados);
+
+            return listaDeFacturas.Count;
         }
 
         // Valida los campos de filtrado y devuelve los errores
@@ -676,20 +682,141 @@ namespace winCompuertaGP
 
         }
 
+        /// <summary>
+        /// Filtra las facturas marcadas en el grid y memoriza las filas no marcadas.
+        /// </summary>
+        /// <param name=""></param>
+        /// <returns>bool: True indica que la lista ha sido filtrada exitosamente</returns>
+        public IList<vwCfdiTransaccionesDeVenta> filtraListaSeleccionada(IList<vwCfdiTransaccionesDeVenta> lFacturas)
+        {
+            int i = 1;
+            object[] llaveDocumento = new object[2];
+            LDocsNoSeleccionados = new List<vwCfdiTransaccionesDeVenta>();
+            dgvFacturas.EndEdit();
+            tsProgressBar1.Value = 0;
+            //cargar lista de no seleccionados
+            foreach (DataGridViewRow dgvr in dgvFacturas.Rows)
+            {
+                if (!(dgvr.Cells[idxChkBox].Value != null && (dgvr.Cells[idxChkBox].Value.Equals(true) || dgvr.Cells[idxChkBox].Value.ToString().Equals("1"))))
+                {
+                    lFacturas.Where(x => x.soptype.ToString().Equals(dgvr.Cells[idxSoptype].Value.ToString()) && x.sopnumbe.Equals(dgvr.Cells[idxSopnumbe].Value.ToString()))
+                            .First().marcado = false;
+                }
+                else
+                {
+                    lFacturas.Where(x => x.soptype.ToString().Equals(dgvr.Cells[idxSoptype].Value.ToString()) && x.sopnumbe.Equals(dgvr.Cells[idxSopnumbe].Value.ToString()))
+                            .First().marcado = true;
+                }
+
+                tsProgressBar1.Value = Convert.ToInt32(i * 100 / dgvFacturas.RowCount);
+                i++;
+            }
+
+            tsProgressBar1.Value = 0;
+            LDocsNoSeleccionados = lFacturas.Where(x => x.marcado.Equals(false)).ToList();
+            bool vacio = dgvFacturas.RowCount == LDocsNoSeleccionados.Count;
+            if (vacio)
+                throw new ArgumentNullException( "[filtraListaSeleccionada] No ha marcado ningún documento. Marque al menos una casilla en la primera columna para continuar con el proceso.\r\n");
+
+            var marcadas = lFacturas.Where(x => x.marcado.Equals(true)).ToList();
+            return (marcadas);
+  
+        }
+        private bool ExistenTransaccionesAMedioContabilizar()
+        {
+            List<string> t = new List<string>();
+            foreach (vwCfdiTransaccionesDeVenta item in listaDeFacturas)
+            {
+                t.Add(item.soptype.ToString() + "-" + item.sopnumbe);
+            }
+            var ragrupado = t.GroupBy(f => f)
+                            .Where(repetido => repetido.Count() > 1)
+                            .ToList();
+
+            if (ragrupado.Count() > 0)
+            {
+                reportaProgreso(0, "Las siguientes facturas todavía no terminaron de contabilizar:");
+                //ragrupado.ForEach(i => txtbxMensajes.AppendText(i.FirstOrDefault()));
+                ragrupado.ForEach(i => reportaProgreso(0, i.FirstOrDefault()));
+                reportaProgreso(0, "Espere a que finalice la contabilización y vuelva a intentar.");
+
+            }
+            return (ragrupado.Count() > 0);
+        }
+
+        private void HabilitarVentana(bool emite, bool anula, bool imprime, bool publica, bool envia, bool cambiaCia, bool integra)
+        {
+            cmbBxCompannia.Enabled = cambiaCia;
+            tsBtnIntegraFactura.Enabled = integra;  
+            tsButtonGenerarTxt.Enabled = emite;
+            tsButtonGeneraXml.Enabled = emite;
+
+            //toolStripConsulta.Enabled = emite || anula || imprime || publica || envia;
+            btnBuscar.Enabled = emite || anula || imprime || publica || envia || integra;
+        }
+
         private void tsButtonGenerarTxt_Click(object sender, EventArgs e)
         {
-            var documentoGP = mainController.GetDatosDocumentoVenta("C00000013", 3);
-            //var documentoGP = new GBRADocumentoVentaGP();
-            //documentoGP.GetDatosDocumentoVenta("C00000013", 3);
+            int errores = 0;
+            txtbxMensajes.Text = "";
 
-            //var WSServicio = new cfdiBrasilOperadorServiciosElectronicos.WebServicesNfe();
-            //var WSServicio = new cfdiBrasilOperadorWS.WebServicesNfe();
-            var WSServicio = new Web_Service.WebServicesNfe();
+            if (listaDeFacturas.Count == 0)
+            {
+                txtbxMensajes.Text = "No hay documentos para generar. Verifique los criterios de búsqueda.";
+                errores++;
+            }
 
-            Web_Service.PedidoEnvioLoteRPS DatosPedido = WSServicio.GeneraDatosRPS(documentoGP);
+            try
+            {
+                var listaSeleccionadaPorUsuario = filtraListaSeleccionada(listaDeFacturas); //Filtra cfdiTransacciones sólo con docs marcados
+                if (errores == 0 && !ExistenTransaccionesAMedioContabilizar())
+                {
+                    HabilitarVentana(false, false, false, false, false, false, false);
+                    ProcesaCfdi proc = new ProcesaCfdi(lblUsuario.Text);
+                    proc.Progreso += new ProcesaCfdi.LogHandler(reportaProgreso);
+                    //pBarProcesoActivo.Visible = true;
 
-            string ArchivoSal = WSServicio.EnviarDatosArchivo(DatosPedido, "C:\\jcDownloads\\ARCHIVO_PREFEITURA.txt");
+                    if (this.tabNotaFiscal.SelectedTab.Name.Equals("gpFactura"))
+                    {
+                        var serviciosPrefeitura = new WebServicesNfe();
+                        proc.GeneraDocumentoTxt(listaSeleccionadaPorUsuario, mainController, serviciosPrefeitura);
+                    }
+                }
+                //Actualiza la pantalla
+                HabilitarVentana(true, false, false, false, false, true, true);
+                filtrarFacturas();
+                tsProgressBar1.Value = 0;
+                //pBarProcesoActivo.Visible = false;
 
+            }
+            catch (Exception ex)
+            {
+                reportaProgreso(0, ex.Message);
+            }
+        }
+
+        void InicializaCheckBoxDelGrid(DataGridView dataGrid, short idxChkBox, bool marca)
+        {
+            for (int r = 0; r < dataGrid.RowCount; r++)
+            {
+                dataGrid[idxChkBox, r].Value = marca;
+            }
+            dataGrid.EndEdit();
+        }
+        void InicializaCheckBoxDelGrid(DataGridView dataGrid, short idxChkBox, List<vwCfdiTransaccionesDeVenta> LNoSeleccionados)
+        {
+            for (int r = 0; r < dataGrid.RowCount; r++)
+            {
+                dataGrid[idxChkBox, r].Value = !LNoSeleccionados.Exists(x => x.sopnumbe.Equals(dataGrid[idxSopnumbe, r].Value.ToString()) 
+                                                                            && x.docid.ToString().Equals(dataGrid[idxIdDoc, r].Value.ToString()));
+            }
+            dataGrid.EndEdit();
+            dataGrid.Refresh();
+        }
+
+        private void checkBoxMark_CheckedChanged(object sender, EventArgs e)
+        {
+            InicializaCheckBoxDelGrid(dgvFacturas, idxChkBox, checkBoxMark.Checked);
         }
     }
 }

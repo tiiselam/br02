@@ -5,12 +5,45 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="GBRAModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="cfdLogFacturaXML">
+          <Key>
+            <PropertyRef Name="soptype" />
+            <PropertyRef Name="sopnumbe" />
+            <PropertyRef Name="secuencia" />
+          </Key>
+          <Property Name="soptype" Type="smallint" Nullable="false" />
+          <Property Name="sopnumbe" Type="varchar" MaxLength="21" Nullable="false" />
+          <Property Name="secuencia" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="estado" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="mensaje" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="estadoActual" Type="varchar" MaxLength="20" />
+          <Property Name="mensajeEA" Type="varchar" MaxLength="255" />
+          <Property Name="noAprobacion" Type="varchar" MaxLength="21" Nullable="false" />
+          <Property Name="fechaEmision" Type="datetime" Nullable="false" />
+          <Property Name="idUsuario" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="fechaAnulacion" Type="datetime" Nullable="false" />
+          <Property Name="idUsuarioAnulacion" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="archivoXML" Type="xml" />
+        </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'GBRA.dbo.vwCfdiGeneraDocumentoDeVentaBRA' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vwCfdiGeneraDocumentoDeVentaBRA">
           <Key>
             <PropertyRef Name="soptype" />
             <PropertyRef Name="SOPNUMBE" />
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
           </Key>
           <Property Name="correlativo" Type="varchar" MaxLength="20" />
           <Property Name="soptype" Type="smallint" Nullable="false" />
@@ -101,7 +134,10 @@ warning 6002: The table/view 'GBRA.dbo.vwCfdiTransaccionesDeVenta' does not have
           <Property Name="isocurrc" Type="varchar" MaxLength="15" />
           <Property Name="addenda" Type="int" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GBRA.dbo.vwRmClientes' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityContainer Name="GBRAModelStoreContainer">
+          <EntitySet Name="cfdLogFacturaXML" EntityType="Self.cfdLogFacturaXML" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="vwCfdiGeneraDocumentoDeVentaBRA" EntityType="Self.vwCfdiGeneraDocumentoDeVentaBRA" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vwCfdiGeneraDocumentoDeVentaBRA].[correlativo] AS [correlativo], 
@@ -200,7 +236,7 @@ warning 6002: The table/view 'GBRA.dbo.vwCfdiTransaccionesDeVenta' does not have
           <Property Name="idImpuestoCliente" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="total" Type="Decimal" Precision="19" Scale="2" />
           <Property Name="montoActualOriginal" Type="Decimal" Precision="30" Scale="5" />
-          <Property Name="voidstts" Type="Int16" />
+          <Property Name="voidstts" Type="Int16" Nullable="false" />
           <Property Name="estado" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="mensaje" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="comprobanteXml" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -223,6 +259,7 @@ warning 6002: The table/view 'GBRA.dbo.vwCfdiTransaccionesDeVenta' does not have
         <EntityContainer Name="GBRAEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="vwCfdiTransaccionesDeVenta" EntityType="Self.vwCfdiTransaccionesDeVenta" />
           <EntitySet Name="vwCfdiGeneraDocumentoDeVentaBRA" EntityType="GBRAModel.vwCfdiGeneraDocumentoDeVentaBRA" />
+          <EntitySet Name="cfdLogFacturaXML" EntityType="GBRAModel.cfdLogFacturaXML" />
         </EntityContainer>
         <EntityType Name="vwCfdiGeneraDocumentoDeVentaBRA">
           <Key>
@@ -270,6 +307,26 @@ warning 6002: The table/view 'GBRA.dbo.vwCfdiTransaccionesDeVenta' does not have
           <Property Name="PercentualCargaTributaria" Type="Int32" Nullable="false" />
           <Property Name="FonteCargaTributaria" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
           <Property Name="ValorTotalRecebido" Type="Decimal" Nullable="false" Precision="19" Scale="5" />
+        </EntityType>
+        <EntityType Name="cfdLogFacturaXML">
+          <Key>
+            <PropertyRef Name="soptype" />
+            <PropertyRef Name="sopnumbe" />
+            <PropertyRef Name="secuencia" />
+          </Key>
+          <Property Name="soptype" Type="Int16" Nullable="false" />
+          <Property Name="sopnumbe" Type="String" Nullable="false" MaxLength="21" FixedLength="false" Unicode="false" />
+          <Property Name="secuencia" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="estado" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="mensaje" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="estadoActual" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="mensajeEA" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="noAprobacion" Type="String" Nullable="false" MaxLength="21" FixedLength="false" Unicode="false" />
+          <Property Name="fechaEmision" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="idUsuario" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="fechaAnulacion" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="idUsuarioAnulacion" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="archivoXML" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -356,6 +413,25 @@ warning 6002: The table/view 'GBRA.dbo.vwCfdiTransaccionesDeVenta' does not have
                 <ScalarProperty Name="SOPNUMBE" ColumnName="SOPNUMBE" />
                 <ScalarProperty Name="soptype" ColumnName="soptype" />
                 <ScalarProperty Name="correlativo" ColumnName="correlativo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cfdLogFacturaXML">
+            <EntityTypeMapping TypeName="GBRAModel.cfdLogFacturaXML">
+              <MappingFragment StoreEntitySet="cfdLogFacturaXML">
+                <ScalarProperty Name="archivoXML" ColumnName="archivoXML" />
+                <ScalarProperty Name="idUsuarioAnulacion" ColumnName="idUsuarioAnulacion" />
+                <ScalarProperty Name="fechaAnulacion" ColumnName="fechaAnulacion" />
+                <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+                <ScalarProperty Name="fechaEmision" ColumnName="fechaEmision" />
+                <ScalarProperty Name="noAprobacion" ColumnName="noAprobacion" />
+                <ScalarProperty Name="mensajeEA" ColumnName="mensajeEA" />
+                <ScalarProperty Name="estadoActual" ColumnName="estadoActual" />
+                <ScalarProperty Name="mensaje" ColumnName="mensaje" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="secuencia" ColumnName="secuencia" />
+                <ScalarProperty Name="sopnumbe" ColumnName="sopnumbe" />
+                <ScalarProperty Name="soptype" ColumnName="soptype" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>cfdiEntidadesGP</RootNamespace>
     <AssemblyName>cfdiEntidadesGP</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
@@ -51,6 +51,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="cfdLogFacturaXML.cs">
+      <DependentUpon>ModelEntidadesGP.tt</DependentUpon>
+    </Compile>
     <Compile Include="GBRADocumentoVentaGP.cs" />
     <Compile Include="ErrorEventArgsEntidadesGP.cs" />
     <Compile Include="GBRAEntities.cs" />
@@ -77,6 +80,7 @@
     <Compile Include="vwCfdiTransaccionesDeVenta.cs">
       <DependentUpon>ModelEntidadesGP.tt</DependentUpon>
     </Compile>
+    <Compile Include="vwCfdiTransaccionesDeVentaPartial.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -103,6 +107,16 @@
       <DependentUpon>ModelEntidadesGP.edmx</DependentUpon>
       <LastGenOutput>ModelEntidadesGP.cs</LastGenOutput>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Comun\Comun.csproj">
+      <Project>{D43004BD-E235-41BE-B272-A05FC4FB9A96}</Project>
+      <Name>Comun</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MaquinaDeEstados\MaquinaDeEstados.csproj">
+      <Project>{3325d053-41aa-48a1-9166-11dc6afea8d7}</Project>
+      <Name>MaquinaDeEstados</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

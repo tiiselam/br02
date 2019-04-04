@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Comun;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -135,6 +136,96 @@ namespace cfdiEntidadesGP
             }
         }
 
+        public void CreaLogFactura(short soptype, string sopnumbe, string mensaje, string noAprobacion, string idusuario, string innerxml,
+                                            string eBaseNuevo, string eBinarioActual, string mensajeBinActual)
+        {
+            using (var db = this.getDbContext())
+            {
+                // verificar la conexión con el servidor de bd
+                if (!this.probarConexion())
+                {
+                    ErrorEventArgsEntidadesGP args = new ErrorEventArgsEntidadesGP();
+                    args.mensajeError = "No se pudo establecer la conexión con el servidor. Verifique la configuración de conexión a la base de datos. [CreaLog]";
+                    OnErrorDB(args);
+                }
+
+                var log = new cfdLogFacturaXML()
+                {
+                    soptype = soptype,
+                    sopnumbe = sopnumbe,
+                    mensaje = Utiles.Derecha(mensaje, 255),
+                    estado = eBaseNuevo,
+                    noAprobacion = noAprobacion,
+                    fechaEmision = DateTime.Now,
+                    idUsuario = Utiles.Derecha(idusuario, 10),
+                    idUsuarioAnulacion = "-",
+                    fechaAnulacion = new DateTime(1900, 1, 1),
+                    archivoXML = !string.IsNullOrEmpty(innerxml) ? innerxml : string.Empty,
+                    estadoActual = eBinarioActual,
+                    mensajeEA = Utiles.Derecha(mensajeBinActual, 255),
+                };
+                db.cfdLogFacturaXML.Add(log);
+                db.SaveChanges();
+            }
+
+        }
+
+        public void ActualizaOCreaLogFactura(short soptype, string sopnumbe, string mensaje, string noAprobacion, string idusuario, string innerxml,
+                                            string eBaseAnterior, string eBaseNuevo, string eBinarioActual, string mensajeEA)
+        {
+            using (var db = this.getDbContext())
+            {
+                // verificar la conexión con el servidor de bd
+                if (!this.probarConexion())
+                {
+                    ErrorEventArgsEntidadesGP args = new ErrorEventArgsEntidadesGP();
+                    args.mensajeError = "No se pudo establecer la conexión con el servidor. Verifique la configuración de conexión a la base de datos. [CreaLog]";
+                    OnErrorDB(args);
+                }
+                //var docl = db.cfdLogFacturaXML.AsQueryable();
+
+                try
+                {
+                    var doc = db.cfdLogFacturaXML.Where(x => x.sopnumbe.Equals(sopnumbe) && x.soptype.Equals(soptype) && x.estado.Equals(eBaseAnterior)).First();
+
+                    if (doc != null)
+                    {
+                        if (!eBaseAnterior.Equals(eBaseNuevo))
+                            doc.estado = eBaseNuevo;         // "anulado";
+                        doc.fechaAnulacion = DateTime.Now;
+                        doc.idUsuarioAnulacion = Utiles.Derecha(idusuario, 10);
+                        doc.estadoActual = eBinarioActual;
+                        doc.mensajeEA = Utiles.Derecha(mensajeEA, 255);
+                        doc.noAprobacion = noAprobacion;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    var log = new cfdLogFacturaXML()
+                    {
+                        soptype = soptype,
+                        sopnumbe = sopnumbe,
+                        mensaje = Utiles.Derecha(mensaje, 255),
+                        estado = eBaseNuevo,
+                        noAprobacion = noAprobacion,
+                        fechaEmision = DateTime.Now,
+                        idUsuario = Utiles.Derecha(idusuario, 10),
+                        idUsuarioAnulacion = "-",
+                        fechaAnulacion = new DateTime(1900, 1, 1),
+                        archivoXML = !string.IsNullOrEmpty(innerxml) ? innerxml : string.Empty,
+                        estadoActual = eBinarioActual,
+                        mensajeEA = Utiles.Derecha(mensajeEA, 255),
+                    };
+                    db.cfdLogFacturaXML.Add(log);
+
+                }
+                finally
+                {
+                    db.SaveChanges();
+                }
+            }
+
+        }
 
 
         public GBRADocumentoVentaGP GetDatosDocumentoVenta(string Sopnumbe, short Soptype)
