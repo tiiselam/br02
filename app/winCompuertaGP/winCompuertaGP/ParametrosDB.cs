@@ -31,12 +31,26 @@ namespace winCompuertaGP
         private string _clienteDefaultCUSTCLAS;
         private int _facturaSopFilaInicial;
         private int _facturaSopColumnaMensajes;
+        private int _facturaSopSerie;
         private int _facturaSopSopnumbe;
+        private string _facturaSopSerieYNumbeSeparados;
         private int _facturaSopDocdate;
         private int _facturaSopDuedate;
         private int _facturaSopTXRGNNUM;
         private int _facturaSopCUSTNAME;
+        private int _facturaSopReferencia;
         private int _facturaSopUNITPRCE;
+        private int _facturaSopDeUNITPRCE;
+        private int _facturaSopItemnmbr;
+        private int _facturaSopItemnmbrDescr;
+        private string _intEstadoCompletado;
+        private string _intEstadosPermitidos;
+        private string _emite;
+        private string _envia;
+        private string _imprime;
+        private string _publica;
+        private string _zip;
+        private string _anula;
 
         public ParametrosDB()
         {
@@ -130,12 +144,29 @@ namespace winCompuertaGP
             {
                 _facturaSopFilaInicial = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopCa/filaInicial/text()").Value);
                 _facturaSopColumnaMensajes = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopCa/columnaMensajes/text()").Value);
+                _facturaSopSerie = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopCa/serie/text()").Value);
                 _facturaSopSopnumbe = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopCa/sopnumbe/text()").Value);
+                _facturaSopSerieYNumbeSeparados = elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopCa/facturaSopSerieYNumbeSeparados/text()").Value;
                 _facturaSopDocdate = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopCa/docdate/text()").Value);
                 _facturaSopDuedate = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopCa/duedate/text()").Value);
                 _facturaSopTXRGNNUM = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopCa/TXRGNNUM/text()").Value);
                 _facturaSopCUSTNAME = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopCa/CUSTNAME/text()").Value);
-                _facturaSopUNITPRCE = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopDe/UNITPRCE/text()").Value);
+                _facturaSopReferencia = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopCa/referencia/text()").Value);
+
+                _facturaSopUNITPRCE = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopCa/UNITPRCE/text()").Value);
+                _facturaSopDeUNITPRCE = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopDe/UNITPRCE/text()").Value);
+                _facturaSopItemnmbr = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopDe/itemnmbr/text()").Value);
+                _facturaSopItemnmbrDescr = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopDe/itemnmbrDescr/text()").Value);
+
+                _intEstadoCompletado = elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/intEstadoCompletado/text()").Value;
+                _intEstadosPermitidos = elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/intEstadosPermitidos/text()").Value;
+                _emite = elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/emite/text()").Value;
+                _envia = elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/envia/text()").Value;
+                _imprime = elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/imprime/text()").Value;
+                _publica = elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/publica/text()").Value;
+                _zip = elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/zip/text()").Value;
+                _anula = elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/anula/text()").Value;
+
 
             }
             catch (ArgumentException ae)
@@ -325,12 +356,29 @@ namespace winCompuertaGP
         public string ClienteDefaultCUSTCLAS { get => _clienteDefaultCUSTCLAS; set => _clienteDefaultCUSTCLAS = value; }
         public int FacturaSopFilaInicial { get => _facturaSopFilaInicial; set => _facturaSopFilaInicial = value; }
         public int FacturaSopColumnaMensajes { get => _facturaSopColumnaMensajes; set => _facturaSopColumnaMensajes = value; }
+        public int FacturaSopSerie { get => _facturaSopSerie; set => _facturaSopSerie = value; }
         public int FacturaSopnumbe { get => _facturaSopSopnumbe; set => _facturaSopSopnumbe = value; }
         public int FacturaSopDocdate { get => _facturaSopDocdate; set => _facturaSopDocdate = value; }
         public int FacturaSopDuedate { get => _facturaSopDuedate; set => _facturaSopDuedate = value; }
         public int FacturaSopTXRGNNUM { get => _facturaSopTXRGNNUM; set => _facturaSopTXRGNNUM = value; }
         public int FacturaSopCUSTNAME { get => _facturaSopCUSTNAME; set => _facturaSopCUSTNAME = value; }
         public int FacturaSopUNITPRCE { get => _facturaSopUNITPRCE; set => _facturaSopUNITPRCE = value; }
+        /// <summary>
+        /// Indica si Serie y Sopnumbe están separados
+        /// </summary>
+        public string FacturaSopSerieYNumbeSeparados { get => _facturaSopSerieYNumbeSeparados; set => _facturaSopSerieYNumbeSeparados = value; }
+        public int FacturaSopReferencia { get => _facturaSopReferencia; set => _facturaSopReferencia = value; }
+        public int FacturaSopItemnmbr { get => _facturaSopItemnmbr; set => _facturaSopItemnmbr = value; }
+        public int FacturaSopItemnmbrDescr { get => _facturaSopItemnmbrDescr; set => _facturaSopItemnmbrDescr = value; }
+        public int FacturaSopDeUNITPRCE { get => _facturaSopDeUNITPRCE; set => _facturaSopDeUNITPRCE = value; }
+        public int intEstadoCompletado { get => int.Parse(_intEstadoCompletado); set => _intEstadoCompletado = value.ToString(); }
+        public int intEstadosPermitidos { get => int.Parse(_intEstadosPermitidos); set => _intEstadosPermitidos = value.ToString(); }
+        public bool emite { get => _emite.Equals("1"); set => _emite = value.ToString(); }
+        public bool envia { get => _envia.Equals("1"); set => _envia = value.ToString(); }
+        public bool imprime { get => _imprime.Equals("1"); set => _imprime = value.ToString(); }
+        public bool publica { get => _publica.Equals("1"); set => _publica = value.ToString(); }
+        public bool zip { get => _zip.Equals("1"); set => _zip = value.ToString(); }
+        public bool anula { get => _anula.Equals("1"); set => _anula = value.ToString(); }
     }
 
 }

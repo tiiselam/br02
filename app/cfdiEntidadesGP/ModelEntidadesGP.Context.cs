@@ -7,16 +7,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace winCompuertaGP.DAL
+namespace cfdiEntidadesGP
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class INTEGRAGPEntities : DbContext
+    public partial class GBRAEntities : DbContext
     {
-        public INTEGRAGPEntities()
-            : base("name=INTEGRAGPEntities")
+        public GBRAEntities()
+            : base("name=GBRAEntities")
         {
         }
     
@@ -25,6 +25,8 @@ namespace winCompuertaGP.DAL
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<vwIntegracionesVentas> vwIntegracionesVentas { get; set; }
+        public virtual DbSet<vwCfdiTransaccionesDeVenta> vwCfdiTransaccionesDeVenta { get; set; }
+        public virtual DbSet<vwCfdiGeneraDocumentoDeVentaBRA> vwCfdiGeneraDocumentoDeVentaBRA { get; set; }
+        public virtual DbSet<cfdLogFacturaXML> cfdLogFacturaXML { get; set; }
     }
 }

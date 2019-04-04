@@ -10,6 +10,17 @@ namespace IntegradorDeGP
         string ConnectionStringSourceEF { get; set; }
         string FormatoFechaDB { get; set; }
         Dictionary<string, string> IdsDocumento { get; set; } //= new Dictionary<string, Int16>();
+
+        int intEstadoCompletado { get; }
+        int intEstadosPermitidos { get; }
+
+        bool emite { get; set; }
+        bool envia { get; set; }
+        bool imprime { get; set; }
+        bool publica { get; set; }
+        bool zip { get; set; }
+        bool anula { get; }
+
     }
 
 }
