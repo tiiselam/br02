@@ -13,7 +13,7 @@
 	<idsDocumentoSOP idAriane="01" idGP="FV A0001"></idsDocumentoSOP>
     <facturaSopCa>
 			<filaInicial>1</filaInicial>
-			<columnaMensajes>30</columnaMensajes>
+			<columnaMensajes>36</columnaMensajes>
 			<serie>1</serie>
 			<sopnumbe>2</sopnumbe>
 			<facturaSopSerieYNumbeSeparados>SI</facturaSopSerieYNumbeSeparados>
@@ -26,10 +26,18 @@
 	</facturaSopCa>	
 	<facturaSopDe>
 			<filaInicial>0</filaInicial>
-			<UNITPRCE>25</UNITPRCE>
+			<UNITPRCE>35</UNITPRCE>
 			<itemnmbr>23</itemnmbr>
 			<itemnmbrDescr>24</itemnmbrDescr>
+			<ReqShipDate>32</ReqShipDate>
+			<ActlShipDate>33</ActlShipDate>
+			<CMMTTEXT>34</CMMTTEXT>
 	</facturaSopDe>
+	<sopUserDefined>
+			<incluirUserDef>true</incluirUserDef>
+			<usrtab01_predetValue>T</usrtab01_predetValue>
+			<usrtab02_predetValue>1</usrtab02_predetValue>
+	</sopUserDefined>
     <Cliente>
       <DefaultCUSTCLAS>GENERAL</DefaultCUSTCLAS>
     </Cliente>
