@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<listaParametros>
+  <servidor defaultDB="GBRA">25.7.201.114</servidor>
+  <seguridadIntegrada>0</seguridadIntegrada>
+  <usuariosql>sa</usuariosql>
+  <passwordsql>r%pqGG(2@sY5</passwordsql>
+  <compannia bd="GBRA" nombre="TEST GETTY BRASIL" metadataGP="metadata=res://*/BLL.ModelGP.csdl|res://*/BLL.ModelGP.ssdl|res://*/BLL.ModelGP.msl;provider=System.Data.SqlClient;" metadataIntegra="metadata=res://*/BLL.ModelIntegra.csdl|res://*/BLL.ModelIntegra.ssdl|res://*/BLL.ModelIntegra.msl;provider=System.Data.SqlClient;" metadataUI="metadata=res://*/ModelEntidadesGP.csdl|res://*/ModelEntidadesGP.ssdl|res://*/ModelEntidadesGP.msl;provider=System.Data.SqlClient;">
+    <TargetGPDB>GBRA</TargetGPDB>
+	<formatoFechaDB>dd/MM/yyyy</formatoFechaDB>
+	<formatoFechaXL>dd/MM/yyyy</formatoFechaXL>
+	<RutaLog>c:\gpUsuario</RutaLog>
+	<rutaCarpeta>C:\jcTii\Desarrollo\BRA_DocsElectronicos\F_QualityAndTesting\SOPUploadNotaFiscal\2018novNotasEjemplo</rutaCarpeta>
+	<idsDocumentoSOP idAriane="01" idGP="FV A0001"></idsDocumentoSOP>
+    <facturaSopCa>
+			<filaInicial>1</filaInicial>
+			<columnaMensajes>30</columnaMensajes>
+			<serie>1</serie>
+			<sopnumbe>2</sopnumbe>
+			<facturaSopSerieYNumbeSeparados>SI</facturaSopSerieYNumbeSeparados>
+			<docdate>3</docdate>
+			<duedate>22</duedate>
+			<TXRGNNUM>9</TXRGNNUM>
+			<CUSTNAME>11</CUSTNAME>
+			<UNITPRCE>5</UNITPRCE>
+			<referencia>21</referencia>
+	</facturaSopCa>	
+	<facturaSopDe>
+			<filaInicial>0</filaInicial>
+			<UNITPRCE>25</UNITPRCE>
+			<itemnmbr>23</itemnmbr>
+			<itemnmbrDescr>24</itemnmbrDescr>
+	</facturaSopDe>
+    <Cliente>
+      <DefaultCUSTCLAS>GENERAL</DefaultCUSTCLAS>
+    </Cliente>
+	<intEstadoCompletado>1</intEstadoCompletado>
+	<intEstadosPermitidos>1</intEstadosPermitidos>
+	<emite>1</emite>
+	<envia>0</envia>
+	<imprime>0</imprime>
+	<publica>0</publica>
+	<zip>0</zip>
+	<anula>0</anula>
+	</compannia>
+</listaParametros>
