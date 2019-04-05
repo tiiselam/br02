@@ -6,6 +6,8 @@ using IntegradorDeGP;
 using cfdiEntidadesGP;
 using Web_Service;
 using cfd.FacturaElectronica;
+using notaFiscalCsvHelper;
+using OfficeOpenXml;
 
 namespace winCompuertaGP
 {
@@ -392,7 +394,13 @@ namespace winCompuertaGP
 
                     bandejaXL.ProgressHandler += reportaProgreso;
 
-                    bandejaXL.ProcesaCarpetaEnTrabajo(carpetaOrigen, lNombreArchivos);
+                    LectorCSV csv = new LectorCSV();
+                    csv.ProgressHandler += reportaProgreso;
+
+                    System.Globalization.CultureInfo culInfo = new System.Globalization.CultureInfo("de-DE");
+                    var archivosXl = csv.ConvierteCsvAExcel(carpetaOrigen, lNombreArchivos, culInfo);
+
+                    bandejaXL.ProcesaCarpetaEnTrabajo(carpetaOrigen, archivosXl);
 
                     filtrarFacturas();
                 }

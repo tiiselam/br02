@@ -11,6 +11,9 @@ namespace IntegradorDeGP
         string FormatoFechaDB { get; set; }
         Dictionary<string, string> IdsDocumento { get; set; } //= new Dictionary<string, Int16>();
 
+        bool IncluirUserDef { get; set; }
+        string Usrtab01_predetValue { get; set; }
+
         int intEstadoCompletado { get; }
         int intEstadosPermitidos { get; }
 

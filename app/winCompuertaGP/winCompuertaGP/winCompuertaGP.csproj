@@ -43,12 +43,17 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="EPPlus, Version=4.5.3.1, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.4.5.3.1\lib\net40\EPPlus.dll</HintPath>
+    </Reference>
     <Reference Include="IntegradorDeGP, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\STD_IntegraEconnectGP\dgp01\app\IntegradorBaseDeGP\bin\Debug\IntegradorDeGP.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -133,6 +138,10 @@
     <ProjectReference Include="..\..\ServicioPrefeitura\Prefeitura.csproj">
       <Project>{79c84b7e-8462-4ad8-a487-f4466da50acf}</Project>
       <Name>Prefeitura</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\notaFiscalCsvHelper\notaFiscalCsvHelper.csproj">
+      <Project>{aab01e3c-7364-4533-a950-b866ccee5315}</Project>
+      <Name>notaFiscalCsvHelper</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
