@@ -26,5 +26,15 @@ namespace IntegradorDeGP
         int FacturaSopCUSTNAME { get; set; }
         int FacturaSopItemnmbr { get; set; }
         int FacturaSopItemnmbrDescr { get; set; }
-}
+
+        int FacturaSopDeReqShipDate { get; set; }
+        int FacturaSopDeActlShipDate { get; set; }
+        int FacturaSopDeCmmttext { get; set; }
+
+        bool IncluirUserDef { get; set; }
+        string Usrtab01_predetValue { get; set; }
+        string Usrtab02_predetValue { get; set; }
+
+
+    }
 }
