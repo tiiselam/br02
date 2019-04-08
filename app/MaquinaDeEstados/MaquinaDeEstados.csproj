@@ -45,7 +45,6 @@
   <ItemGroup>
     <Compile Include="Estado.cs" />
     <Compile Include="Maquina.cs" />
-    <Compile Include="ReglasME.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Transicion.cs" />
   </ItemGroup>

@@ -106,7 +106,7 @@ select tv.estadoContabilizado, tv.soptype, tv.docid, tv.sopnumbe, tv.fechahora,
 	isnull(lf.noAprobacion, '3') regimen, 
 	emi.INET7 rutaXml, 
 	emi.ZIPCODE codigoPostal,
-	isnull(lf.estadoActual, '000100000000') estadoActual, 
+	isnull(lf.estadoActual, '00010000000000') estadoActual, 
 	isnull(lf.mensajeEA, tv.estadoContabilizado) mensajeEA,
 	tv.curncyid isocurrc,
 	null addenda

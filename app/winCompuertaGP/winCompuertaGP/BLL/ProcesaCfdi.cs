@@ -85,31 +85,33 @@ namespace cfd.FacturaElectronica
                             var docGpBrasil = DocumentosGP.GetDatosDocumentoVenta(trxVenta.sopnumbe, trxVenta.soptype);
                             documentosRps.Add(serviciosPrefectura.GeneraDatosRPS(docGpBrasil));
 
-                            DocumentosGP.CreaLogFactura(trxVenta.soptype, trxVenta.sopnumbe, rutaYNom, trxVenta.CicloDeVida.idxTargetSingleStatus.ToString(), _usuario, string.Empty, trxVenta.CicloDeVida.targetSingleStatus, 
+                            DocumentosGP.CreaLogFactura(trxVenta.soptype, trxVenta.sopnumbe, rutaYNom, trxVenta.CicloDeVida.idxTargetSingleStatus.ToString(), _usuario, string.Empty, trxVenta.CicloDeVida.targetSingleStatus,
                                                         trxVenta.CicloDeVida.targetBinStatus, trxVenta.CicloDeVida.EstadoEnPalabras(trxVenta.CicloDeVida.targetBinStatus));
 
                             DocumentosGP.ActualizaOCreaLogFactura(trxVenta.soptype, trxVenta.sopnumbe, rutaYNom, trxVenta.CicloDeVida.idxTargetSingleStatus.ToString(), _usuario, string.Empty,
                                                         Maquina.estadoBaseEmisor, Maquina.estadoBaseEmisor,
                                                         trxVenta.CicloDeVida.targetBinStatus, trxVenta.CicloDeVida.EstadoEnPalabras(trxVenta.CicloDeVida.targetBinStatus));
                         }
-                        else //si el documento está anulado en gp, agregar al log como emitido
+                        else
                         {
-                            if (trxVenta.voidstts.Equals(1))
-                            { 
-                                //maquina.ValidaTransicion(tipoMEstados, "ANULA VENTA", trxVenta.estadoActual, "emitido");
-                                msj = "Anulado en GP y marcado como emitido.";
-                                OnProgreso(1, msj);
-                                DocumentosGP.CreaLogFactura(trxVenta.soptype, trxVenta.sopnumbe, "Anulado en GP", Maquina.idxBaseAnulado, _usuario, "", Maquina.estadoBaseAnulado, Maquina.binStatusBaseAnulado, msj.Trim());
-
-                                DocumentosGP.ActualizaOCreaLogFactura(trxVenta.soptype, trxVenta.sopnumbe, "Anulado en GP", Maquina.idxBaseAnulado, _usuario, string.Empty,
-                                                            Maquina.estadoBaseEmisor, Maquina.estadoBaseEmisor,
-                                                            trxVenta.CicloDeVida.targetBinStatus, trxVenta.CicloDeVida.EstadoEnPalabras(trxVenta.CicloDeVida.targetBinStatus));
-                            }
+                            msj += trxVenta.CicloDeVida.sMsj;
                         }
+                        //{
+                        //    if (trxVenta.voidstts.Equals(1))
+                        //    { 
+                        //        msj = "Anulado en GP y marcado como emitido.";
+                        //        OnProgreso(1, msj);
+                        //        DocumentosGP.CreaLogFactura(trxVenta.soptype, trxVenta.sopnumbe, "Anulado en GP", Maquina.idxBaseAnulado, _usuario, "", Maquina.estadoBaseAnulado, Maquina.binStatusBaseAnulado, msj.Trim());
+
+                        //        DocumentosGP.ActualizaOCreaLogFactura(trxVenta.soptype, trxVenta.sopnumbe, "Anulado en GP", Maquina.idxBaseAnulado, _usuario, string.Empty,
+                        //                                    Maquina.estadoBaseEmisor, Maquina.estadoBaseEmisor,
+                        //                                    trxVenta.CicloDeVida.targetBinStatus, trxVenta.CicloDeVida.EstadoEnPalabras(trxVenta.CicloDeVida.targetBinStatus));
+                        //    }
+                        //}
                     }
-                    catch (ArgumentException ae)
+                    catch (InvalidOperationException ae)
                     {
-                        msj = ae.Message + Environment.NewLine + ae.StackTrace;
+                        msj = ae.Message + Environment.NewLine;
                         errores++;
                     }
                     catch (TimeoutException ae)

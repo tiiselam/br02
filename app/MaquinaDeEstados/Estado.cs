@@ -18,5 +18,9 @@ namespace MaquinaDeEstados
             _idx = idx;
             _idxSuperEstado = idxSuperEstado;
         }
+
+        public string Nombre { get => _nombre; set => _nombre = value; }
+        public int Idx { get => _idx; set => _idx = value; }
+        public int IdxSuperEstado { get => _idxSuperEstado; set => _idxSuperEstado = value; }
     }
 }
