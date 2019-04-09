@@ -17,12 +17,12 @@ namespace IntegradorDeGP
         int intEstadoCompletado { get; }
         int intEstadosPermitidos { get; }
 
-        bool emite { get; set; }
-        bool envia { get; set; }
-        bool imprime { get; set; }
-        bool publica { get; set; }
-        bool zip { get; set; }
-        bool anula { get; }
+//        bool emite { get; set; }
+//        bool envia { get; set; }
+//        bool imprime { get; set; }
+//        bool publica { get; set; }
+//        bool zip { get; set; }
+//        bool anula { get; }
 
     }
 

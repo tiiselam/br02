@@ -44,7 +44,11 @@ namespace notaFiscalCsvHelper
                             }
                             else if (archivoCsv.Contains("RR"))
                             {
+                                csv.Configuration.RegisterClassMap<SerieC_RRMap>();
+                                //classMap.Map(row => row.InicioDireitoDeUso).ConvertUsing(row => Convert.ToDateTime(row.GetField(24).Replace("00/00/0000", "01/01/1900")));
+
                                 var records = csv.GetRecords<SerieC_RR>();
+                                
                                 var xl = CreaExcel_RR(records, archivoCsv, culInfo);
                                 archivosXl.Add(xl);
                             }
@@ -245,7 +249,7 @@ namespace notaFiscalCsvHelper
             }
             catch (Exception f)
             {
-                throw new FormatException(nombreArchivoCsv+": Excepción en la fila " + i.ToString() + ", columna 5 o 25 " + " [CreaExcel]" + f.Message);
+                throw new FormatException(nombreArchivoCsv+": Excepción en la fila " + i.ToString() + ", columna 5 o 25 " + " [CreaExcel]" + f.Message +" ie: "+ f.InnerException?.Message);
             }
             package.Workbook.Properties.Title = nombreArchivoCsv;
             return package;

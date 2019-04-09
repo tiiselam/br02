@@ -18,7 +18,7 @@ namespace MaquinaDeEstados
         private int _destino;
         private String _tipo;
 
-        public int iErr;
+        //public int iErr;
         public string sMsj;
 
         public Transicion()
@@ -70,36 +70,45 @@ namespace MaquinaDeEstados
             set { _destino = value; }
         }
 
-        public bool CondicionDeGuarda(int anulado, int conAcceso)
+        public bool CondicionDeGuarda(int evento, int anulado, int conAcceso)
         {
             bool ok = false;
-            iErr = 0;
-            if (_evento == Maquina.eventoGeneraTxt)   //ensambla archivo txt
+
+            if (anulado == 1)
+                throw new ArgumentException("El documento está anulado en GP. [Transicion.CondicionDeGuarda]");
+            else
             {
-                if (anulado == 0 && conAcceso == 1)
+                if (evento == Maquina.eventoGeneraTxt)   //ensambla archivo txt
+                {
+                    if (conAcceso == 1)
+                        ok = true;
+
+                    if (conAcceso == 0)
+                        throw new ArgumentException("No tiene permisos para generar el archivo txt. Verifique los permisos en la ventana de mantenimiento de Certificados de GP.");
+                }
+
+                if (evento == Maquina.eventoPrefecturaAcepta)
+                {
                     ok = true;
+                }
 
-                if (anulado == 1)
-                    sMsj = "El documento está anulado en GP.";
+                if (evento == Maquina.eventoModificaFacturaEnLote)
+                {
+                    if (conAcceso == 1)
+                        ok = true;
 
-                if (conAcceso == 0)
-                    sMsj = "No tiene permisos para generar este documento. Verifique los permisos en la ventana de mantenimiento de Certificados de GP.";
+                    if (conAcceso == 0)
+                        throw new ArgumentException("No tiene permisos para emitir una factura modificada. Verifique los permisos en la ventana de mantenimiento de Certificados de GP. [Transicion.CondicionDeGuarda]");
+                }
+                if (evento == Maquina.eventoAnulaNfse)
+                {
+                    if (conAcceso == 1)
+                        ok = true;
+
+                    if (conAcceso == 0)
+                        throw new ArgumentException("No tiene permisos para anular documentos. Verifique los permisos en la ventana de mantenimiento de Certificados de GP. [Transicion.CondicionDeGuarda]");
+                }
             }
-
-            if (_evento == Maquina.eventoPrefecturaAcepta )  
-            {
-                if (anulado == 0 && conAcceso == 1)
-                    ok = true;
-
-                if (anulado == 1)
-                    sMsj = "El documento está anulado en GP. [Transicion.CondicionDeGuarda]";
-
-                if (conAcceso == 0)
-                    sMsj = "No tiene permisos para emitir documentos. Verifique los permisos en la ventana de mantenimiento de Certificados de GP. [Transicion.CondicionDeGuarda]";
-
-            }
-
-            if (!ok) iErr++;
 
             return ok;
         }

@@ -31,6 +31,18 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(winFormCompuertaGPBase));
             this.dgvFacturas = new System.Windows.Forms.DataGridView();
+            this.M = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.docid = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.soptype = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.sopnumbe = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fechahora = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nombreCliente = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.idImpuestoCliente = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.total = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.estado = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MENSAJE = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.voidstts = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.mensajeEA = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cmbBEstado = new System.Windows.Forms.ComboBox();
             this.checkBoxEstado = new System.Windows.Forms.CheckBox();
             this.checkBoxPacientes_numero_pf = new System.Windows.Forms.CheckBox();
@@ -38,9 +50,7 @@
             this.dtPickerHasta = new System.Windows.Forms.DateTimePicker();
             this.dtPickerDesde = new System.Windows.Forms.DateTimePicker();
             this.label6 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.textBoxPacientes_numero_pf_hasta = new System.Windows.Forms.TextBox();
             this.textBoxPacientes_numero_pf_desde = new System.Windows.Forms.TextBox();
             this.txtbxMensajes = new System.Windows.Forms.TextBox();
@@ -91,6 +101,7 @@
             this.tabNotaFiscal = new System.Windows.Forms.TabControl();
             this.gpFactura = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.checkBoxMark = new System.Windows.Forms.CheckBox();
             this.panel6 = new System.Windows.Forms.Panel();
             this.label30 = new System.Windows.Forms.Label();
             this.textBoxPacientes_referencia = new System.Windows.Forms.TextBox();
@@ -112,18 +123,6 @@
             this.panel8 = new System.Windows.Forms.Panel();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.checkBoxMark = new System.Windows.Forms.CheckBox();
-            this.M = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.docid = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.soptype = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sopnumbe = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fechahora = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nombreCliente = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.idImpuestoCliente = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.total = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.estado = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MENSAJE = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.mensajeEA = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvFacturas)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.tsConfirma1.SuspendLayout();
@@ -167,17 +166,121 @@
             this.total,
             this.estado,
             this.MENSAJE,
+            this.voidstts,
             this.mensajeEA});
             this.dgvFacturas.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvFacturas.Location = new System.Drawing.Point(0, 0);
             this.dgvFacturas.Name = "dgvFacturas";
             this.dgvFacturas.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            this.dgvFacturas.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders;
+            this.dgvFacturas.RowHeadersWidth = 15;
+            this.dgvFacturas.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvFacturas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dgvFacturas.Size = new System.Drawing.Size(1073, 311);
+            this.dgvFacturas.Size = new System.Drawing.Size(1177, 311);
             this.dgvFacturas.TabIndex = 50;
             this.dgvFacturas.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvPacientes_CellDoubleClick);
             this.dgvFacturas.CurrentCellDirtyStateChanged += new System.EventHandler(this.dgvPacientes_CurrentCellDirtyStateChanged);
+            // 
+            // M
+            // 
+            this.M.FalseValue = "0";
+            this.M.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.M.Frozen = true;
+            this.M.HeaderText = "M";
+            this.M.IndeterminateValue = "-1";
+            this.M.MinimumWidth = 20;
+            this.M.Name = "M";
+            this.M.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.M.TrueValue = "1";
+            this.M.Width = 20;
+            // 
+            // docid
+            // 
+            this.docid.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.docid.DataPropertyName = "docid";
+            this.docid.FillWeight = 20F;
+            this.docid.HeaderText = "Id. Doc.";
+            this.docid.Name = "docid";
+            this.docid.Width = 70;
+            // 
+            // soptype
+            // 
+            this.soptype.DataPropertyName = "soptype";
+            this.soptype.HeaderText = "Tipo";
+            this.soptype.Name = "soptype";
+            this.soptype.Width = 45;
+            // 
+            // sopnumbe
+            // 
+            this.sopnumbe.DataPropertyName = "sopnumbe";
+            this.sopnumbe.FillWeight = 60F;
+            this.sopnumbe.HeaderText = "Número Doc.";
+            this.sopnumbe.Name = "sopnumbe";
+            this.sopnumbe.ReadOnly = true;
+            // 
+            // fechahora
+            // 
+            this.fechahora.DataPropertyName = "fechahora";
+            this.fechahora.HeaderText = "Fecha";
+            this.fechahora.MinimumWidth = 40;
+            this.fechahora.Name = "fechahora";
+            this.fechahora.Width = 50;
+            // 
+            // nombreCliente
+            // 
+            this.nombreCliente.DataPropertyName = "nombreCliente";
+            this.nombreCliente.HeaderText = "Nombre Cliente";
+            this.nombreCliente.MinimumWidth = 100;
+            this.nombreCliente.Name = "nombreCliente";
+            this.nombreCliente.Width = 120;
+            // 
+            // idImpuestoCliente
+            // 
+            this.idImpuestoCliente.DataPropertyName = "idImpuestoCliente";
+            this.idImpuestoCliente.FillWeight = 60F;
+            this.idImpuestoCliente.HeaderText = "Id de Impuesto";
+            this.idImpuestoCliente.Name = "idImpuestoCliente";
+            this.idImpuestoCliente.ReadOnly = true;
+            this.idImpuestoCliente.Width = 102;
+            // 
+            // total
+            // 
+            this.total.DataPropertyName = "total";
+            this.total.HeaderText = "Total";
+            this.total.Name = "total";
+            // 
+            // estado
+            // 
+            this.estado.DataPropertyName = "estado";
+            this.estado.FillWeight = 60F;
+            this.estado.HeaderText = "Estado";
+            this.estado.Name = "estado";
+            this.estado.ReadOnly = true;
+            // 
+            // MENSAJE
+            // 
+            this.MENSAJE.DataPropertyName = "mensaje";
+            this.MENSAJE.FillWeight = 60F;
+            this.MENSAJE.HeaderText = "Mensaje";
+            this.MENSAJE.Name = "MENSAJE";
+            // 
+            // voidstts
+            // 
+            this.voidstts.FalseValue = "0";
+            this.voidstts.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.voidstts.HeaderText = "Anulado";
+            this.voidstts.Name = "voidstts";
+            this.voidstts.ReadOnly = true;
+            this.voidstts.TrueValue = "1";
+            this.voidstts.Width = 50;
+            // 
+            // mensajeEA
+            // 
+            this.mensajeEA.DataPropertyName = "mensajeEA";
+            this.mensajeEA.FillWeight = 60F;
+            this.mensajeEA.HeaderText = "Observaciones";
+            this.mensajeEA.MinimumWidth = 100;
+            this.mensajeEA.Name = "mensajeEA";
+            this.mensajeEA.Width = 150;
             // 
             // cmbBEstado
             // 
@@ -210,12 +313,13 @@
             // 
             this.checkBoxPacientes_numero_pf.AutoSize = true;
             this.checkBoxPacientes_numero_pf.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.checkBoxPacientes_numero_pf.Location = new System.Drawing.Point(7, 11);
+            this.checkBoxPacientes_numero_pf.Location = new System.Drawing.Point(953, 6);
             this.checkBoxPacientes_numero_pf.Name = "checkBoxPacientes_numero_pf";
             this.checkBoxPacientes_numero_pf.Size = new System.Drawing.Size(81, 17);
             this.checkBoxPacientes_numero_pf.TabIndex = 18;
             this.checkBoxPacientes_numero_pf.Text = "Núm. Ariane";
             this.checkBoxPacientes_numero_pf.UseVisualStyleBackColor = true;
+            this.checkBoxPacientes_numero_pf.Visible = false;
             // 
             // checkBoxFecha
             // 
@@ -240,7 +344,7 @@
             // dtPickerDesde
             // 
             this.dtPickerDesde.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtPickerDesde.Location = new System.Drawing.Point(110, 32);
+            this.dtPickerDesde.Location = new System.Drawing.Point(111, 32);
             this.dtPickerDesde.MinDate = new System.DateTime(2010, 1, 1, 0, 0, 0, 0);
             this.dtPickerDesde.Name = "dtPickerDesde";
             this.dtPickerDesde.Size = new System.Drawing.Size(82, 20);
@@ -256,48 +360,32 @@
             this.label6.TabIndex = 14;
             this.label6.Text = "A";
             // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(196, 13);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(14, 13);
-            this.label5.TabIndex = 13;
-            this.label5.Text = "A";
-            // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(86, 36);
+            this.label4.Location = new System.Drawing.Point(89, 36);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(24, 13);
             this.label4.TabIndex = 12;
             this.label4.Text = "De:";
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(87, 13);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(24, 13);
-            this.label3.TabIndex = 11;
-            this.label3.Text = "De:";
-            // 
             // textBoxPacientes_numero_pf_hasta
             // 
             this.textBoxPacientes_numero_pf_hasta.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBoxPacientes_numero_pf_hasta.Location = new System.Drawing.Point(214, 8);
+            this.textBoxPacientes_numero_pf_hasta.Location = new System.Drawing.Point(1090, 5);
             this.textBoxPacientes_numero_pf_hasta.Name = "textBoxPacientes_numero_pf_hasta";
-            this.textBoxPacientes_numero_pf_hasta.Size = new System.Drawing.Size(82, 20);
+            this.textBoxPacientes_numero_pf_hasta.Size = new System.Drawing.Size(49, 20);
             this.textBoxPacientes_numero_pf_hasta.TabIndex = 22;
+            this.textBoxPacientes_numero_pf_hasta.Visible = false;
             // 
             // textBoxPacientes_numero_pf_desde
             // 
             this.textBoxPacientes_numero_pf_desde.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBoxPacientes_numero_pf_desde.Location = new System.Drawing.Point(110, 8);
+            this.textBoxPacientes_numero_pf_desde.Location = new System.Drawing.Point(1030, 5);
             this.textBoxPacientes_numero_pf_desde.Name = "textBoxPacientes_numero_pf_desde";
-            this.textBoxPacientes_numero_pf_desde.Size = new System.Drawing.Size(82, 20);
+            this.textBoxPacientes_numero_pf_desde.Size = new System.Drawing.Size(54, 20);
             this.textBoxPacientes_numero_pf_desde.TabIndex = 20;
+            this.textBoxPacientes_numero_pf_desde.Visible = false;
             // 
             // txtbxMensajes
             // 
@@ -309,7 +397,7 @@
             this.txtbxMensajes.Multiline = true;
             this.txtbxMensajes.Name = "txtbxMensajes";
             this.txtbxMensajes.ReadOnly = true;
-            this.txtbxMensajes.Size = new System.Drawing.Size(616, 137);
+            this.txtbxMensajes.Size = new System.Drawing.Size(674, 137);
             this.txtbxMensajes.TabIndex = 60;
             // 
             // toolStripProgressBar2
@@ -335,7 +423,7 @@
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
             this.menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.menuStrip1.Size = new System.Drawing.Size(152, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(272, 24);
             this.menuStrip1.TabIndex = 14;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -366,8 +454,8 @@
             // genFacturaElectrónicaV10ToolStripMenuItem
             // 
             this.genFacturaElectrónicaV10ToolStripMenuItem.Name = "genFacturaElectrónicaV10ToolStripMenuItem";
-            this.genFacturaElectrónicaV10ToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
-            this.genFacturaElectrónicaV10ToolStripMenuItem.Text = "Integraciones GP v. 2.0.0";
+            this.genFacturaElectrónicaV10ToolStripMenuItem.Size = new System.Drawing.Size(266, 22);
+            this.genFacturaElectrónicaV10ToolStripMenuItem.Text = "Nota Fiscal y Boleto Bancario v. 1.0.0";
             // 
             // toolStripMenuItem2
             // 
@@ -439,7 +527,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel4.Location = new System.Drawing.Point(0, 0);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(1127, 26);
+            this.panel4.Size = new System.Drawing.Size(1231, 26);
             this.panel4.TabIndex = 74;
             // 
             // panel2
@@ -449,7 +537,7 @@
             this.panel2.Controls.Add(this.lblUsuario);
             this.panel2.Controls.Add(this.lblFecha);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel2.Location = new System.Drawing.Point(602, 0);
+            this.panel2.Location = new System.Drawing.Point(706, 0);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(525, 26);
             this.panel2.TabIndex = 17;
@@ -496,7 +584,7 @@
             this.panel5.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel5.Location = new System.Drawing.Point(3, 3);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(1073, 88);
+            this.panel5.Size = new System.Drawing.Size(1177, 88);
             this.panel5.TabIndex = 75;
             // 
             // toolStrip2
@@ -504,7 +592,7 @@
             this.toolStrip2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStrip2.Location = new System.Drawing.Point(450, 25);
             this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(623, 63);
+            this.toolStrip2.Size = new System.Drawing.Size(727, 63);
             this.toolStrip2.TabIndex = 86;
             this.toolStrip2.Text = "toolStrip2";
             // 
@@ -514,7 +602,7 @@
             this.tsDropDownFiltro});
             this.toolStrip3.Location = new System.Drawing.Point(450, 0);
             this.toolStrip3.Name = "toolStrip3";
-            this.toolStrip3.Size = new System.Drawing.Size(623, 25);
+            this.toolStrip3.Size = new System.Drawing.Size(727, 25);
             this.toolStrip3.TabIndex = 85;
             this.toolStrip3.Text = "toolStrip3";
             // 
@@ -759,7 +847,7 @@
             this.tabNotaFiscal.Multiline = true;
             this.tabNotaFiscal.Name = "tabNotaFiscal";
             this.tabNotaFiscal.SelectedIndex = 0;
-            this.tabNotaFiscal.Size = new System.Drawing.Size(1127, 475);
+            this.tabNotaFiscal.Size = new System.Drawing.Size(1231, 475);
             this.tabNotaFiscal.TabIndex = 78;
             this.tabNotaFiscal.SelectedIndexChanged += new System.EventHandler(this.tabControlPrefactura_SelectedIndexChanged);
             this.tabNotaFiscal.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tabControlPreFactura_Selecting);
@@ -772,7 +860,7 @@
             this.gpFactura.Location = new System.Drawing.Point(44, 4);
             this.gpFactura.Name = "gpFactura";
             this.gpFactura.Padding = new System.Windows.Forms.Padding(3);
-            this.gpFactura.Size = new System.Drawing.Size(1079, 467);
+            this.gpFactura.Size = new System.Drawing.Size(1183, 467);
             this.gpFactura.TabIndex = 0;
             this.gpFactura.Text = "NOTA FISCAL";
             this.gpFactura.UseVisualStyleBackColor = true;
@@ -784,19 +872,29 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(3, 153);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1073, 311);
+            this.panel1.Size = new System.Drawing.Size(1177, 311);
             this.panel1.TabIndex = 79;
+            // 
+            // checkBoxMark
+            // 
+            this.checkBoxMark.AutoSize = true;
+            this.checkBoxMark.Checked = true;
+            this.checkBoxMark.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxMark.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.checkBoxMark.Location = new System.Drawing.Point(20, 6);
+            this.checkBoxMark.Name = "checkBoxMark";
+            this.checkBoxMark.Size = new System.Drawing.Size(12, 11);
+            this.checkBoxMark.TabIndex = 51;
+            this.checkBoxMark.UseVisualStyleBackColor = true;
+            this.checkBoxMark.CheckedChanged += new System.EventHandler(this.checkBoxMark_CheckedChanged);
             // 
             // panel6
             // 
             this.panel6.Controls.Add(this.textBoxPacientes_numero_pf_desde);
-            this.panel6.Controls.Add(this.label3);
-            this.panel6.Controls.Add(this.label30);
             this.panel6.Controls.Add(this.textBoxPacientes_referencia);
             this.panel6.Controls.Add(this.checkBoxPacientes_referencia);
             this.panel6.Controls.Add(this.textBoxPacientes_nombre_cliente);
             this.panel6.Controls.Add(this.checkBoxPacientes_nombre_cliente);
-            this.panel6.Controls.Add(this.checkBoxPacientes_sopnumbe);
             this.panel6.Controls.Add(this.textBoxPacientes_sopnumbe_desde);
             this.panel6.Controls.Add(this.label29);
             this.panel6.Controls.Add(this.textBoxPacientes_sopnumbe_hasta);
@@ -804,23 +902,24 @@
             this.panel6.Controls.Add(this.btnBuscar);
             this.panel6.Controls.Add(this.label4);
             this.panel6.Controls.Add(this.checkBoxPacientes_numero_pf);
-            this.panel6.Controls.Add(this.label5);
             this.panel6.Controls.Add(this.cmbBEstado);
             this.panel6.Controls.Add(this.dtPickerHasta);
             this.panel6.Controls.Add(this.checkBoxFecha);
             this.panel6.Controls.Add(this.textBoxPacientes_numero_pf_hasta);
             this.panel6.Controls.Add(this.checkBoxEstado);
             this.panel6.Controls.Add(this.label6);
+            this.panel6.Controls.Add(this.label30);
+            this.panel6.Controls.Add(this.checkBoxPacientes_sopnumbe);
             this.panel6.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel6.Location = new System.Drawing.Point(3, 91);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(1073, 62);
+            this.panel6.Size = new System.Drawing.Size(1177, 62);
             this.panel6.TabIndex = 78;
             // 
             // label30
             // 
             this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(570, 12);
+            this.label30.Location = new System.Drawing.Point(89, 13);
             this.label30.Name = "label30";
             this.label30.Size = new System.Drawing.Size(24, 13);
             this.label30.TabIndex = 47;
@@ -869,25 +968,25 @@
             // 
             this.checkBoxPacientes_sopnumbe.AutoSize = true;
             this.checkBoxPacientes_sopnumbe.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.checkBoxPacientes_sopnumbe.Location = new System.Drawing.Point(488, 10);
+            this.checkBoxPacientes_sopnumbe.Location = new System.Drawing.Point(7, 11);
             this.checkBoxPacientes_sopnumbe.Name = "checkBoxPacientes_sopnumbe";
             this.checkBoxPacientes_sopnumbe.Size = new System.Drawing.Size(87, 17);
-            this.checkBoxPacientes_sopnumbe.TabIndex = 49;
+            this.checkBoxPacientes_sopnumbe.TabIndex = 10;
             this.checkBoxPacientes_sopnumbe.Text = "Núm. Factura";
             this.checkBoxPacientes_sopnumbe.UseVisualStyleBackColor = true;
             // 
             // textBoxPacientes_sopnumbe_desde
             // 
             this.textBoxPacientes_sopnumbe_desde.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBoxPacientes_sopnumbe_desde.Location = new System.Drawing.Point(596, 9);
+            this.textBoxPacientes_sopnumbe_desde.Location = new System.Drawing.Point(111, 10);
             this.textBoxPacientes_sopnumbe_desde.Name = "textBoxPacientes_sopnumbe_desde";
-            this.textBoxPacientes_sopnumbe_desde.Size = new System.Drawing.Size(69, 20);
-            this.textBoxPacientes_sopnumbe_desde.TabIndex = 50;
+            this.textBoxPacientes_sopnumbe_desde.Size = new System.Drawing.Size(82, 20);
+            this.textBoxPacientes_sopnumbe_desde.TabIndex = 12;
             // 
             // label29
             // 
             this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(668, 14);
+            this.label29.Location = new System.Drawing.Point(196, 15);
             this.label29.Name = "label29";
             this.label29.Size = new System.Drawing.Size(14, 13);
             this.label29.TabIndex = 48;
@@ -896,10 +995,10 @@
             // textBoxPacientes_sopnumbe_hasta
             // 
             this.textBoxPacientes_sopnumbe_hasta.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBoxPacientes_sopnumbe_hasta.Location = new System.Drawing.Point(683, 9);
+            this.textBoxPacientes_sopnumbe_hasta.Location = new System.Drawing.Point(214, 10);
             this.textBoxPacientes_sopnumbe_hasta.Name = "textBoxPacientes_sopnumbe_hasta";
-            this.textBoxPacientes_sopnumbe_hasta.Size = new System.Drawing.Size(76, 20);
-            this.textBoxPacientes_sopnumbe_hasta.TabIndex = 51;
+            this.textBoxPacientes_sopnumbe_hasta.Size = new System.Drawing.Size(82, 20);
+            this.textBoxPacientes_sopnumbe_hasta.TabIndex = 14;
             // 
             // btnBuscar
             // 
@@ -931,8 +1030,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.txtbxMensajes);
-            this.splitContainer1.Size = new System.Drawing.Size(1127, 137);
-            this.splitContainer1.SplitterDistance = 507;
+            this.splitContainer1.Size = new System.Drawing.Size(1231, 137);
+            this.splitContainer1.SplitterDistance = 553;
             this.splitContainer1.TabIndex = 79;
             // 
             // textBoxAlertas
@@ -943,7 +1042,7 @@
             this.textBoxAlertas.Multiline = true;
             this.textBoxAlertas.Name = "textBoxAlertas";
             this.textBoxAlertas.ReadOnly = true;
-            this.textBoxAlertas.Size = new System.Drawing.Size(507, 137);
+            this.textBoxAlertas.Size = new System.Drawing.Size(553, 137);
             this.textBoxAlertas.TabIndex = 61;
             // 
             // panel3
@@ -952,7 +1051,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel3.Location = new System.Drawing.Point(0, 638);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(1127, 23);
+            this.panel3.Size = new System.Drawing.Size(1231, 23);
             this.panel3.TabIndex = 80;
             // 
             // statusStrip1
@@ -962,7 +1061,7 @@
             this.tsProgressBar1});
             this.statusStrip1.Location = new System.Drawing.Point(0, 0);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1127, 23);
+            this.statusStrip1.Size = new System.Drawing.Size(1231, 23);
             this.statusStrip1.TabIndex = 81;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -977,7 +1076,7 @@
             this.panel7.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel7.Location = new System.Drawing.Point(0, 26);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(1127, 475);
+            this.panel7.Size = new System.Drawing.Size(1231, 475);
             this.panel7.TabIndex = 81;
             // 
             // toolStripButton1
@@ -995,118 +1094,18 @@
             this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel8.Location = new System.Drawing.Point(0, 501);
             this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(1127, 137);
+            this.panel8.Size = new System.Drawing.Size(1231, 137);
             this.panel8.TabIndex = 81;
             // 
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // checkBoxMark
-            // 
-            this.checkBoxMark.AutoSize = true;
-            this.checkBoxMark.Checked = true;
-            this.checkBoxMark.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxMark.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.checkBoxMark.Location = new System.Drawing.Point(39, 6);
-            this.checkBoxMark.Name = "checkBoxMark";
-            this.checkBoxMark.Size = new System.Drawing.Size(12, 11);
-            this.checkBoxMark.TabIndex = 51;
-            this.checkBoxMark.UseVisualStyleBackColor = true;
-            this.checkBoxMark.CheckedChanged += new System.EventHandler(this.checkBoxMark_CheckedChanged);
-            // 
-            // M
-            // 
-            this.M.FalseValue = "0";
-            this.M.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.M.Frozen = true;
-            this.M.HeaderText = "M";
-            this.M.IndeterminateValue = "-1";
-            this.M.MinimumWidth = 20;
-            this.M.Name = "M";
-            this.M.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.M.TrueValue = "1";
-            this.M.Width = 20;
-            // 
-            // docid
-            // 
-            this.docid.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.docid.DataPropertyName = "docid";
-            this.docid.FillWeight = 20F;
-            this.docid.HeaderText = "Id. Doc.";
-            this.docid.Name = "docid";
-            this.docid.Width = 70;
-            // 
-            // soptype
-            // 
-            this.soptype.DataPropertyName = "soptype";
-            this.soptype.HeaderText = "Tipo";
-            this.soptype.Name = "soptype";
-            this.soptype.Width = 45;
-            // 
-            // sopnumbe
-            // 
-            this.sopnumbe.DataPropertyName = "sopnumbe";
-            this.sopnumbe.FillWeight = 60F;
-            this.sopnumbe.HeaderText = "Número Doc.";
-            this.sopnumbe.Name = "sopnumbe";
-            this.sopnumbe.ReadOnly = true;
-            // 
-            // fechahora
-            // 
-            this.fechahora.DataPropertyName = "fechahora";
-            this.fechahora.HeaderText = "Fecha";
-            this.fechahora.Name = "fechahora";
-            // 
-            // nombreCliente
-            // 
-            this.nombreCliente.DataPropertyName = "nombreCliente";
-            this.nombreCliente.HeaderText = "Nombre Cliente";
-            this.nombreCliente.Name = "nombreCliente";
-            this.nombreCliente.Width = 150;
-            // 
-            // idImpuestoCliente
-            // 
-            this.idImpuestoCliente.DataPropertyName = "idImpuestoCliente";
-            this.idImpuestoCliente.FillWeight = 60F;
-            this.idImpuestoCliente.HeaderText = "Id de Impuesto";
-            this.idImpuestoCliente.Name = "idImpuestoCliente";
-            this.idImpuestoCliente.ReadOnly = true;
-            this.idImpuestoCliente.Width = 102;
-            // 
-            // total
-            // 
-            this.total.DataPropertyName = "total";
-            this.total.HeaderText = "Total";
-            this.total.Name = "total";
-            // 
-            // estado
-            // 
-            this.estado.DataPropertyName = "estado";
-            this.estado.FillWeight = 60F;
-            this.estado.HeaderText = "Estado";
-            this.estado.Name = "estado";
-            this.estado.ReadOnly = true;
-            // 
-            // MENSAJE
-            // 
-            this.MENSAJE.DataPropertyName = "mensaje";
-            this.MENSAJE.FillWeight = 60F;
-            this.MENSAJE.HeaderText = "Mensaje";
-            this.MENSAJE.Name = "MENSAJE";
-            // 
-            // mensajeEA
-            // 
-            this.mensajeEA.DataPropertyName = "mensajeEA";
-            this.mensajeEA.FillWeight = 60F;
-            this.mensajeEA.HeaderText = "Observaciones";
-            this.mensajeEA.Name = "mensajeEA";
-            // 
             // winFormCompuertaGPBase
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1127, 661);
+            this.ClientSize = new System.Drawing.Size(1231, 661);
             this.Controls.Add(this.panel8);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel7);
@@ -1176,9 +1175,7 @@
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripMenuItem salirToolStripMenuItem;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.DateTimePicker dtPickerHasta;
         private System.Windows.Forms.DateTimePicker dtPickerDesde;
         private System.Windows.Forms.CheckBox checkBoxFecha;
@@ -1255,6 +1252,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn total;
         private System.Windows.Forms.DataGridViewTextBoxColumn estado;
         private System.Windows.Forms.DataGridViewTextBoxColumn MENSAJE;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn voidstts;
         private System.Windows.Forms.DataGridViewTextBoxColumn mensajeEA;
     }
 }

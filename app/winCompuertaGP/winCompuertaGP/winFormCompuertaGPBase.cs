@@ -397,7 +397,7 @@ namespace winCompuertaGP
                     LectorCSV csv = new LectorCSV();
                     csv.ProgressHandler += reportaProgreso;
 
-                    System.Globalization.CultureInfo culInfo = new System.Globalization.CultureInfo("de-DE");
+                    System.Globalization.CultureInfo culInfo = new System.Globalization.CultureInfo(configuracion.CulturaParaMontos);
                     var archivosXl = csv.ConvierteCsvAExcel(carpetaOrigen, lNombreArchivos, culInfo);
 
                     bandejaXL.ProcesaCarpetaEnTrabajo(carpetaOrigen, archivosXl);

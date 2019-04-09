@@ -9,38 +9,24 @@ namespace MaquinaDeEstados
 {
     public class Maquina
     {
-        public int iErr;
+        //public int iErr;
         public string sMsj;
         private int estadoInicial;
-        //public const int eventoEnsamblaLote = 0;
-        //public const int eventoEnviaAlSII = 2;
-        //public const int eventoSIIAcepta = 3;
-        //public const int eventoSIIRechazo = 5;
-        //public const int eventoSIIReparo = 4;
         public const int eventoObtienePdf = 10;
         public const int eventoModificaFacturaEnLote = 9;
-        public const int eventoNfseAnulada = 12;
+        public const int eventoAnulaNfse = 12;
         public const int eventoPrefecturaAcepta = 13;
         public const int eventoGeneraTxt = 14;
-        //public const int eventoReceptorExcepcional = 15;
-        //public const int eventoAcuseProducto = 11;
-        //public const int eventoAcuseDocumento = 16;
-        //public const int eventoEnviaMailACliente = 6;
-        //public const int eventoEmiteLibro = 20;
-        //public const int eventoCorrigeLibro =21;
 
         public const String estadoBaseEmisor = "emitido";
         public const String estadoBaseReceptor = "publicado";
-        public const String binStatusBaseEmisor   = "000100000000";
-        public const String binStatusBaseReceptor = "000100000000";
+        public const String binStatusBaseEmisor   = "00010000000000";
+        public const String binStatusBaseReceptor = "00010000000000";
 
         public const String estadoBaseError = "error";
-        public const String binStatusBaseAnulado = "000101001000";
-        public const String idxBaseAnulado = "8";
-        public const String estadoBaseAnulado = "nfse anulado";
-        //private string[] _estados = { "anulado", "rechazado", "aceptado", "doc recibido", "publicado", "recibido", "rechazado SII", "con reparos SII", "aceptado SII", "enviado SII", "emitido", "no emitido", "prod recibido", "con error" };
-        private string[] _estados = { "error", "rps ingresado", "rps modificado", "no emitido", "txt generado", "emitido", "nfse generado", "nfse impreso", "nfse anulado", "con cuotas", "remesa enviada", "bolb aceptado"};
-        //                                0            1               2              3                4               5         6               7               8              9             10                 11           
+        //public const String binStatusBaseAnulado = "000101001000";
+        //public const String idxBaseAnulado = "8";
+        //public const String estadoBaseAnulado = "nfse anulada";
         private Estado[] _Estados;
 
         private Transicion[] _matrizTransiciones;
@@ -54,11 +40,12 @@ namespace MaquinaDeEstados
         private List<Transicion> paresOrdenados;
         private int maxLevel = 0;
         private int idxMaxLevel = 0;
+
         //**********************************************************
         #region Propiedades
         public string targetSingleStatus
         {
-            get { return _estados[_currentTransition.destino]; }
+            get { return _Estados[_currentTransition.destino].Nombre; }
         }
         public int idxTargetSingleStatus
         {
@@ -131,7 +118,6 @@ namespace MaquinaDeEstados
 
         private void InicializaTransicionesDe(String maquina)
         {
-
             if (maquina.Equals("DOCVENTA-contabilizado"))
             {
                 _Estados = new Estado[]{ 
@@ -140,22 +126,23 @@ namespace MaquinaDeEstados
                 new Estado("rps modificado", 2, -1),
                 new Estado("no emitido", 3, -1),
                 new Estado("txt generado", 4, -1),
-                new Estado("emitido", 5, -1),
-                new Estado("nfse generado", 6, -1),
-                new Estado("nfse impreso", 7, -1),
-                new Estado("nfse anulado", 8, -1),
-                new Estado("con cuotas", 9, -1),
-                new Estado("remesa enviada", 10, -1),
-                new Estado("bolb aceptado", 11, -1),
+                new Estado("txt aceptado", 5, -1),
+                new Estado("nfse generada", 6, -1),
+                new Estado("nfse aceptada", 7, -1),
+                new Estado("nfse rechazada", 8, -1),
+                new Estado("nfse impresa", 9, -1),
+                new Estado("nfse anulada", 10, -1),
+                new Estado("con cuotas", 11, -1),
+                new Estado("remesa enviada", 12, -1),
+                new Estado("bolb aceptado", 13, -1),
                 };
 
                 _matrizTransiciones = new Transicion[] {
                                     //Eventos de factura electrónica
-                                    new Transicion(eventoGeneraTxt, "Genera archivo texto", "std", 3, 4),
-                                    new Transicion(eventoGeneraTxt, "Genera archivo texto", "std", 4, 4),
-                                    new Transicion(eventoPrefecturaAcepta, "Prefectura acepta", "std", 4, 5),
-                                    new Transicion(eventoObtienePdf, "Descarga pdf", "std", 5, 6),
-                                    new Transicion(eventoNfseAnulada, "Anula NFSe", "std", 5, 8),
+                                    new Transicion(eventoGeneraTxt, "Genera archivo texto", "std", _Estados.Where(x=>x.Nombre.Equals("no emitido")).First().Idx, _Estados.Where(x=>x.Nombre.Equals("txt generado")).First().Idx),
+                                    new Transicion(eventoGeneraTxt, "Genera archivo texto", "std", _Estados.Where(x=>x.Nombre.Equals("txt generado")).First().Idx, _Estados.Where(x=>x.Nombre.Equals("txt generado")).First().Idx),
+                                    new Transicion(eventoPrefecturaAcepta, "Prefectura acepta", "std", _Estados.Where(x=>x.Nombre.Equals("txt generado")).First().Idx, _Estados.Where(x=>x.Nombre.Equals("txt aceptado")).First().Idx),
+                                    new Transicion(eventoAnulaNfse, "Anula NFSe", "std", _Estados.Where(x=>x.Nombre.Equals("txt aceptado")).First().Idx, _Estados.Where(x=>x.Nombre.Equals("nfse anulada")).First().Idx),
                                     };
             };
 
@@ -167,22 +154,23 @@ namespace MaquinaDeEstados
                 new Estado("rps modificado", 2, -1),
                 new Estado("no emitido", 3, -1),
                 new Estado("txt generado", 4, -1),
-                new Estado("emitido", 5, -1),
-                new Estado("nfse generado", 6, -1),
-                new Estado("nfse impreso", 7, -1),
-                new Estado("nfse anulado", 8, -1),
-                new Estado("con cuotas", 9, -1),
-                new Estado("remesa enviada", 10, -1),
-                new Estado("bolb aceptado", 11, -1),
+                new Estado("txt aceptado", 5, -1),
+                new Estado("nfse generada", 6, -1),
+                new Estado("nfse aceptada", 7, -1),
+                new Estado("nfse rechazada", 8, -1),
+                new Estado("nfse impresa", 9, -1),
+                new Estado("nfse anulada", 10, -1),
+                new Estado("con cuotas", 11, -1),
+                new Estado("remesa enviada", 12, -1),
+                new Estado("bolb aceptado", 13, -1),
                 };
 
                 _matrizTransiciones = new Transicion[] {
-                                    new Transicion(eventoGeneraTxt, "Genera archivo texto", "std", 3, 4),
-                                    new Transicion(eventoGeneraTxt, "Genera archivo texto", "std", 4, 4),
-                                    new Transicion(eventoPrefecturaAcepta, "Prefectura acepta", "std", 4, 5),
-                                    new Transicion(eventoModificaFacturaEnLote, "Modifica factura en lote", "std", 5, 3),
-                                    new Transicion(eventoObtienePdf, "Descarga pdf", "std", 5, 6),
-                                    new Transicion(eventoNfseAnulada, "Anula NFSe", "std", 5, 8),
+                                    new Transicion(eventoGeneraTxt, "Genera archivo texto", "std", _Estados.Where(x=>x.Nombre.Equals("no emitido")).First().Idx, _Estados.Where(x=>x.Nombre.Equals("txt generado")).First().Idx),
+                                    new Transicion(eventoGeneraTxt, "Genera archivo texto", "std", _Estados.Where(x=>x.Nombre.Equals("txt generado")).First().Idx, _Estados.Where(x=>x.Nombre.Equals("txt generado")).First().Idx),
+                                    new Transicion(eventoPrefecturaAcepta, "Prefectura acepta", "std", _Estados.Where(x=>x.Nombre.Equals("txt generado")).First().Idx, _Estados.Where(x=>x.Nombre.Equals("txt aceptado")).First().Idx),
+                                    new Transicion(eventoModificaFacturaEnLote, "Modifica factura en lote", "std", _Estados.Where(x=>x.Nombre.Equals("txt aceptado")).First().Idx, _Estados.Where(x=>x.Nombre.Equals("no emitido")).First().Idx),
+                                    new Transicion(eventoAnulaNfse, "Anula NFSe", "std", _Estados.Where(x=>x.Nombre.Equals("txt aceptado")).First().Idx, _Estados.Where(x=>x.Nombre.Equals("nfse anulada")).First().Idx),
                                     };
                 
             };
@@ -201,7 +189,7 @@ namespace MaquinaDeEstados
         /// <returns></returns>
         public bool Transiciona(int evento, int usuarioConAcceso)
         {
-            iErr = 0;
+            //iErr = 0;
             sMsj = string.Empty;
             bool guardaCondicion = false;
 
@@ -219,7 +207,7 @@ namespace MaquinaDeEstados
                         _currentTransition = tran;
 
                     //verifica la condición de guarda
-                    guardaCondicion = _currentTransition.CondicionDeGuarda(_voidStts, usuarioConAcceso);
+                    guardaCondicion = _currentTransition.CondicionDeGuarda(evento, _voidStts, usuarioConAcceso);
                     if (guardaCondicion)
                     {
                         char[] chBinStatus = _targetBinStatus.ToArray();
@@ -235,20 +223,24 @@ namespace MaquinaDeEstados
                         else
                             _idxSingleStatus = _currentTransition.destino;
                     }
-                    iErr = _currentTransition.iErr;
+                    //iErr = _currentTransition.iErr;
                     sMsj = _currentTransition.sMsj;
                 }
                 else
                 {
-                    iErr = -1;
-                    sMsj = "Esta acción no corresponde (Evento: " + evento.ToString() + ")";
+                    throw new InvalidOperationException("El documento no puede cambiar de status porque no existe el status destino correspondiente al Evento: " + evento.ToString() + "");
                 }
                 return guardaCondicion;
 
             }
+            catch(ArgumentException ioe)
+            {
+                sMsj = "Excepción en la condición de guarda. ";
+                sMsj = sMsj + evento.ToString() + " [binStatus: " + _binStatus.ToString() + " targetBinStatus: " + _targetBinStatus.ToString() + " idxSingleStatus: " + _idxSingleStatus.ToString() + " estadoInicial: " + estadoInicial.ToString() + " voidStts: " + _voidStts.ToString() + "] " + ioe.Message;
+                return false;
+            }
             catch (Exception tr)
             {
-                iErr++;
                 sMsj = _matrizTransiciones == null ? "No existe transición para este tipo de documento. " : "Excepción desconocida en la transición del evento ";
                 sMsj = sMsj + evento.ToString() + " [binStatus: " + _binStatus.ToString() + " targetBinStatus: " + _targetBinStatus.ToString() + " idxSingleStatus: " + _idxSingleStatus.ToString() + " estadoInicial: " + estadoInicial.ToString() + " voidStts: " + _voidStts.ToString() + "] " + tr.Message;
                 return false;
@@ -341,7 +333,7 @@ namespace MaquinaDeEstados
                     //No agregar palabras si es estado inicial y no tiene continuidad 
                     if (paresOrdenados[ind].destino != estadoInicial && paresOrdenados[ind].destino == anterior) 
                     {
-                        descripcionEstados = paresOrdenados[ind].Tipo.Equals("sco") ? getDescripcionSubEstados(paresOrdenados[ind].origen, eBinario, "sco") : _estados[paresOrdenados[ind].destino].ToUpper(); 
+                        descripcionEstados = paresOrdenados[ind].Tipo.Equals("sco") ? getDescripcionSubEstados(paresOrdenados[ind].origen, eBinario, "sco") : _Estados[paresOrdenados[ind].destino].Nombre.ToUpper(); 
                         enPalabras = descripcionEstados + ". " + enPalabras;
                     }
                     anterior = paresOrdenados[ind].origen;
@@ -403,37 +395,11 @@ namespace MaquinaDeEstados
             String desc = String.Empty;
             foreach (var subEstado in componentesDelEstadoPadre)
                 if (binStatus.Substring(subEstado.destino, 1).Equals("1"))
-                    desc = _estados[subEstado.destino].ToUpper() + ". " + desc; 
+                    desc = _Estados[subEstado.destino].Nombre.ToUpper() + ". " + desc; 
 
             return desc;
         }
 
-
-        public bool emitido(string eBinario)
-        {
-            return Utiles.Derecha(eBinario, 1).Equals("1");
-        }
-        public bool anulado(string eBinario)
-        {
-            return Utiles.Derecha(eBinario, 2)[0].Equals('1');
-        }
-        public bool impreso(string eBinario)
-        {
-            //Console.WriteLine(Utiles.Derecha(eBinario, 3)[0].Equals('1') + " - " + Utiles.Derecha(eBinario, 3)[0].Equals('1'));
-            return Utiles.Derecha(eBinario, 3)[0].Equals('1');
-        }
-        public bool publicado(string eBinario)
-        {
-            return Utiles.Derecha(eBinario, 4)[0].Equals('1');
-        }
-        public bool enviado(string eBinario)
-        {
-            return Utiles.Derecha(eBinario, 5)[0].Equals('1');
-        }
-        public bool error(string eBinario)
-        {
-            return Utiles.Derecha(eBinario, 6)[0].Equals('1');
-        }
 
     }
 }
