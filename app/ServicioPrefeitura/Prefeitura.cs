@@ -90,14 +90,30 @@ namespace Web_Service
         public string PercentualCargaTributaria { get; set; }
         public string FonteCargaTributaria { get; set; }
         public string ValorTotalRecebido { get; set; }
+        
 
     }
 
     public class PedidoEnvioLoteRPS
     {
+        public int Soptype { get; set; }
+        public string SopNumbe { get; set; }
         public Cabeca Cabecalho { get; set; }
         public RPSCompleto RPS { get; set; }
         public PedidoEnvioLoteRPS() { }
+    }
+
+    public class FacturasProcesadas
+    {
+        public FacturasProcesadas()
+        {
+
+        }
+        public int SopType { get; set; }
+        public string SopNumbe { get; set; }
+        public bool Status { get; set; }
+        public string Archivo { get; set; }
+        public string MsjError { get; set; }
     }
 
 
@@ -117,23 +133,25 @@ namespace Web_Service
             string Assinatura;
             //Defino la cultura para el punto decimal a hacer el ToString. ESto define . como separador decimal.
 
-
-
             try
             {
                 // Inicializo el objeto donde voy a guardar todos los datos del RPS
                 PedidoEnvioLoteRPS Pedido = new PedidoEnvioLoteRPS();
 
+                //Esto se agrega para tener rastro de la factura para los errores.
+                Pedido.Soptype = documentoGP.DocVenta.soptype;
+                Pedido.SopNumbe = documentoGP.DocVenta.SOPNUMBE;
+                
                 //Cabecalho
                 Pedido.Cabecalho = new Cabeca();
                 {
                     Pedido.Cabecalho.CPFCNPJRemetente = new Cabeca.CPFCNPJRemet();
 
-                    Pedido.Cabecalho.CPFCNPJRemetente.CNPJ = "02195059000108";
-                    Pedido.Cabecalho.transacao = "false";
+                    Pedido.Cabecalho.CPFCNPJRemetente.CNPJ = documentoGP.DocVenta.CPFCNPJRemetente;//"02195059000108";
+                    if (documentoGP.DocVenta.transacao == 0) { Pedido.Cabecalho.transacao = "false"; }
                     Pedido.Cabecalho.dtInicio = documentoGP.DocVenta.fechaEmision.ToString(("yyyy-MM-dd"));
                     Pedido.Cabecalho.dtFim = documentoGP.DocVenta.fechaEmision.ToString(("yyyy-MM-dd"));
-                    Pedido.Cabecalho.QtdRPS = "1";
+                    Pedido.Cabecalho.QtdRPS = documentoGP.DocVenta.QtdRPS.ToString();
                     Pedido.Cabecalho.ValorTotalServicos = documentoGP.DocVenta.montoTotalVenta.ToString();
                     Pedido.Cabecalho.ValorTotalDeducoes = documentoGP.DocVenta.descuentoGlobalMonto.ToString();
                 }
@@ -151,11 +169,11 @@ namespace Web_Service
                              documentoGP.DocVenta.ValorTotalRecebido.ToString("0.00", nfi) +
                              documentoGP.DocVenta.ValorCargaTributaria.ToString("0.00", nfi) +
                              documentoGP.DocVenta.CodigoServico +
-                             "3" + //documentoGP.DocVenta.indicadorTomador +
+                             documentoGP.DocVenta.indicadorTomador +
                              documentoGP.DocVenta.CPFCNPJTomador +
-                             "3" + //documentoGP.DocVenta.indicadorIntermediario +
-                             "00000000000000" + //documentoGP.DocVenta.CPFCNPJIntermediario +
-                             "N"
+                             documentoGP.DocVenta.indicadorIntermediario +
+                             documentoGP.DocVenta.CPFCNPJIntermediario +
+                             documentoGP.DocVenta.ISSRetidoIntermediario
                              ; //documentoGP.DocVenta.ISSRetidoIntermediario
                                //PAsar a Base64 el string 64
 
@@ -166,7 +184,7 @@ namespace Web_Service
                         Pedido.RPS.ChaveRPS.SerieRPS = documentoGP.DocVenta.serie;
                         Pedido.RPS.ChaveRPS.NumeroRPS = documentoGP.DocVenta.numero;
                     }
-                    Pedido.RPS.TipoRPS = "RPS";
+                    if (documentoGP.DocVenta.TipoRPS == "1") { Pedido.RPS.TipoRPS = "RPS"; }
                     Pedido.RPS.DataEmissao = documentoGP.DocVenta.fechaEmision.ToString("yyyy-MM-dd");
                     Pedido.RPS.StatusRPS = documentoGP.DocVenta.StatusRPS;
                     Pedido.RPS.TributacaoRPS = documentoGP.DocVenta.TributacaoRPS;
@@ -210,9 +228,9 @@ namespace Web_Service
 
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return null;
+                throw new NotImplementedException(ex.Message);
 
             }
         }
@@ -306,107 +324,436 @@ namespace Web_Service
 
         }
 
-        public string EnviarDatosArchivo(PedidoEnvioLoteRPS Pedido, string Archivo)
+        public string GuardaArchivoTxt(string ruta, string nombreArchivo, string extension, string contenido)
         {
-            string Cabecera, Detalle;
+            string rutaYNomArchivo = ruta + nombreArchivo + extension;
+
+            try
+            {
+                if (!Directory.Exists(ruta) && !string.IsNullOrEmpty(ruta))
+                {
+                    DirectoryInfo di = Directory.CreateDirectory(ruta);
+                }
+
+                using (StreamWriter Writer = new StreamWriter(rutaYNomArchivo))
+                {
+                    Writer.WriteLine(contenido);
+                }
+
+                return rutaYNomArchivo;
+
+            }
+            catch (DirectoryNotFoundException)
+            {
+                string smsj = "Verifique la existencia de la carpeta indicada en la configuración de Ruta de archivos Xml de GP. La ruta de la carpeta no existe: " + rutaYNomArchivo;
+                throw new DirectoryNotFoundException(smsj);
+            }
+            catch (IOException)
+            {
+                string smsj = "Verifique permisos de escritura en la carpeta: " + rutaYNomArchivo + ". No se pudo guardar el archivo xml.";
+                throw new IOException(smsj);
+            }
+        }
+
+        public Tuple<string, string> PreparaDatosArchivoTxt(Web_Service.PedidoEnvioLoteRPS documentoRps) 
+        {
+            string Cabecera, Detalle, Detalle_Archivo = "", Cabecera_Archivo = "";
+            string Errores = "";
+            string MinFecha = "9999-99-99", MaxFecha = "00-00-0000";
+
+            //IList<FacturasProcesadas> Procesadas = new List<FacturasProcesadas>();
+
+            //try
+            //{
+                //StreamWriter ArchSalidaGral = new StreamWriter(Archivo);
+
+                //foreach (Web_Service.PedidoEnvioLoteRPS Pedido in documentoRps)
+                //{
+                    Errores = "";
+                    Cabecera = "1"; //Tipo de Registro
+                    Cabecera += "001"; // Version de ARchivo
+                    if (documentoRps.RPS.ChaveRPS.InscricaoPrestador.Length > 8)
+                    {
+                        Errores += "Error: Longitud de Campo InscipcaoPesestador es mayor al permitido\n\r";
+                    }
+                    else
+                    {
+                        Cabecera += documentoRps.RPS.ChaveRPS.InscricaoPrestador.Substring(0, 8); // Inscripcion Municipal Prestador
+                    }
+                    Cabecera_Archivo = Cabecera;
+                    Cabecera += documentoRps.Cabecalho.dtInicio.Replace("-", "");
+                    Cabecera += documentoRps.Cabecalho.dtFim.Replace("-", "");
+                    // Cabecera += "\n\r";
+
+                    Detalle = "2"; //Tipo de Registro
+                    Detalle += documentoRps.RPS.TipoRPS.PadRight(5);
+                    if (documentoRps.RPS.ChaveRPS.SerieRPS.Length > 5)
+                    {
+                        Errores += "Error: Longitud de Campo SerieRPS es mayor al permitido\n\r";
+                    }
+                    else
+                    {
+                        Detalle += documentoRps.RPS.ChaveRPS.SerieRPS.PadRight(5);
+                    }
+                    Detalle += documentoRps.RPS.ChaveRPS.NumeroRPS.PadLeft(12, '0');
+                    Detalle += documentoRps.RPS.DataEmissao.Replace("-", "");
+                    if (documentoRps.RPS.TributacaoRPS == null ||
+                         documentoRps.RPS.TributacaoRPS.Length == 0)
+                    {
+                        Errores += "Error: El campo TributacaoRPS no puede ser nulo\n\r";
+                    }
+                    else
+                    {
+                        Detalle += documentoRps.RPS.TributacaoRPS;
+                    }
+                    Detalle += documentoRps.RPS.ValorServicos.Replace(".", "").PadLeft(15, '0');
+                    Detalle += documentoRps.RPS.ValorDeducoes.Replace(".", "").PadLeft(15, '0');
+
+                    //Agregar Contro e Codigo de SErvicio
+                    if (documentoRps.RPS.CodigoServico == null ||
+                        documentoRps.RPS.CodigoServico.Length == 0)
+                    {
+                        Errores += "Error: El campo CodigoCodigoServico no puede ser nulo o vacio\n\r";
+                    }
+                    else if (documentoRps.RPS.CodigoServico.Length > 5)
+                    {
+                        Errores += "Error: La longitud del campo CodigoServico es mayor al permitido. 5 posiciones.\n\r";
+                    }
+                    else Detalle += documentoRps.RPS.CodigoServico.PadRight(5);
+
+                    //Detalle += "TEST " + documentoRps.RPS.AliquotaServicos + "FIN TEST";
+                    Detalle += (Convert.ToDecimal(documentoRps.RPS.AliquotaServicos, nfi) * 100).ToString("0").PadLeft(4, '0');
+
+                    //Agregar control de ISS RETido
+                    if (documentoRps.RPS.ISSRetido == null ||
+                              documentoRps.RPS.ISSRetido.Length == 0)
+                    {
+                        Errores += "Error: El campo ISSRetido no puede ser nulo o vacio\n\r";
+                    }
+                    else //if (documentoRps.RPS.ISSRetido == "true") Detalle += "1"; else Detalle += "2";
+                        Detalle += documentoRps.RPS.ISSRetido;
+
+                    //Indicador longitud CPF
+                    if (documentoRps.RPS.CPFCNPJTomador.CPF.Length == 14) Detalle += "1";
+                    else if (documentoRps.RPS.CPFCNPJTomador.CPF.Length == 11) Detalle += "2";
+                    else if (documentoRps.RPS.CPFCNPJTomador.CPF.Length == 0) Detalle += "3";
+                    else
+                    {
+                        Errores += "Error: EL Numero de CPF/CNPJ no tiene una longitud valida\n\r";
+
+                    }
+                    Detalle += documentoRps.RPS.CPFCNPJTomador.CPF;
+
+                    // Indicador Tomador
+                    if (documentoRps.RPS.InscricaoMunicipalTomador.Length > 8)
+                    {
+                        Errores += "Error: La longitud del campo InscricaoMunicipalTomador es mayor al permitido\n\r";
+                    }
+                    else
+                    {
+                        Detalle += documentoRps.RPS.InscricaoMunicipalTomador.PadLeft(8);
+                    }
+                    if (documentoRps.RPS.InscricaoEstadualTomador.Length > 12)
+                    {
+                        Errores += "Error: La longitud del campo InscricaoEstadualTomador es mayor al permitido\n\r";
+                    }
+                    else
+                    {
+                        Detalle += documentoRps.RPS.InscricaoEstadualTomador.PadLeft(12);
+                    }
+                    if (documentoRps.RPS.RazaoSocialTomador.Length > 75)
+                    {
+                        Errores += "Error: La longitud del campo RazaoSocialTomador es mayor al permitido\n\r";
+                    }
+                    else
+                    {
+                        Detalle += documentoRps.RPS.RazaoSocialTomador.PadRight(75);
+                    }
+                    Detalle += documentoRps.RPS.EnderecoTomador.TipoLogradouro.PadRight(3); //?????
+                    Detalle += documentoRps.RPS.EnderecoTomador.Logradouro.PadRight(50).Substring(0, 50);
+                    Detalle += documentoRps.RPS.EnderecoTomador.NumeroEndereco.PadRight(10).Substring(0, 10);
+                    Detalle += "".PadLeft(30);
+                    Detalle += documentoRps.RPS.EnderecoTomador.Bairro.PadRight(30).Substring(0, 30);
+                    Detalle += documentoRps.RPS.EnderecoTomador.Cidade.PadRight(50).Substring(0, 50);
+                    Detalle += documentoRps.RPS.EnderecoTomador.UF.PadRight(2).Substring(0, 2);
+                    Detalle += documentoRps.RPS.EnderecoTomador.CEP.PadRight(8).Substring(0, 8);
+                    Detalle += documentoRps.RPS.EmailTomador.PadRight(75).Substring(0, 75);
+                    if (documentoRps.RPS.Discriminacao == null ||
+                        documentoRps.RPS.Discriminacao.Length == 0)
+                    {
+                        Errores += "Error: El campo Discriminacao no puede ser nulo o vacio\n\r";
+                    }
+                    else Detalle += Utiles.Izquierda(documentoRps.RPS.Discriminacao, 1000);
+
+                    Detalle += "\n\r";
+                    // Termine de armar los strings
+
+                    //Armo Salida
+                    //FacturasProcesadas FProc = new FacturasProcesadas();
+                    //FProc.SopType = documentoRps.Soptype;
+                    //FProc.SopNumbe = documentoRps.SopNumbe;
+
+                    if (Errores != "")
+                    {
+                        throw new ArgumentException(Errores);
+                        //FProc.Status = false;
+                        //FProc.MsjError = Errores;
+                    }
+                    else
+                    {
+                        //if (ArchivoxFactura)
+                        //{
+                        //    StreamWriter ArchSalida = new StreamWriter(Archivo.Substring(1, Archivo.LastIndexOf('.') - 1) + "_" + documentoRps.SopNumbe.Trim() + Archivo.Substring(Archivo.LastIndexOf('.'), 4));
+                        //    ArchSalida.WriteLine(Cabecera);
+                        //    ArchSalida.WriteLine(Detalle);
+                        //    ArchSalida.Close();
+                        //    FProc.Archivo = Archivo.Substring(1, Archivo.LastIndexOf('.') - 1) + "_" + documentoRps.SopNumbe.Trim() + Archivo.Substring(Archivo.LastIndexOf('.'), 4);
+                        //}
+                        //else
+                        //{
+                            if (String.Compare(documentoRps.Cabecalho.dtInicio, MinFecha) < 0)
+                            {
+                                MinFecha = documentoRps.Cabecalho.dtInicio;
+                            }
+
+                            if (String.Compare(documentoRps.Cabecalho.dtFim, MaxFecha) > 0)
+                            {
+                                MaxFecha = documentoRps.Cabecalho.dtFim;
+                            }
+
+                            Detalle_Archivo += Detalle + "\n\r";
+                            //FProc.Archivo = Archivo;
+                        //}
+
+                        //FProc.Status = true;
+                    }
+
+                    //Procesadas.Add(FProc);
+                //}
+
+                //if (!ArchivoxFactura)
+                //{
+                    Cabecera_Archivo += MinFecha.Replace("-", "");
+                    Cabecera_Archivo += MaxFecha.Replace("-", "");
+                    //ArchSalidaGral.WriteLine(Cabecera_Archivo);
+                    //ArchSalidaGral.WriteLine(Detalle_Archivo);
+                //}
+
+                //ArchSalidaGral.Close();
+
+                //if (ArchivoxFactura)
+                //{
+                //    File.Delete(Archivo);
+                //}
+
+                return new Tuple<string, string>(Cabecera_Archivo, Detalle_Archivo);
+
+            //}
+            //catch (Exception ex)
+            //{
+            //    throw new NotImplementedException(ex.Message);
+            //}
+
+        }
+
+        public IList<FacturasProcesadas> EnviarDatosArchivo(IList<Web_Service.PedidoEnvioLoteRPS> documentosRps, string Archivo,bool ArchivoxFactura) //PedidoEnvioLoteRPS Pedido
+        {
+            string Cabecera, Detalle,Detalle_Archivo="",Cabecera_Archivo="";
             string Errores="";
+            string MinFecha="9999-99-99", MaxFecha="00-00-0000";
 
-            Cabecera = "1"; //Tipo de Registro
-            Cabecera += "001"; // Version de ARchivo
-            if (Pedido.RPS.ChaveRPS.InscricaoPrestador.Length > 8)
-            {
-                Errores += "Error: Longitud de Campo InscipcaoPesestador es mayor al permitido\n\r";
-            }
-            else
-            {
-                Cabecera += Pedido.RPS.ChaveRPS.InscricaoPrestador.Substring(0, 8); // Inscripcion Municipal Prestador
-            }
-            Cabecera += Pedido.Cabecalho.dtInicio.Replace("-", "");
-            Cabecera += Pedido.Cabecalho.dtFim.Replace("-", "");
-            // Cabecera += "\n\r";
-
-            Detalle = "2"; //Tipo de Registro
-            Detalle += Pedido.RPS.TipoRPS.PadRight(5);
-            if (Pedido.RPS.ChaveRPS.SerieRPS.Length > 5)
-            {
-                Errores += "Error: Longitud de Campo SerieRPS es mayor al permitido\n\r";
-            }
-            else
-            {
-                Detalle += Pedido.RPS.ChaveRPS.SerieRPS.PadRight(5);
-            }
-            Detalle += Pedido.RPS.ChaveRPS.NumeroRPS.PadLeft(12, '0');
-            Detalle += Pedido.RPS.DataEmissao.Replace("-", "");
-            Detalle += Pedido.RPS.TributacaoRPS;
-            Detalle += Pedido.RPS.ValorServicos.Replace(".", "").PadLeft(15, '0');
-            Detalle += Pedido.RPS.ValorDeducoes.Replace(".", "").PadLeft(15, '0');
-            Detalle += Pedido.RPS.CodigoServico.PadRight(5);
-
-            //Detalle += "TEST " + Pedido.RPS.AliquotaServicos + "FIN TEST";
-            Detalle += (Convert.ToDecimal(Pedido.RPS.AliquotaServicos, nfi) * 100).ToString("0").PadLeft(4, '0');
-            if (Pedido.RPS.ISSRetido == "true") Detalle += "1"; else Detalle += "2";
-
-            //Indicador longitud CPF
-            if (Pedido.RPS.CPFCNPJTomador.CPF.Length == 14) Detalle += "1";
-            else if (Pedido.RPS.CPFCNPJTomador.CPF.Length == 11) Detalle += "2";
-            else if (Pedido.RPS.CPFCNPJTomador.CPF.Length == 0) Detalle += "3";
-            else
-            {
-                Errores = Errores += "Error: EL Numero de CPF/CNPJ no tiene una longitud valida\n\r";
-
-            }
-
-            // Indicador Tomador
-            Detalle += Pedido.RPS.CPFCNPJTomador.CPF;
-            if (Pedido.RPS.InscricaoMunicipalTomador.Length > 8)
-            {
-                Errores = Errores += "Error: La longitud del campo InscricaoMunicipalTomador es mayor al permitido\n\r";
-            }
-            else
-            {
-                Detalle += Pedido.RPS.InscricaoMunicipalTomador.PadLeft(8);
-            }
-            if (Pedido.RPS.InscricaoEstadualTomador.Length > 12)
-            {
-                Errores = Errores += "Error: La longitud del campo InscricaoEstadualTomador es mayor al permitido\n\r";
-            }
-            else
-            {
-                Detalle += Pedido.RPS.InscricaoEstadualTomador.PadLeft(12);
-            }
-            if (Pedido.RPS.RazaoSocialTomador.Length > 75)
-            {
-                Errores = Errores += "Error: La longitud del campo RazaoSocialTomador es mayor al permitido\n\r";
-            }
-            else
-            {
-                Detalle += Pedido.RPS.RazaoSocialTomador.PadRight(75);
-            }
-            Detalle += Pedido.RPS.EnderecoTomador.TipoLogradouro.PadRight(3); //?????
-            Detalle += Pedido.RPS.EnderecoTomador.Logradouro.PadRight(50).Substring(0,50);
-            Detalle += Pedido.RPS.EnderecoTomador.NumeroEndereco.PadRight(10).Substring(0,10);
-            Detalle += "".PadLeft(30);
-            Detalle += Pedido.RPS.EnderecoTomador.Bairro.PadRight(30).Substring(0,30);
-            Detalle += Pedido.RPS.EnderecoTomador.Cidade.PadRight(50).Substring(0,50);
-            Detalle += Pedido.RPS.EnderecoTomador.UF.PadRight(2).Substring(0,2);
-            Detalle += Pedido.RPS.EnderecoTomador.CEP.PadRight(8).Substring(0,8);
-            Detalle += Pedido.RPS.EmailTomador.PadRight(75).Substring(0,75);
-            Detalle += Utiles.Izquierda( Pedido.RPS.Discriminacao,1000);
-            Detalle += "\n\r";
-
-            StreamWriter ArchSalida = new StreamWriter(Archivo);
-
-            if (Errores != "")
-            {
-                return Errores;
-            }
+            IList<FacturasProcesadas> Procesadas = new  List<FacturasProcesadas>();
             
-            ArchSalida.WriteLine(Cabecera);
-            ArchSalida.WriteLine(Detalle);
+            try
+            {
+                StreamWriter ArchSalidaGral = new StreamWriter(Archivo);
 
-            ArchSalida.Close();
+                foreach (Web_Service.PedidoEnvioLoteRPS Pedido in documentosRps)
+                {
+                    Errores = "";
+                    Cabecera = "1"; //Tipo de Registro
+                    Cabecera += "001"; // Version de ARchivo
+                    if (Pedido.RPS.ChaveRPS.InscricaoPrestador.Length > 8)
+                    {
+                        Errores += "Error: Longitud de Campo InscipcaoPesestador es mayor al permitido\n\r";
+                    }
+                    else
+                    {
+                        Cabecera += Pedido.RPS.ChaveRPS.InscricaoPrestador.Substring(0, 8); // Inscripcion Municipal Prestador
+                    }
+                    Cabecera_Archivo = Cabecera;
+                    Cabecera += Pedido.Cabecalho.dtInicio.Replace("-", "");
+                    Cabecera += Pedido.Cabecalho.dtFim.Replace("-", "");
+                    // Cabecera += "\n\r";
 
-            return "Archivo Generado OK" + "Arch: " + Errores;
+                    Detalle = "2"; //Tipo de Registro
+                    Detalle += Pedido.RPS.TipoRPS.PadRight(5);
+                    if (Pedido.RPS.ChaveRPS.SerieRPS.Length > 5)
+                    {
+                        Errores += "Error: Longitud de Campo SerieRPS es mayor al permitido\n\r";
+                    }
+                    else
+                    {
+                        Detalle += Pedido.RPS.ChaveRPS.SerieRPS.PadRight(5);
+                    }
+                    Detalle += Pedido.RPS.ChaveRPS.NumeroRPS.PadLeft(12, '0');
+                    Detalle += Pedido.RPS.DataEmissao.Replace("-", "");
+                    if ( Pedido.RPS.TributacaoRPS == null ||
+                         Pedido.RPS.TributacaoRPS.Length ==0 )
+                    {
+                        Errores += "Error: El campo TributacaoRPS no puede ser nulo\n\r";
+                    }
+                    else
+                    {
+                        Detalle += Pedido.RPS.TributacaoRPS;
+                    }
+                    Detalle += Pedido.RPS.ValorServicos.Replace(".", "").PadLeft(15, '0');
+                    Detalle += Pedido.RPS.ValorDeducoes.Replace(".", "").PadLeft(15, '0');
+
+                    //Agregar Contro e Codigo de SErvicio
+                    if( Pedido.RPS.CodigoServico == null ||
+                        Pedido.RPS.CodigoServico.Length == 0)
+                    {
+                        Errores += "Error: El campo CodigoCodigoServico no puede ser nulo o vacio\n\r";
+                    }
+                    else if (Pedido.RPS.CodigoServico.Length > 5)
+                    {
+                        Errores += "Error: La longitud del campo CodigoServico es mayor al permitido. 5 posiciones.\n\r";
+                    }
+                    else  Detalle += Pedido.RPS.CodigoServico.PadRight(5);
+
+                    //Detalle += "TEST " + Pedido.RPS.AliquotaServicos + "FIN TEST";
+                    Detalle += (Convert.ToDecimal(Pedido.RPS.AliquotaServicos, nfi) * 100).ToString("0").PadLeft(4, '0');
+
+                    //Agregar control de ISS RETido
+                    if (Pedido.RPS.ISSRetido == null ||
+                              Pedido.RPS.ISSRetido.Length == 0)
+                    {
+                        Errores += "Error: El campo ISSRetido no puede ser nulo o vacio\n\r";
+                    }
+                    else //if (Pedido.RPS.ISSRetido == "true") Detalle += "1"; else Detalle += "2";
+                        Detalle += Pedido.RPS.ISSRetido;
+
+                    //Indicador longitud CPF
+                    if (Pedido.RPS.CPFCNPJTomador.CPF.Length == 14) Detalle += "1";
+                    else if (Pedido.RPS.CPFCNPJTomador.CPF.Length == 11) Detalle += "2";
+                    else if (Pedido.RPS.CPFCNPJTomador.CPF.Length == 0) Detalle += "3";
+                    else
+                    {
+                        Errores = Errores += "Error: EL Numero de CPF/CNPJ no tiene una longitud valida\n\r";
+
+                    }
+                    Detalle += Pedido.RPS.CPFCNPJTomador.CPF;
+
+                    // Indicador Tomador
+                    if (Pedido.RPS.InscricaoMunicipalTomador.Length > 8)
+                    {
+                        Errores = Errores += "Error: La longitud del campo InscricaoMunicipalTomador es mayor al permitido\n\r";
+                    }
+                    else
+                    {
+                        Detalle += Pedido.RPS.InscricaoMunicipalTomador.PadLeft(8);
+                    }
+                    if (Pedido.RPS.InscricaoEstadualTomador.Length > 12)
+                    {
+                        Errores = Errores += "Error: La longitud del campo InscricaoEstadualTomador es mayor al permitido\n\r";
+                    }
+                    else
+                    {
+                        Detalle += Pedido.RPS.InscricaoEstadualTomador.PadLeft(12);
+                    }
+                    if (Pedido.RPS.RazaoSocialTomador.Length > 75)
+                    {
+                        Errores = Errores += "Error: La longitud del campo RazaoSocialTomador es mayor al permitido\n\r";
+                    }
+                    else
+                    {
+                        Detalle += Pedido.RPS.RazaoSocialTomador.PadRight(75);
+                    }
+                    Detalle += Pedido.RPS.EnderecoTomador.TipoLogradouro.PadRight(3); //?????
+                    Detalle += Pedido.RPS.EnderecoTomador.Logradouro.PadRight(50).Substring(0, 50);
+                    Detalle += Pedido.RPS.EnderecoTomador.NumeroEndereco.PadRight(10).Substring(0, 10);
+                    Detalle += "".PadLeft(30);
+                    Detalle += Pedido.RPS.EnderecoTomador.Bairro.PadRight(30).Substring(0, 30);
+                    Detalle += Pedido.RPS.EnderecoTomador.Cidade.PadRight(50).Substring(0, 50);
+                    Detalle += Pedido.RPS.EnderecoTomador.UF.PadRight(2).Substring(0, 2);
+                    Detalle += Pedido.RPS.EnderecoTomador.CEP.PadRight(8).Substring(0, 8);
+                    Detalle += Pedido.RPS.EmailTomador.PadRight(75).Substring(0, 75);
+                    if (Pedido.RPS.Discriminacao == null ||
+                        Pedido.RPS.Discriminacao.Length == 0)
+                    {
+                        Errores += "Error: El campo Discriminacao no puede ser nulo o vacio\n\r";
+                    }
+                    else  Detalle += Utiles.Izquierda(Pedido.RPS.Discriminacao, 1000);
+
+                    Detalle += "\n\r";
+                    // Termine de armar los strings
+                    
+                    //Armo Salida
+                    FacturasProcesadas FProc = new FacturasProcesadas();
+                    FProc.SopType = Pedido.Soptype;
+                    FProc.SopNumbe = Pedido.SopNumbe;
+
+                    if (Errores != "")
+                    {
+                        FProc.Status = false;
+                        FProc.MsjError = Errores;
+                    }
+                    else
+                    {
+                        if (ArchivoxFactura)
+                        {
+                            StreamWriter ArchSalida = new StreamWriter(Archivo.Substring(1, Archivo.LastIndexOf('.') - 1) + "_" + Pedido.SopNumbe.Trim() + Archivo.Substring(Archivo.LastIndexOf('.'), 4));
+                            ArchSalida.WriteLine(Cabecera);
+                            ArchSalida.WriteLine(Detalle);
+                            ArchSalida.Close();
+                            FProc.Archivo = Archivo.Substring(1, Archivo.LastIndexOf('.') - 1) + "_" + Pedido.SopNumbe.Trim() + Archivo.Substring(Archivo.LastIndexOf('.'), 4);
+                        }
+                        else
+                        {
+                            if (String.Compare(Pedido.Cabecalho.dtInicio, MinFecha) < 0)
+                            {
+                                MinFecha = Pedido.Cabecalho.dtInicio;
+                            }
+
+                            if(String.Compare(Pedido.Cabecalho.dtFim, MaxFecha) > 0 )
+                            {
+                                MaxFecha = Pedido.Cabecalho.dtFim;
+                            }
+                            
+                            Detalle_Archivo += Detalle + "\n\r";
+                            FProc.Archivo = Archivo;
+                        }
+                                               
+                        FProc.Status = true;
+                    }
+
+                    Procesadas.Add(FProc);
+                }
+
+                if (!ArchivoxFactura)
+                {
+                    Cabecera_Archivo += MinFecha.Replace("-", "");
+                    Cabecera_Archivo += MaxFecha.Replace("-", "");
+                    ArchSalidaGral.WriteLine(Cabecera_Archivo);
+                    ArchSalidaGral.WriteLine(Detalle_Archivo);
+                }
+
+                ArchSalidaGral.Close();
+
+                if (ArchivoxFactura)
+                {
+                    File.Delete(Archivo);
+                }
+                
+                return Procesadas;
+
+            }
+            catch (Exception ex)
+            {
+                throw new NotImplementedException(ex.Message);
+            }
+
         }
 
         public string GetHash1(string stringtohash)

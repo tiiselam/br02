@@ -35,17 +35,11 @@ warning 6002: The table/view 'GBRA.dbo.vwCfdiGeneraDocumentoDeVentaBRA' does not
             
             
             
-            
-            
-            
-            
-            
-            
-            
-            
-            
           </Key>
           <Property Name="correlativo" Type="varchar" MaxLength="20" />
+          <Property Name="CPFCNPJRemetente" Type="char" MaxLength="25" Nullable="false" />
+          <Property Name="transacao" Type="int" Nullable="false" />
+          <Property Name="QtdRPS" Type="int" Nullable="false" />
           <Property Name="soptype" Type="smallint" Nullable="false" />
           <Property Name="SOPNUMBE" Type="char" MaxLength="21" Nullable="false" />
           <Property Name="serie" Type="varchar" MaxLength="1" />
@@ -58,7 +52,7 @@ warning 6002: The table/view 'GBRA.dbo.vwCfdiGeneraDocumentoDeVentaBRA' does not
           <Property Name="fechaEmision" Type="datetime" Nullable="false" />
           <Property Name="horaEmision" Type="varchar" MaxLength="30" />
           <Property Name="StatusRPS" Type="varchar" MaxLength="1" Nullable="false" />
-          <Property Name="TributacaoRPS" Type="char" MaxLength="21" Nullable="false" />
+          <Property Name="TributacaoRPS" Type="char" MaxLength="21" />
           <Property Name="montoTotalVenta" Type="numeric" Precision="19" Scale="5" Nullable="false" />
           <Property Name="descuentoGlobalMonto" Type="numeric" Precision="19" Scale="5" Nullable="false" />
           <Property Name="ValorPIS" Type="numeric" Precision="19" Scale="5" />
@@ -70,9 +64,13 @@ warning 6002: The table/view 'GBRA.dbo.vwCfdiGeneraDocumentoDeVentaBRA' does not
           <Property Name="AliquotaServicos" Type="char" MaxLength="30" />
           <Property Name="ISSRetido" Type="varchar" MaxLength="21" />
           <Property Name="CPFCNPJTomador" Type="varchar" MaxLength="25" />
+          <Property Name="indicadorTomador" Type="varchar" MaxLength="1" Nullable="false" />
           <Property Name="InscricaoMunicipalTomador" Type="varchar" MaxLength="25" />
           <Property Name="InscricaoEstadualTomador" Type="varchar" MaxLength="25" />
           <Property Name="RazaoSocialTomador" Type="varchar" MaxLength="65" />
+          <Property Name="indicadorIntermediario" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="CPFCNPJIntermediario" Type="varchar" MaxLength="14" Nullable="false" />
+          <Property Name="ISSRetidoIntermediario" Type="varchar" MaxLength="1" Nullable="false" />
           <Property Name="Emisor_TipoLogradouro" Type="varchar" MaxLength="3" />
           <Property Name="Emisor_Logradouro" Type="varchar" MaxLength="61" />
           <Property Name="Emisor_NumeroEndereco" Type="varchar" MaxLength="61" />
@@ -134,13 +132,14 @@ warning 6002: The table/view 'GBRA.dbo.vwCfdiTransaccionesDeVenta' does not have
           <Property Name="isocurrc" Type="varchar" MaxLength="15" />
           <Property Name="addenda" Type="int" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'GBRA.dbo.vwRmClientes' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityContainer Name="GBRAModelStoreContainer">
           <EntitySet Name="cfdLogFacturaXML" EntityType="Self.cfdLogFacturaXML" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="vwCfdiGeneraDocumentoDeVentaBRA" EntityType="Self.vwCfdiGeneraDocumentoDeVentaBRA" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vwCfdiGeneraDocumentoDeVentaBRA].[correlativo] AS [correlativo], 
+    [vwCfdiGeneraDocumentoDeVentaBRA].[CPFCNPJRemetente] AS [CPFCNPJRemetente], 
+    [vwCfdiGeneraDocumentoDeVentaBRA].[transacao] AS [transacao], 
+    [vwCfdiGeneraDocumentoDeVentaBRA].[QtdRPS] AS [QtdRPS], 
     [vwCfdiGeneraDocumentoDeVentaBRA].[soptype] AS [soptype], 
     [vwCfdiGeneraDocumentoDeVentaBRA].[SOPNUMBE] AS [SOPNUMBE], 
     [vwCfdiGeneraDocumentoDeVentaBRA].[serie] AS [serie], 
@@ -165,9 +164,13 @@ warning 6002: The table/view 'GBRA.dbo.vwRmClientes' does not have a primary key
     [vwCfdiGeneraDocumentoDeVentaBRA].[AliquotaServicos] AS [AliquotaServicos], 
     [vwCfdiGeneraDocumentoDeVentaBRA].[ISSRetido] AS [ISSRetido], 
     [vwCfdiGeneraDocumentoDeVentaBRA].[CPFCNPJTomador] AS [CPFCNPJTomador], 
+    [vwCfdiGeneraDocumentoDeVentaBRA].[indicadorTomador] AS [indicadorTomador], 
     [vwCfdiGeneraDocumentoDeVentaBRA].[InscricaoMunicipalTomador] AS [InscricaoMunicipalTomador], 
     [vwCfdiGeneraDocumentoDeVentaBRA].[InscricaoEstadualTomador] AS [InscricaoEstadualTomador], 
     [vwCfdiGeneraDocumentoDeVentaBRA].[RazaoSocialTomador] AS [RazaoSocialTomador], 
+    [vwCfdiGeneraDocumentoDeVentaBRA].[indicadorIntermediario] AS [indicadorIntermediario], 
+    [vwCfdiGeneraDocumentoDeVentaBRA].[CPFCNPJIntermediario] AS [CPFCNPJIntermediario], 
+    [vwCfdiGeneraDocumentoDeVentaBRA].[ISSRetidoIntermediario] AS [ISSRetidoIntermediario], 
     [vwCfdiGeneraDocumentoDeVentaBRA].[Emisor_TipoLogradouro] AS [Emisor_TipoLogradouro], 
     [vwCfdiGeneraDocumentoDeVentaBRA].[Emisor_Logradouro] AS [Emisor_Logradouro], 
     [vwCfdiGeneraDocumentoDeVentaBRA].[Emisor_NumeroEndereco] AS [Emisor_NumeroEndereco], 
@@ -279,7 +282,7 @@ warning 6002: The table/view 'GBRA.dbo.vwRmClientes' does not have a primary key
           <Property Name="fechaEmision" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="horaEmision" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="StatusRPS" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="TributacaoRPS" Type="String" Nullable="false" MaxLength="21" FixedLength="true" Unicode="false" />
+          <Property Name="TributacaoRPS" Type="String" MaxLength="21" FixedLength="true" Unicode="false" />
           <Property Name="montoTotalVenta" Type="Decimal" Nullable="false" Precision="19" Scale="5" />
           <Property Name="descuentoGlobalMonto" Type="Decimal" Nullable="false" Precision="19" Scale="5" />
           <Property Name="ValorPIS" Type="Decimal" Precision="19" Scale="5" />
@@ -307,6 +310,13 @@ warning 6002: The table/view 'GBRA.dbo.vwRmClientes' does not have a primary key
           <Property Name="PercentualCargaTributaria" Type="Int32" Nullable="false" />
           <Property Name="FonteCargaTributaria" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
           <Property Name="ValorTotalRecebido" Type="Decimal" Nullable="false" Precision="19" Scale="5" />
+          <Property Name="CPFCNPJRemetente" Type="String" Nullable="false" MaxLength="25" FixedLength="true" Unicode="false" />
+          <Property Name="transacao" Type="Int32" Nullable="false" />
+          <Property Name="QtdRPS" Type="Int32" Nullable="false" />
+          <Property Name="indicadorTomador" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="indicadorIntermediario" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="CPFCNPJIntermediario" Type="String" Nullable="false" MaxLength="14" FixedLength="false" Unicode="false" />
+          <Property Name="ISSRetidoIntermediario" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="cfdLogFacturaXML">
           <Key>
@@ -372,6 +382,13 @@ warning 6002: The table/view 'GBRA.dbo.vwRmClientes' does not have a primary key
           <EntitySetMapping Name="vwCfdiGeneraDocumentoDeVentaBRA">
             <EntityTypeMapping TypeName="GBRAModel.vwCfdiGeneraDocumentoDeVentaBRA">
               <MappingFragment StoreEntitySet="vwCfdiGeneraDocumentoDeVentaBRA">
+                <ScalarProperty Name="ISSRetidoIntermediario" ColumnName="ISSRetidoIntermediario" />
+                <ScalarProperty Name="CPFCNPJIntermediario" ColumnName="CPFCNPJIntermediario" />
+                <ScalarProperty Name="indicadorIntermediario" ColumnName="indicadorIntermediario" />
+                <ScalarProperty Name="indicadorTomador" ColumnName="indicadorTomador" />
+                <ScalarProperty Name="QtdRPS" ColumnName="QtdRPS" />
+                <ScalarProperty Name="transacao" ColumnName="transacao" />
+                <ScalarProperty Name="CPFCNPJRemetente" ColumnName="CPFCNPJRemetente" />
                 <ScalarProperty Name="ValorTotalRecebido" ColumnName="ValorTotalRecebido" />
                 <ScalarProperty Name="FonteCargaTributaria" ColumnName="FonteCargaTributaria" />
                 <ScalarProperty Name="PercentualCargaTributaria" ColumnName="PercentualCargaTributaria" />

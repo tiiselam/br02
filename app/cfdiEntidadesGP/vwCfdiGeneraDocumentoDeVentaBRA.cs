@@ -55,5 +55,12 @@ namespace cfdiEntidadesGP
         public int PercentualCargaTributaria { get; set; }
         public string FonteCargaTributaria { get; set; }
         public decimal ValorTotalRecebido { get; set; }
+        public string CPFCNPJRemetente { get; set; }
+        public int transacao { get; set; }
+        public int QtdRPS { get; set; }
+        public string indicadorTomador { get; set; }
+        public string indicadorIntermediario { get; set; }
+        public string CPFCNPJIntermediario { get; set; }
+        public string ISSRetidoIntermediario { get; set; }
     }
 }

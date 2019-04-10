@@ -58,24 +58,25 @@ namespace cfd.FacturaElectronica
         /// </summary>
         public void GeneraDocumentoTxt(IList<vwCfdiTransaccionesDeVenta> listaTransaccionesVenta, MainDB DocumentosGP, Web_Service.WebServicesNfe serviciosPrefectura)
         {
-            //string xmlFactura = string.Empty;
             string rutaYNom = string.Empty;
             try
             {
                 String msj = String.Empty;
                 int errores = 0; int i = 1;
-                //ReglasME_old maquina = new ReglasME_old(true, false, false, false);
                 OnProgreso(1, "INICIANDO GENERACION DE ARCHIVO TEXTO...");
-                IList<Web_Service.PedidoEnvioLoteRPS> documentosRps = new List<Web_Service.PedidoEnvioLoteRPS>();
+                //IList<Web_Service.PedidoEnvioLoteRPS> documentosRps = new List<Web_Service.PedidoEnvioLoteRPS>();
+                string detalleDocTxt = string.Empty;
+                string cabeceraDocTxt = string.Empty;
                 string sTimeStamp = System.DateTime.Now.ToString("yyMMddHHmmss");
                 string nombreArchivo = "NFPrefeitura_" + sTimeStamp;
                 string extension = ".txt";
+                string ruta = string.Empty;
 
                 foreach (vwCfdiTransaccionesDeVenta trxVenta in listaTransaccionesVenta)
                 {
+                    ruta = trxVenta.rutaXml.Trim();
                     rutaYNom = Path.Combine(trxVenta.rutaXml.Trim(), nombreArchivo + extension);
                     msj = String.Empty;
-                    //String accion = "EMITE TXT";
                     try
                     {
                         string tipoMEstados = "DOCVENTA-"+ trxVenta.estadoContabilizado;
@@ -83,7 +84,11 @@ namespace cfd.FacturaElectronica
                         if (trxVenta.CicloDeVida.Transiciona(Maquina.eventoGeneraTxt, 1))
                         {
                             var docGpBrasil = DocumentosGP.GetDatosDocumentoVenta(trxVenta.sopnumbe, trxVenta.soptype);
-                            documentosRps.Add(serviciosPrefectura.GeneraDatosRPS(docGpBrasil));
+                            //documentosRps.Add(serviciosPrefectura.GeneraDatosRPS(docGpBrasil));
+                            var documentoRps = serviciosPrefectura.GeneraDatosRPS(docGpBrasil);
+                            var documentoTxt = serviciosPrefectura.PreparaDatosArchivoTxt(documentoRps);
+                            detalleDocTxt += documentoTxt.Item2;
+                            cabeceraDocTxt = documentoTxt.Item1;
 
                             DocumentosGP.CreaLogFactura(trxVenta.soptype, trxVenta.sopnumbe, rutaYNom, trxVenta.CicloDeVida.idxTargetSingleStatus.ToString(), _usuario, string.Empty, trxVenta.CicloDeVida.targetSingleStatus,
                                                         trxVenta.CicloDeVida.targetBinStatus, trxVenta.CicloDeVida.EstadoEnPalabras(trxVenta.CicloDeVida.targetBinStatus));
@@ -96,18 +101,6 @@ namespace cfd.FacturaElectronica
                         {
                             msj += trxVenta.CicloDeVida.sMsj;
                         }
-                        //{
-                        //    if (trxVenta.voidstts.Equals(1))
-                        //    { 
-                        //        msj = "Anulado en GP y marcado como emitido.";
-                        //        OnProgreso(1, msj);
-                        //        DocumentosGP.CreaLogFactura(trxVenta.soptype, trxVenta.sopnumbe, "Anulado en GP", Maquina.idxBaseAnulado, _usuario, "", Maquina.estadoBaseAnulado, Maquina.binStatusBaseAnulado, msj.Trim());
-
-                        //        DocumentosGP.ActualizaOCreaLogFactura(trxVenta.soptype, trxVenta.sopnumbe, "Anulado en GP", Maquina.idxBaseAnulado, _usuario, string.Empty,
-                        //                                    Maquina.estadoBaseEmisor, Maquina.estadoBaseEmisor,
-                        //                                    trxVenta.CicloDeVida.targetBinStatus, trxVenta.CicloDeVida.EstadoEnPalabras(trxVenta.CicloDeVida.targetBinStatus));
-                        //    }
-                        //}
                     }
                     catch (InvalidOperationException ae)
                     {
@@ -152,9 +145,10 @@ namespace cfd.FacturaElectronica
                     if (errores > 10) break;
                 }
 
-                if (documentosRps.Count > 0)
+                if (!string.IsNullOrEmpty( detalleDocTxt))
                 {
-                    string ArchivoSal = serviciosPrefectura.EnviarDatosArchivo(documentosRps.FirstOrDefault(), rutaYNom);
+                    string rn = serviciosPrefectura.GuardaArchivoTxt(ruta, nombreArchivo, extension, cabeceraDocTxt +Environment.NewLine+ detalleDocTxt);
+                    OnProgreso(100, "Archivo guardado en: " + rn);
                 }
                 else
                     OnProgreso(100, "No se generó el archivo porque ningún documento de venta tenía el status correcto.");
