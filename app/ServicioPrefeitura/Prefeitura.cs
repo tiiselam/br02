@@ -355,32 +355,25 @@ namespace Web_Service
             }
         }
 
-        public Tuple<string, string> PreparaDatosArchivoTxt(Web_Service.PedidoEnvioLoteRPS documentoRps) 
+        public Tuple<string, string, decimal, decimal> PreparaDatosArchivoTxt(Web_Service.PedidoEnvioLoteRPS documentoRps) 
         {
-            string Cabecera, Detalle, Detalle_Archivo = "", Cabecera_Archivo = "";
-            string Errores = "";
-            string MinFecha = "9999-99-99", MaxFecha = "00-00-0000";
+            string Cabecera, Detalle;
+            string Errores = ""+ Environment.NewLine;
+            decimal Total_Servicios = 0, Total_Deducciones = 0;
+          
 
-            //IList<FacturasProcesadas> Procesadas = new List<FacturasProcesadas>();
-
-            //try
-            //{
-                //StreamWriter ArchSalidaGral = new StreamWriter(Archivo);
-
-                //foreach (Web_Service.PedidoEnvioLoteRPS Pedido in documentoRps)
-                //{
+         
                     Errores = "";
                     Cabecera = "1"; //Tipo de Registro
                     Cabecera += "001"; // Version de ARchivo
                     if (documentoRps.RPS.ChaveRPS.InscricaoPrestador.Length > 8)
                     {
-                        Errores += "Error: Longitud de Campo InscipcaoPesestador es mayor al permitido\n\r";
+                        Errores += "\tError: Longitud de Campo InscipcaoPesestador es mayor al permitido"+Environment.NewLine;
                     }
                     else
                     {
                         Cabecera += documentoRps.RPS.ChaveRPS.InscricaoPrestador.Substring(0, 8); // Inscripcion Municipal Prestador
                     }
-                    Cabecera_Archivo = Cabecera;
                     Cabecera += documentoRps.Cabecalho.dtInicio.Replace("-", "");
                     Cabecera += documentoRps.Cabecalho.dtFim.Replace("-", "");
                     // Cabecera += "\n\r";
@@ -389,7 +382,7 @@ namespace Web_Service
                     Detalle += documentoRps.RPS.TipoRPS.PadRight(5);
                     if (documentoRps.RPS.ChaveRPS.SerieRPS.Length > 5)
                     {
-                        Errores += "Error: Longitud de Campo SerieRPS es mayor al permitido\n\r";
+                        Errores += "\tError: Longitud de Campo SerieRPS es mayor al permitido\n\r";
                     }
                     else
                     {
@@ -400,7 +393,7 @@ namespace Web_Service
                     if (documentoRps.RPS.TributacaoRPS == null ||
                          documentoRps.RPS.TributacaoRPS.Length == 0)
                     {
-                        Errores += "Error: El campo TributacaoRPS no puede ser nulo\n\r";
+                        Errores += "\tError: El campo TributacaoRPS no puede ser nulo" + Environment.NewLine;
                     }
                     else
                     {
@@ -409,16 +402,19 @@ namespace Web_Service
                     Detalle += documentoRps.RPS.ValorServicos.Replace(".", "").PadLeft(15, '0');
                     Detalle += documentoRps.RPS.ValorDeducoes.Replace(".", "").PadLeft(15, '0');
 
-                    //Agregar Contro e Codigo de SErvicio
-                    if (documentoRps.RPS.CodigoServico == null ||
+            Total_Servicios = Convert.ToDecimal(documentoRps.RPS.ValorServicos.Replace(".", ""));
+            Total_Deducciones = Convert.ToDecimal(documentoRps.RPS.ValorDeducoes.Replace(".", ""));
+
+            //Agregar Contro e Codigo de SErvicio
+            if (documentoRps.RPS.CodigoServico == null ||
                         documentoRps.RPS.CodigoServico.Length == 0)
                     {
-                        Errores += "Error: El campo CodigoCodigoServico no puede ser nulo o vacio\n\r";
-                    }
+                        Errores += "\tError: El campo CodigoCodigoServico no puede ser nulo o vacio" + Environment.NewLine;
+            }
                     else if (documentoRps.RPS.CodigoServico.Length > 5)
                     {
-                        Errores += "Error: La longitud del campo CodigoServico es mayor al permitido. 5 posiciones.\n\r";
-                    }
+                        Errores += "\tError: La longitud del campo CodigoServico es mayor al permitido. 5 posiciones." + Environment.NewLine;
+            }
                     else Detalle += documentoRps.RPS.CodigoServico.PadRight(5);
 
                     //Detalle += "TEST " + documentoRps.RPS.AliquotaServicos + "FIN TEST";
@@ -428,7 +424,7 @@ namespace Web_Service
                     if (documentoRps.RPS.ISSRetido == null ||
                               documentoRps.RPS.ISSRetido.Length == 0)
                     {
-                        Errores += "Error: El campo ISSRetido no puede ser nulo o vacio\n\r";
+                        Errores += "\tError: El campo ISSRetido no puede ser nulo o vacio" + Environment.NewLine;
                     }
                     else //if (documentoRps.RPS.ISSRetido == "true") Detalle += "1"; else Detalle += "2";
                         Detalle += documentoRps.RPS.ISSRetido;
@@ -439,7 +435,7 @@ namespace Web_Service
                     else if (documentoRps.RPS.CPFCNPJTomador.CPF.Length == 0) Detalle += "3";
                     else
                     {
-                        Errores += "Error: EL Numero de CPF/CNPJ no tiene una longitud valida\n\r";
+                        Errores += "\tError: EL Numero de CPF/CNPJ no tiene una longitud valida" + Environment.NewLine;
 
                     }
                     Detalle += documentoRps.RPS.CPFCNPJTomador.CPF;
@@ -447,7 +443,7 @@ namespace Web_Service
                     // Indicador Tomador
                     if (documentoRps.RPS.InscricaoMunicipalTomador.Length > 8)
                     {
-                        Errores += "Error: La longitud del campo InscricaoMunicipalTomador es mayor al permitido\n\r";
+                        Errores += "\tError: La longitud del campo InscricaoMunicipalTomador es mayor al permitido" + Environment.NewLine;
                     }
                     else
                     {
@@ -455,16 +451,16 @@ namespace Web_Service
                     }
                     if (documentoRps.RPS.InscricaoEstadualTomador.Length > 12)
                     {
-                        Errores += "Error: La longitud del campo InscricaoEstadualTomador es mayor al permitido\n\r";
-                    }
+                        Errores += "\tError: La longitud del campo InscricaoEstadualTomador es mayor al permitido" + Environment.NewLine;
+            }
                     else
                     {
                         Detalle += documentoRps.RPS.InscricaoEstadualTomador.PadLeft(12);
                     }
                     if (documentoRps.RPS.RazaoSocialTomador.Length > 75)
                     {
-                        Errores += "Error: La longitud del campo RazaoSocialTomador es mayor al permitido\n\r";
-                    }
+                        Errores += "\tError: La longitud del campo RazaoSocialTomador es mayor al permitido" + Environment.NewLine;
+            }
                     else
                     {
                         Detalle += documentoRps.RPS.RazaoSocialTomador.PadRight(75);
@@ -481,78 +477,23 @@ namespace Web_Service
                     if (documentoRps.RPS.Discriminacao == null ||
                         documentoRps.RPS.Discriminacao.Length == 0)
                     {
-                        Errores += "Error: El campo Discriminacao no puede ser nulo o vacio\n\r";
+                        Errores += "\tError: El campo Discriminacao no puede ser nulo o vacio" + Environment.NewLine;
                     }
                     else Detalle += Utiles.Izquierda(documentoRps.RPS.Discriminacao, 1000);
 
-                    Detalle += "\n\r";
-                    // Termine de armar los strings
-
-                    //Armo Salida
-                    //FacturasProcesadas FProc = new FacturasProcesadas();
-                    //FProc.SopType = documentoRps.Soptype;
-                    //FProc.SopNumbe = documentoRps.SopNumbe;
+                    //Detalle += "\n\r";
+                  
 
                     if (Errores != "")
                     {
                         throw new ArgumentException(Errores);
-                        //FProc.Status = false;
-                        //FProc.MsjError = Errores;
+                       
                     }
-                    else
-                    {
-                        //if (ArchivoxFactura)
-                        //{
-                        //    StreamWriter ArchSalida = new StreamWriter(Archivo.Substring(1, Archivo.LastIndexOf('.') - 1) + "_" + documentoRps.SopNumbe.Trim() + Archivo.Substring(Archivo.LastIndexOf('.'), 4));
-                        //    ArchSalida.WriteLine(Cabecera);
-                        //    ArchSalida.WriteLine(Detalle);
-                        //    ArchSalida.Close();
-                        //    FProc.Archivo = Archivo.Substring(1, Archivo.LastIndexOf('.') - 1) + "_" + documentoRps.SopNumbe.Trim() + Archivo.Substring(Archivo.LastIndexOf('.'), 4);
-                        //}
-                        //else
-                        //{
-                            if (String.Compare(documentoRps.Cabecalho.dtInicio, MinFecha) < 0)
-                            {
-                                MinFecha = documentoRps.Cabecalho.dtInicio;
-                            }
+                   
 
-                            if (String.Compare(documentoRps.Cabecalho.dtFim, MaxFecha) > 0)
-                            {
-                                MaxFecha = documentoRps.Cabecalho.dtFim;
-                            }
+                return new Tuple<string, string, decimal, decimal>(Cabecera, Detalle,Total_Servicios,Total_Deducciones);
 
-                            Detalle_Archivo += Detalle + "\n\r";
-                            //FProc.Archivo = Archivo;
-                        //}
-
-                        //FProc.Status = true;
-                    }
-
-                    //Procesadas.Add(FProc);
-                //}
-
-                //if (!ArchivoxFactura)
-                //{
-                    Cabecera_Archivo += MinFecha.Replace("-", "");
-                    Cabecera_Archivo += MaxFecha.Replace("-", "");
-                    //ArchSalidaGral.WriteLine(Cabecera_Archivo);
-                    //ArchSalidaGral.WriteLine(Detalle_Archivo);
-                //}
-
-                //ArchSalidaGral.Close();
-
-                //if (ArchivoxFactura)
-                //{
-                //    File.Delete(Archivo);
-                //}
-
-                return new Tuple<string, string>(Cabecera_Archivo, Detalle_Archivo);
-
-            //}
-            //catch (Exception ex)
-            //{
-            //    throw new NotImplementedException(ex.Message);
-            //}
+          
 
         }
 
