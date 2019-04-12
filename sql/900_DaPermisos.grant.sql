@@ -10,4 +10,5 @@ IF DATABASE_PRINCIPAL_ID('ROL_NOTAFISCAL') IS NULL
 	create role ROL_NOTAFISCAL;
 
 grant select on dbo.vwCfdiTransaccionesDeVenta to ROL_NOTAFISCAL;
+grant select, delete, update, insert on dbo.cfdLogFacturaXML to ROL_NOTAFISCAL;
 

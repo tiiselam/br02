@@ -27,7 +27,7 @@ as
 
 	select	
 		convert(varchar(20),1)													correlativo, 
-		'02195059000108'														CPFCNPJRemetente,
+		CMP.TAXREGTN															CPFCNPJRemetente,
 		0																		transacao,
 		1																		QtdRPS,
 		FAC.soptype,
@@ -41,8 +41,8 @@ as
 		'1'																		TipoRPS,
 		FAC.DOCDATE																fechaEmision,
 		convert(varchar,FAC.DOCDATE, 8)											horaEmision,
-		'N'																		StatusRPS,
-		UDF.USRTAB01															TributacaoRPS,
+		'N'																		StatusRPS, --Ver la tabla porque falta
+		RTRIM(UDF.USRTAB01)														TributacaoRPS,
 		FAC.DOCAMNT																montoTotalVenta,
 		FAC.TRDISAMT															descuentoGlobalMonto,
 		dbo.fncGetTaxBra(DET.SOPTYPE,DET.SOPNUMBE,'S-PIS',DET.LNITMSEQ)			ValorPIS,
@@ -66,8 +66,8 @@ as
 		RTRiM(CST.ADDRESS2)														Emisor_NumeroEndereco ,
 		RTRiM(CST.ADDRESS3)														Emisor_Bairro ,
 		RTRIM(CST.CITY)															Emisor_Cidade ,
-		RTRIM(CST.STATE)														Emisor_CEP ,
-		RTRIM(CST.ZIP)															Emisor_UF ,
+		RTRIM(CST.STATE)														Emisor_UF ,
+		RTRIM(CST.ZIP)															Emisor_CEP ,
 		CASE WHEN em.emailTo is not null then em.emailTo  END 
 		--+ CASE WHEN em.emailCC is not null then em.emailCC END 
 		--+CASE WHEN em.emailCCO is not null then em.emailCCO END					
@@ -103,22 +103,22 @@ as
 union all
 select	
 		convert(varchar(20),1)													correlativo, 
-		'02195059000108'														CPFCNPJRemetente,
+		CMP.TAXREGTN															CPFCNPJRemetente,
 		0																		transacao,
 		1																		QtdRPS,
 		FAC.soptype,
 		FAC.SOPNUMBE,
 		SUBSTRING(FAC.SOPNUMBE,1,1)												serie, --?????
 		RTRIM(SUBSTRING(FAC.SOPNUMBE,2,100))									numero,
-		'3'											emisorTipoDoc, 
-		''											emisorNroDoc,
+		'3'																		emisorTipoDoc, 
+		''																		emisorNroDoc,
 		CMP.CMPNYNAM															emisorNombre,
 		Substring(INFO.INETINFO,charindex('NRO_INSCRIP=',INFO.INETINFO,1)+12,8)	InscricaoPrestador,
 		'1'																		TipoRPS,
 		FAC.DOCDATE																fechaEmision,
 		convert(varchar,FAC.DOCDATE, 8)											horaEmision,
 		'N'																		StatusRPS,
-		UDF.USRTAB01															TributacaoRPS,
+		RTRIM(UDF.USRTAB01)														TributacaoRPS,
 		FAC.DOCAMNT																montoTotalVenta,
 		FAC.TRDISAMT															descuentoGlobalMonto,
 		dbo.fncGetTaxBra(DET.SOPTYPE,DET.SOPNUMBE,'S-PIS',DET.LNITMSEQ)			ValorPIS,
@@ -142,8 +142,8 @@ select
 		RTRiM(CST.ADDRESS2)														Emisor_NumeroEndereco ,
 		RTRiM(CST.ADDRESS3)														Emisor_Bairro ,
 		RTRIM(CST.CITY)															Emisor_Cidade ,
-		RTRIM(CST.STATE)														Emisor_CEP ,
-		RTRIM(CST.ZIP)															Emisor_UF ,
+		RTRIM(CST.STATE)														Emisor_UF ,
+		RTRIM(CST.ZIP)															Emisor_CEP ,
 		CASE WHEN em.emailTo is not null then em.emailTo  END 
 		--+ CASE WHEN em.emailCC is not null then em.emailCC END 
 		--+CASE WHEN em.emailCCO is not null then em.emailCCO END					

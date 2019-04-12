@@ -53,11 +53,14 @@ namespace cfd.FacturaElectronica
                 //IList<Web_Service.PedidoEnvioLoteRPS> documentosRps = new List<Web_Service.PedidoEnvioLoteRPS>();
                 string detalleDocTxt = string.Empty;
                 string cabeceraDocTxt = string.Empty;
+                string trailerDocTxt = string.Empty;
                 string sTimeStamp = System.DateTime.Now.ToString("yyMMddHHmmss");
                 string nombreArchivo = "NFPrefeitura_" + sTimeStamp;
                 string extension = ".txt";
                 string ruta = string.Empty;
                 string MinFecha = "99999999", MaxFecha = "00000000";
+                decimal TotalServicios = 0, TotalDeducciones = 0, TotalRPS = 0;
+
 
                 foreach (vwCfdiTransaccionesDeVenta trxVenta in listaTransaccionesVenta)
                 {
@@ -66,7 +69,7 @@ namespace cfd.FacturaElectronica
                     msj = String.Empty;
                     try
                     {
-                        string tipoMEstados = "DOCVENTA-"+ trxVenta.estadoContabilizado;
+                        string tipoMEstados = "DOCVENTA-" + trxVenta.estadoContabilizado;
                         trxVenta.CicloDeVida = new Maquina(trxVenta.estadoActual, trxVenta.regimen, trxVenta.voidstts, "emisor", tipoMEstados);
                         if (trxVenta.CicloDeVida.Transiciona(Maquina.eventoGeneraTxt, 1))
                         {
@@ -74,8 +77,12 @@ namespace cfd.FacturaElectronica
                             //documentosRps.Add(serviciosPrefectura.GeneraDatosRPS(docGpBrasil));
                             var documentoRps = serviciosPrefectura.GeneraDatosRPS(docGpBrasil);
                             var documentoTxt = serviciosPrefectura.PreparaDatosArchivoTxt(documentoRps);
-                            detalleDocTxt += documentoTxt.Item2+Environment.NewLine;
+                            detalleDocTxt += documentoTxt.Item2 + Environment.NewLine;
                             cabeceraDocTxt = documentoTxt.Item1;
+                            TotalServicios += documentoTxt.Item3;
+                            TotalDeducciones += documentoTxt.Item4;
+                            TotalRPS++;
+
 
                             if (String.Compare(cabeceraDocTxt.Substring(12, 8), MinFecha) < 0)
                             {
@@ -142,11 +149,13 @@ namespace cfd.FacturaElectronica
                     if (errores > 10) break;
                 }
 
-                if (!string.IsNullOrEmpty( detalleDocTxt))
+                if (!string.IsNullOrEmpty(detalleDocTxt))
                 {
-                    cabeceraDocTxt = cabeceraDocTxt.Substring(0, 11) + MinFecha + MaxFecha;
+                    //Genero finalmente con los totales el header y el trailer.
+                    cabeceraDocTxt = cabeceraDocTxt.Substring(0, 12) + MinFecha + MaxFecha;
+                    trailerDocTxt = "9" + TotalRPS.ToString().PadLeft(7, '0') + TotalServicios.ToString().PadLeft(15, '0') + TotalDeducciones.ToString().PadLeft(15, '0');
 
-                    string rn = serviciosPrefectura.GuardaArchivoTxt(ruta, nombreArchivo, extension, cabeceraDocTxt +Environment.NewLine+ detalleDocTxt);
+                    string rn = serviciosPrefectura.GuardaArchivoTxt(ruta, nombreArchivo, extension, cabeceraDocTxt + Environment.NewLine + detalleDocTxt + Environment.NewLine + trailerDocTxt);
                     OnProgreso(100, "Archivo guardado en: " + rn);
                 }
                 else
