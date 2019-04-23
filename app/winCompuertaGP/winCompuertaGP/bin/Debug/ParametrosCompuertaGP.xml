@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<listaParametros>
+  <servidor defaultDB="GBRA">10.178.2.16</servidor>
+  <seguridadIntegrada>1</seguridadIntegrada>
+  <usuariosql>sa</usuariosql>
+  <passwordsql>r%pqGG(2@sY5</passwordsql>
+  <compannia bd="GBRA" nombre="TEST GETTY BRASIL" metadataGP="metadata=res://*/BLL.ModelGP.csdl|res://*/BLL.ModelGP.ssdl|res://*/BLL.ModelGP.msl;provider=System.Data.SqlClient;" metadataIntegra="metadata=res://*/BLL.ModelIntegra.csdl|res://*/BLL.ModelIntegra.ssdl|res://*/BLL.ModelIntegra.msl;provider=System.Data.SqlClient;" metadataUI="metadata=res://*/ModelEntidadesGP.csdl|res://*/ModelEntidadesGP.ssdl|res://*/ModelEntidadesGP.msl;provider=System.Data.SqlClient;">
+    <TargetGPDB>GBRA</TargetGPDB>
+	<formatoFechaDB>dd/MM/yyyy</formatoFechaDB>
+	<formatoFechaXL>dd/MM/yyyy</formatoFechaXL>
+	<culturaParaMontos>de-DE</culturaParaMontos>
+	<RutaLog>c:\gpUsuario</RutaLog>
+	<rutaCarpeta>C:\GPDocIntegration</rutaCarpeta>
+	<idsDocumentoSOP idAriane="01" idGP="FV A0001"></idsDocumentoSOP>
+    <facturaSopCa>
+			<filaInicial>1</filaInicial>
+			<columnaMensajes>36</columnaMensajes>
+			<serie>1</serie>
+			<sopnumbe>2</sopnumbe>
+			<facturaSopSerieYNumbeSeparados>SI</facturaSopSerieYNumbeSeparados>
+			<docdate>3</docdate>
+			<duedate>22</duedate>
+			<TXRGNNUM>9</TXRGNNUM>
+			<CUSTNAME>11</CUSTNAME>
+			<UNITPRCE>5</UNITPRCE>
+			<referencia>21</referencia>
+	</facturaSopCa>	
+	<facturaSopDe>
+			<filaInicial>0</filaInicial>
+			<UNITPRCE>35</UNITPRCE>
+			<itemnmbr>23</itemnmbr>
+			<itemnmbrDescr>24</itemnmbrDescr>
+			<ReqShipDate>32</ReqShipDate>
+			<ActlShipDate>33</ActlShipDate>
+			<CMMTTEXT>34</CMMTTEXT>
+	</facturaSopDe>
+	<sopUserDefined>
+			<incluirUserDef>true</incluirUserDef>
+			<usrtab01_predetValue>T</usrtab01_predetValue>
+			<usrtab02_predetValue>1</usrtab02_predetValue>
+	</sopUserDefined>
+    <Cliente>
+      <DefaultCUSTCLAS>GENERAL</DefaultCUSTCLAS>
+    </Cliente>
+	<intEstadoCompletado>1</intEstadoCompletado>
+	<intEstadosPermitidos>1</intEstadosPermitidos>
+</compannia>
+</listaParametros>
