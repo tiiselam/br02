@@ -40,6 +40,7 @@ namespace winCompuertaGP
         private int _facturaSopTXRGNNUM;
         private int _facturaSopCUSTNAME;
         private int _facturaSopReferencia;
+        private int _facturaSopCliDireccion1;
         private int _facturaSopUNITPRCE;
         private int _facturaSopDeUNITPRCE;
         private int _facturaSopItemnmbr;
@@ -156,6 +157,7 @@ namespace winCompuertaGP
                 _facturaSopTXRGNNUM = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopCa/TXRGNNUM/text()").Value);
                 _facturaSopCUSTNAME = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopCa/CUSTNAME/text()").Value);
                 _facturaSopReferencia = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopCa/referencia/text()").Value);
+                _facturaSopCliDireccion1 = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopCa/cliDireccion1/text()").Value);
 
                 _facturaSopUNITPRCE = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopCa/UNITPRCE/text()").Value);
                 _facturaSopDeUNITPRCE = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopDe/UNITPRCE/text()").Value);
@@ -389,6 +391,7 @@ namespace winCompuertaGP
         public string Usrtab01_predetValue { get => _usrtab01_predetValue; set => _usrtab01_predetValue = value; }
         public string Usrtab02_predetValue { get => _usrtab02_predetValue; set => _usrtab02_predetValue = value; }
         public int FacturaSopCodServicio { get => _facturaSopCodServicio; set => _facturaSopCodServicio = value; }
+        public int FacturaSopCliDireccion1 { get => _facturaSopCliDireccion1; set => _facturaSopCliDireccion1 = value; }
     }
 
 }

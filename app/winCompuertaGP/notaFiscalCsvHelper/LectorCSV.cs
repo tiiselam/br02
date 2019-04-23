@@ -113,6 +113,7 @@ namespace notaFiscalCsvHelper
                     //RF, RR, RM deben tener unitprice en el mismo campo
                     worksheet.Cells[i, 35].Value = unitprice;
                     worksheet.Cells[i, 36].Value = record.Prefixo + record.CodigoServicio1 + record.CodigoServicio2;
+                    worksheet.Cells[i, 37].Value = string.Concat( record.TipoLogradouro, " ", record.Logradouro);
                     i++;
                 }
 
@@ -181,6 +182,7 @@ namespace notaFiscalCsvHelper
                     //RF, RR, RM deben tener unitprice en el mismo campo
                     worksheet.Cells[i, 35].Value = unitprice;
                     worksheet.Cells[i, 36].Value = record.Prefixo + record.CodigoServicio1 + record.CodigoServicio2;
+                    worksheet.Cells[i, 37].Value = string.Concat(record.TipoLogradouro, " ", record.Logradouro);
                     i++;
                 }
 
@@ -246,6 +248,7 @@ namespace notaFiscalCsvHelper
                     //RF, RR, RM deben tener unitprice en el mismo campo
                     worksheet.Cells[i, 35].Value = unitprice;
                     worksheet.Cells[i, 36].Value = record.Prefixo + record.CodigoServicio1 + record.CodigoServicio2;
+                    worksheet.Cells[i, 37].Value = string.Concat(record.TipoLogradouro, " ", record.Logradouro);
                     i++;
                 }
 
