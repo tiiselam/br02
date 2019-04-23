@@ -103,16 +103,16 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.checkBoxMark = new System.Windows.Forms.CheckBox();
             this.panel6 = new System.Windows.Forms.Panel();
-            this.label30 = new System.Windows.Forms.Label();
             this.textBoxPacientes_referencia = new System.Windows.Forms.TextBox();
             this.checkBoxPacientes_referencia = new System.Windows.Forms.CheckBox();
             this.textBoxPacientes_nombre_cliente = new System.Windows.Forms.TextBox();
             this.checkBoxPacientes_nombre_cliente = new System.Windows.Forms.CheckBox();
-            this.checkBoxPacientes_sopnumbe = new System.Windows.Forms.CheckBox();
             this.textBoxPacientes_sopnumbe_desde = new System.Windows.Forms.TextBox();
             this.label29 = new System.Windows.Forms.Label();
             this.textBoxPacientes_sopnumbe_hasta = new System.Windows.Forms.TextBox();
             this.btnBuscar = new System.Windows.Forms.Button();
+            this.label30 = new System.Windows.Forms.Label();
+            this.checkBoxPacientes_sopnumbe = new System.Windows.Forms.CheckBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.textBoxAlertas = new System.Windows.Forms.TextBox();
             this.panel3 = new System.Windows.Forms.Panel();
@@ -168,7 +168,6 @@
             this.MENSAJE,
             this.voidstts,
             this.mensajeEA});
-            this.dgvFacturas.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvFacturas.Location = new System.Drawing.Point(0, 0);
             this.dgvFacturas.Name = "dgvFacturas";
             this.dgvFacturas.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
@@ -455,7 +454,7 @@
             // 
             this.genFacturaElectrónicaV10ToolStripMenuItem.Name = "genFacturaElectrónicaV10ToolStripMenuItem";
             this.genFacturaElectrónicaV10ToolStripMenuItem.Size = new System.Drawing.Size(266, 22);
-            this.genFacturaElectrónicaV10ToolStripMenuItem.Text = "Nota Fiscal y Boleto Bancario v. 1.0.0";
+            this.genFacturaElectrónicaV10ToolStripMenuItem.Text = "Nota Fiscal y Boleto Bancario v. 1.0.1";
             // 
             // toolStripMenuItem2
             // 
@@ -916,15 +915,6 @@
             this.panel6.Size = new System.Drawing.Size(1177, 62);
             this.panel6.TabIndex = 78;
             // 
-            // label30
-            // 
-            this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(89, 13);
-            this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(24, 13);
-            this.label30.TabIndex = 47;
-            this.label30.Text = "De:";
-            // 
             // textBoxPacientes_referencia
             // 
             this.textBoxPacientes_referencia.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -963,17 +953,6 @@
             this.checkBoxPacientes_nombre_cliente.TabIndex = 52;
             this.checkBoxPacientes_nombre_cliente.Text = "Id Cliente";
             this.checkBoxPacientes_nombre_cliente.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxPacientes_sopnumbe
-            // 
-            this.checkBoxPacientes_sopnumbe.AutoSize = true;
-            this.checkBoxPacientes_sopnumbe.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.checkBoxPacientes_sopnumbe.Location = new System.Drawing.Point(7, 11);
-            this.checkBoxPacientes_sopnumbe.Name = "checkBoxPacientes_sopnumbe";
-            this.checkBoxPacientes_sopnumbe.Size = new System.Drawing.Size(87, 17);
-            this.checkBoxPacientes_sopnumbe.TabIndex = 10;
-            this.checkBoxPacientes_sopnumbe.Text = "Núm. Factura";
-            this.checkBoxPacientes_sopnumbe.UseVisualStyleBackColor = true;
             // 
             // textBoxPacientes_sopnumbe_desde
             // 
@@ -1016,6 +995,26 @@
             this.btnBuscar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnBuscar.UseVisualStyleBackColor = true;
             this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Location = new System.Drawing.Point(89, 13);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(24, 13);
+            this.label30.TabIndex = 47;
+            this.label30.Text = "De:";
+            // 
+            // checkBoxPacientes_sopnumbe
+            // 
+            this.checkBoxPacientes_sopnumbe.AutoSize = true;
+            this.checkBoxPacientes_sopnumbe.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.checkBoxPacientes_sopnumbe.Location = new System.Drawing.Point(7, 11);
+            this.checkBoxPacientes_sopnumbe.Name = "checkBoxPacientes_sopnumbe";
+            this.checkBoxPacientes_sopnumbe.Size = new System.Drawing.Size(87, 17);
+            this.checkBoxPacientes_sopnumbe.TabIndex = 10;
+            this.checkBoxPacientes_sopnumbe.Text = "Núm. Factura";
+            this.checkBoxPacientes_sopnumbe.UseVisualStyleBackColor = true;
             // 
             // splitContainer1
             // 

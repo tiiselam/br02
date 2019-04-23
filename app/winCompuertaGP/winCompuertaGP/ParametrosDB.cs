@@ -40,10 +40,12 @@ namespace winCompuertaGP
         private int _facturaSopTXRGNNUM;
         private int _facturaSopCUSTNAME;
         private int _facturaSopReferencia;
+        private int _facturaSopCliDireccion1;
         private int _facturaSopUNITPRCE;
         private int _facturaSopDeUNITPRCE;
         private int _facturaSopItemnmbr;
         private int _facturaSopItemnmbrDescr;
+        private int _facturaSopCodServicio;
         private int _facturaSopDeReqShipDate;
         private int _facturaSopDeActlShipDate;
         private int _facturaSopDeCmmttext;
@@ -52,12 +54,6 @@ namespace winCompuertaGP
         private string _usrtab02_predetValue;
         private string _intEstadoCompletado;
         private string _intEstadosPermitidos;
-        //private string _emite;
-        //private string _envia;
-        //private string _imprime;
-        //private string _publica;
-        //private string _zip;
-        //private string _anula;
 
         public ParametrosDB()
         {
@@ -161,11 +157,13 @@ namespace winCompuertaGP
                 _facturaSopTXRGNNUM = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopCa/TXRGNNUM/text()").Value);
                 _facturaSopCUSTNAME = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopCa/CUSTNAME/text()").Value);
                 _facturaSopReferencia = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopCa/referencia/text()").Value);
+                _facturaSopCliDireccion1 = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopCa/cliDireccion1/text()").Value);
 
                 _facturaSopUNITPRCE = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopCa/UNITPRCE/text()").Value);
                 _facturaSopDeUNITPRCE = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopDe/UNITPRCE/text()").Value);
                 _facturaSopItemnmbr = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopDe/itemnmbr/text()").Value);
                 _facturaSopItemnmbrDescr = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopDe/itemnmbrDescr/text()").Value);
+                _facturaSopCodServicio = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopDe/codservicio/text()").Value);
 
                 _facturaSopDeReqShipDate = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopDe/ReqShipDate/text()").Value);
                 _facturaSopDeActlShipDate = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopDe/ActlShipDate/text()").Value);
@@ -177,12 +175,6 @@ namespace winCompuertaGP
 
                 _intEstadoCompletado = elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/intEstadoCompletado/text()").Value;
                 _intEstadosPermitidos = elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/intEstadosPermitidos/text()").Value;
-                //_emite = elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/emite/text()").Value;
-                //_envia = elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/envia/text()").Value;
-                //_imprime = elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/imprime/text()").Value;
-                //_publica = elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/publica/text()").Value;
-                //_zip = elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/zip/text()").Value;
-                //_anula = elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/anula/text()").Value;
 
 
             }
@@ -395,15 +387,11 @@ namespace winCompuertaGP
 
         public int intEstadoCompletado { get => int.Parse(_intEstadoCompletado); set => _intEstadoCompletado = value.ToString(); }
         public int intEstadosPermitidos { get => int.Parse(_intEstadosPermitidos); set => _intEstadosPermitidos = value.ToString(); }
-        //public bool emite { get => _emite.Equals("1"); set => _emite = value.ToString(); }
-        //public bool envia { get => _envia.Equals("1"); set => _envia = value.ToString(); }
-        //public bool imprime { get => _imprime.Equals("1"); set => _imprime = value.ToString(); }
-        //public bool publica { get => _publica.Equals("1"); set => _publica = value.ToString(); }
-        //public bool zip { get => _zip.Equals("1"); set => _zip = value.ToString(); }
-        //public bool anula { get => _anula.Equals("1"); set => _anula = value.ToString(); }
         public bool IncluirUserDef { get => _incluirUserDef.ToLower().Equals("true") || _incluirUserDef.Equals("1") ; set => _incluirUserDef = value.ToString(); }
         public string Usrtab01_predetValue { get => _usrtab01_predetValue; set => _usrtab01_predetValue = value; }
         public string Usrtab02_predetValue { get => _usrtab02_predetValue; set => _usrtab02_predetValue = value; }
+        public int FacturaSopCodServicio { get => _facturaSopCodServicio; set => _facturaSopCodServicio = value; }
+        public int FacturaSopCliDireccion1 { get => _facturaSopCliDireccion1; set => _facturaSopCliDireccion1 = value; }
     }
 
 }
