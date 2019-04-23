@@ -73,15 +73,15 @@ as
 		--+CASE WHEN em.emailCCO is not null then em.emailCCO END					
 																				EmailTomador ,
 		RTRIM(dbo.fncGetConceptoBra(DET.SOPTYPE,DET.SOPNUMBE))		
-		+ RTRIM(Substring(INFO.INETINFO,charindex('FIX_MSJ=',INFO.INETINFO,1)+8
+		+ REPLACE(REPLACE(REPLACE(RTRIM(Substring(INFO.INETINFO,charindex('FIX_MSJ=',INFO.INETINFO,1)+8
 								 ,charindex('TRIB=',INFO.INETINFO,1)-8 - charindex('FIX_MSJ=',INFO.INETINFO,1))
-					)  +' |'
-		+ RTRIM(Substring(INFO.INETINFO,charindex('TRIB=',INFO.INETINFO,1)+5
+					),CHAR(9),''),CHAR(10),''),CHAR(13),'')  +' |'
+		+ REPLACE(REPLACE(REPLACE(RTRIM(Substring(INFO.INETINFO,charindex('TRIB=',INFO.INETINFO,1)+5
 								 ,charindex('FONTE=',INFO.INETINFO,1)-5 - charindex('TRIB=',INFO.INETINFO,1))
 		
-				) +' '
- 		+ RTRIM(Substring(INFO.INETINFO,charindex('FONTE=',INFO.INETINFO,1)+6
-								 , 100))
+				),CHAR(9),''),CHAR(10),''),CHAR(13),'') +' '
+ 		+ REPLACE(REPLACE(REPLACE(RTRIM(Substring(INFO.INETINFO,charindex('FONTE=',INFO.INETINFO,1)+6
+								 , 100)),CHAR(9),''),CHAR(10),''),CHAR(13),'')
 											Concepto ,
 		0											ValorCargaTributaria ,
 		0											PercentualCargaTributaria ,
@@ -149,15 +149,15 @@ select
 		--+CASE WHEN em.emailCCO is not null then em.emailCCO END					
 																				EmailTomador ,
 		RTRIM(dbo.fncGetConceptoBra(DET.SOPTYPE,DET.SOPNUMBE))		
-		+ RTRIM(Substring(INFO.INETINFO,charindex('FIX_MSJ=',INFO.INETINFO,1)+8
+		+ REPLACE(REPLACE(REPLACE(RTRIM(Substring(INFO.INETINFO,charindex('FIX_MSJ=',INFO.INETINFO,1)+8
 								 ,charindex('TRIB=',INFO.INETINFO,1)-8 - charindex('FIX_MSJ=',INFO.INETINFO,1))
-					)  +' |'
-		+ RTRIM(Substring(INFO.INETINFO,charindex('TRIB=',INFO.INETINFO,1)+5
+					),CHAR(9),''),CHAR(10),''),CHAR(13),'')  +' |'
+		+ REPLACE(REPLACE(REPLACE(RTRIM(Substring(INFO.INETINFO,charindex('TRIB=',INFO.INETINFO,1)+5
 								 ,charindex('FONTE=',INFO.INETINFO,1)-5 - charindex('TRIB=',INFO.INETINFO,1))
 		
-				) +' '
- 		+ RTRIM(Substring(INFO.INETINFO,charindex('FONTE=',INFO.INETINFO,1)+6
-								 , 100))
+				),CHAR(9),''),CHAR(10),''),CHAR(13),'') +' '
+ 		+ REPLACE(REPLACE(REPLACE(RTRIM(Substring(INFO.INETINFO,charindex('FONTE=',INFO.INETINFO,1)+6
+								 , 100)),CHAR(9),''),CHAR(10),''),CHAR(13),'')
 											Concepto ,
 		0											ValorCargaTributaria ,
 		0											PercentualCargaTributaria ,
