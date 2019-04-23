@@ -30,19 +30,19 @@ namespace notaFiscalCsvHelper
                         using (var csv = new CsvReader(reader))
                         {
                             csv.Configuration.HasHeaderRecord = false;
-                            if (archivoCsv.Contains("RF"))
+                            if (archivoCsv.ToUpper().Contains("RF"))
                             {
                                 var records = csv.GetRecords<SerieB_RF>();
                                 var xl = CreaExcel_RF(records, archivoCsv, culInfo);
                                 archivosXl.Add(xl);
                             }
-                            else if (archivoCsv.Contains("RM"))
+                            else if (archivoCsv.ToUpper().Contains("RM"))
                             {
                                 var records = csv.GetRecords<SerieC_RM>();
                                 var xl = CreaExcel_RM(records, archivoCsv, culInfo);
                                 archivosXl.Add(xl);
                             }
-                            else if (archivoCsv.Contains("RR"))
+                            else if (archivoCsv.ToUpper().Contains("RR"))
                             {
                                 csv.Configuration.RegisterClassMap<SerieC_RRMap>();
                                 //classMap.Map(row => row.InicioDireitoDeUso).ConvertUsing(row => Convert.ToDateTime(row.GetField(24).Replace("00/00/0000", "01/01/1900")));
@@ -112,6 +112,7 @@ namespace notaFiscalCsvHelper
 
                     //RF, RR, RM deben tener unitprice en el mismo campo
                     worksheet.Cells[i, 35].Value = unitprice;
+                    worksheet.Cells[i, 36].Value = record.Prefixo + record.CodigoServicio1 + record.CodigoServicio2;
                     i++;
                 }
 
@@ -179,6 +180,7 @@ namespace notaFiscalCsvHelper
                     worksheet.Cells[i, 34].Value = record.Usage;
                     //RF, RR, RM deben tener unitprice en el mismo campo
                     worksheet.Cells[i, 35].Value = unitprice;
+                    worksheet.Cells[i, 36].Value = record.Prefixo + record.CodigoServicio1 + record.CodigoServicio2;
                     i++;
                 }
 
@@ -243,6 +245,7 @@ namespace notaFiscalCsvHelper
                     worksheet.Cells[i, 34].Value = record.Usage;
                     //RF, RR, RM deben tener unitprice en el mismo campo
                     worksheet.Cells[i, 35].Value = unitprice;
+                    worksheet.Cells[i, 36].Value = record.Prefixo + record.CodigoServicio1 + record.CodigoServicio2;
                     i++;
                 }
 

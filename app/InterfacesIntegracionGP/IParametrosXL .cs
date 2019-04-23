@@ -26,6 +26,7 @@ namespace IntegradorDeGP
         int FacturaSopCUSTNAME { get; set; }
         int FacturaSopItemnmbr { get; set; }
         int FacturaSopItemnmbrDescr { get; set; }
+        int FacturaSopCodServicio { get ; set ; }
 
         int FacturaSopDeReqShipDate { get; set; }
         int FacturaSopDeActlShipDate { get; set; }
