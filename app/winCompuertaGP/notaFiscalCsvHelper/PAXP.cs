@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CsvHelper;
 using CsvHelper.Configuration.Attributes;
 
 namespace notaFiscalCsvHelper
 {
-    public class SerieB_RF
+    class PAXP
     {
         [Index(0)]
         public string Prefixo { get; set; }
@@ -74,10 +73,10 @@ namespace notaFiscalCsvHelper
         public DateTime DataVencimento { get; set; }
 
         [Index(22)]
-        public string ImageNumber { get; set; }
+        public string ImageDescription { get; set; }
 
         [Index(23)]
-        public string DescricaoColecao { get; set; }
+        public string ImageDescription2 { get; set; }
 
         [Index(24)]
         public string ValorUnitario { get; set; }
@@ -85,7 +84,5 @@ namespace notaFiscalCsvHelper
         [Index(25)]
         public string CCM { get; set; }
 
-
     }
-
 }

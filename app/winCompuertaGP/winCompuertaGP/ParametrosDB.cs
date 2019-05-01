@@ -41,6 +41,12 @@ namespace winCompuertaGP
         private int _facturaSopCUSTNAME;
         private int _facturaSopReferencia;
         private int _facturaSopCliDireccion1;
+        private int _facturaSopCliDireccion2;
+        private int _facturaSopCliDireccion3;
+        private int _facturaSopCliCiudad;
+        private int _facturaSopCliEstado;
+        private int _facturaSopCliZipCode;
+        private int _facturaSopCliEmail;
         private int _facturaSopUNITPRCE;
         private int _facturaSopDeUNITPRCE;
         private int _facturaSopItemnmbr;
@@ -132,7 +138,7 @@ namespace winCompuertaGP
                         idsDocumento.Add(n.Attributes["idAriane"].Value, n.Attributes["idGP"].Value);
                 }
             }
-            catch (ArgumentException ae)
+            catch (Exception ae)
             {
                 throw new ArgumentException("Excepción en los parámetros de la sección idsDocumentoSOP. [GetParametros(int)] " + ae.Message);
             }
@@ -141,10 +147,11 @@ namespace winCompuertaGP
             {
                 _clienteDefaultCUSTCLAS = elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/Cliente/DefaultCUSTCLAS/text()").Value;
             }
-            catch (ArgumentException ae)
+            catch (Exception ae)
             {
                 throw new ArgumentException("Excepción en los parámetros de la sección Cliente. [GetParametros(int)] " + ae.Message);
             }
+
             try
             {
                 _facturaSopFilaInicial = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopCa/filaInicial/text()").Value);
@@ -157,9 +164,24 @@ namespace winCompuertaGP
                 _facturaSopTXRGNNUM = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopCa/TXRGNNUM/text()").Value);
                 _facturaSopCUSTNAME = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopCa/CUSTNAME/text()").Value);
                 _facturaSopReferencia = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopCa/referencia/text()").Value);
-                _facturaSopCliDireccion1 = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopCa/cliDireccion1/text()").Value);
-
                 _facturaSopUNITPRCE = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopCa/UNITPRCE/text()").Value);
+
+                _facturaSopCliDireccion1 = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopCa/cliDireccion1/text()").Value);
+                _facturaSopCliDireccion2 = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopCa/cliDireccion2/text()").Value);
+                _facturaSopCliDireccion3 = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopCa/cliDireccion3/text()").Value);
+                _facturaSopCliCiudad = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopCa/cliCiudad/text()").Value);
+                _facturaSopCliEstado = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopCa/cliEstado/text()").Value);
+                _facturaSopCliZipCode = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopCa/cliZipCode/text()").Value);
+                _facturaSopCliEmail = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopCa/cliEmail/text()").Value);
+
+            }
+            catch (Exception ae)
+            {
+                throw new ArgumentException("Excepción en alguno de los parámetros de la sección facturasSopCa. [GetParametros(int)] " + ae.Message);
+            }
+
+            try
+            {
                 _facturaSopDeUNITPRCE = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopDe/UNITPRCE/text()").Value);
                 _facturaSopItemnmbr = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopDe/itemnmbr/text()").Value);
                 _facturaSopItemnmbrDescr = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopDe/itemnmbrDescr/text()").Value);
@@ -169,18 +191,25 @@ namespace winCompuertaGP
                 _facturaSopDeActlShipDate = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopDe/ActlShipDate/text()").Value);
                 _facturaSopDeCmmttext = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopDe/CMMTTEXT/text()").Value);
 
+            }
+            catch (Exception ae)
+            {
+                throw new ArgumentException("Excepción en alguno de los parámetros de la sección facturasSopDe. [GetParametros(int)] " + ae.Message);
+            }
+
+            try
+            {
                 _incluirUserDef = elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/sopUserDefined/incluirUserDef/text()").Value;
                 _usrtab01_predetValue = elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/sopUserDefined/usrtab01_predetValue/text()").Value;
                 _usrtab02_predetValue = elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/sopUserDefined/usrtab02_predetValue/text()").Value;
 
-                _intEstadoCompletado = elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/intEstadoCompletado/text()").Value;
-                _intEstadosPermitidos = elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/intEstadosPermitidos/text()").Value;
-
+                //_intEstadoCompletado = elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/intEstadoCompletado/text()").Value;
+                //_intEstadosPermitidos = elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/intEstadosPermitidos/text()").Value;
 
             }
-            catch (ArgumentException ae)
+            catch (Exception ae)
             {
-                throw new ArgumentException("Excepción en alguno de los parámetros de la sección facturasSopCa o facturasSopDe. [GetParametros(int)] " + ae.Message);
+                throw new ArgumentException("Excepción en alguno de los parámetros de la sección sopUserDefined. [GetParametros(int)] " + ae.Message);
             }
 
         }
@@ -392,6 +421,12 @@ namespace winCompuertaGP
         public string Usrtab02_predetValue { get => _usrtab02_predetValue; set => _usrtab02_predetValue = value; }
         public int FacturaSopCodServicio { get => _facturaSopCodServicio; set => _facturaSopCodServicio = value; }
         public int FacturaSopCliDireccion1 { get => _facturaSopCliDireccion1; set => _facturaSopCliDireccion1 = value; }
+        public int FacturaSopCliDireccion2 { get => _facturaSopCliDireccion2; set => _facturaSopCliDireccion2 = value; }
+        public int FacturaSopCliDireccion3 { get => _facturaSopCliDireccion3; set => _facturaSopCliDireccion3 = value; }
+        public int FacturaSopCliCiudad { get => _facturaSopCliCiudad; set => _facturaSopCliCiudad = value; }
+        public int FacturaSopCliEstado { get => _facturaSopCliEstado; set => _facturaSopCliEstado = value; }
+        public int FacturaSopCliZipCode { get => _facturaSopCliZipCode; set => _facturaSopCliZipCode = value; }
+        public int FacturaSopCliEmail { get => _facturaSopCliEmail; set => _facturaSopCliEmail = value; }
     }
 
 }
