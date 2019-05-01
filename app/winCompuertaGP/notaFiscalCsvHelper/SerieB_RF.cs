@@ -83,7 +83,7 @@ namespace notaFiscalCsvHelper
         public string ValorUnitario { get; set; }
 
         [Index(25)]
-        public string Desconocido2 { get; set; }
+        public string CCM { get; set; }
 
 
     }

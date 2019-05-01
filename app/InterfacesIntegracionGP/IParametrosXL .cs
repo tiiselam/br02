@@ -25,6 +25,12 @@ namespace IntegradorDeGP
         int FacturaSopDeUNITPRCE { get; set; }
         int FacturaSopCUSTNAME { get; set; }
         int FacturaSopCliDireccion1 { get; set; }
+        int FacturaSopCliDireccion2 { get; set; }
+        int FacturaSopCliDireccion3 { get; set; }
+        int FacturaSopCliCiudad { get; set; }
+        int FacturaSopCliEstado { get; set; }
+        int FacturaSopCliZipCode { get; set; }
+        int FacturaSopCliEmail { get; set; }
 
         int FacturaSopItemnmbr { get; set; }
         int FacturaSopItemnmbrDescr { get; set; }

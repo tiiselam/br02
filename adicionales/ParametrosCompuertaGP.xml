@@ -25,6 +25,12 @@
 			<UNITPRCE>5</UNITPRCE>
 			<referencia>21</referencia>
 			<cliDireccion1>37</cliDireccion1>
+			<cliDireccion2>14</cliDireccion2>
+			<cliDireccion3>16</cliDireccion3>
+			<cliCiudad>17</cliCiudad>
+			<cliEstado>18</cliEstado>
+			<cliZipCode>19</cliZipCode>
+			<cliEmail>20</cliEmail>
 	</facturaSopCa>	
 	<facturaSopDe>
 			<filaInicial>0</filaInicial>

@@ -321,7 +321,7 @@ namespace notaFiscalCsvHelper
 
                     unitprice = Convert.ToDecimal(record.ValorUnitario, culInfo);
                     worksheet.Cells[i, 25].Value = unitprice;
-                    worksheet.Cells[i, 26].Value = record.Desconocido2;
+                    worksheet.Cells[i, 26].Value = record.CCM;
 
                     //RF, RR, RM deben tener unitprice en el mismo campo
                     worksheet.Cells[i, 35].Value = unitprice;
@@ -338,6 +338,7 @@ namespace notaFiscalCsvHelper
             package.Workbook.Properties.Title = nombreArchivoCsv;
             return package;
         }
+
         private ExcelPackage CreaExcel_RM(IEnumerable<SerieC_RM> records, string nombreArchivoCsv, CultureInfo culInfo)
         {
             var package = new ExcelPackage();
