@@ -213,7 +213,7 @@ namespace Web_Service
                         Pedido.RPS.EnderecoTomador.Bairro = documentoGP.DocVenta.Emisor_Bairro;
                         Pedido.RPS.EnderecoTomador.Cidade = documentoGP.DocVenta.Emisor_Cidade;
                         Pedido.RPS.EnderecoTomador.UF = documentoGP.DocVenta.Emisor_UF;
-                        Pedido.RPS.EnderecoTomador.CEP = documentoGP.DocVenta.Emisor_CEP;
+                        Pedido.RPS.EnderecoTomador.CEP = documentoGP.DocVenta.Emisor_CEP.Replace("-", "");
                     }
                     Pedido.RPS.EmailTomador = documentoGP.DocVenta.EmailTomador;
 
@@ -335,9 +335,10 @@ namespace Web_Service
                     DirectoryInfo di = Directory.CreateDirectory(ruta);
                 }
 
-                using (StreamWriter Writer = new StreamWriter(rutaYNomArchivo))
+                using (StreamWriter Writer = new StreamWriter(rutaYNomArchivo, true,Encoding.UTF8))
                 {
-                    Writer.WriteLine(contenido);
+                    Writer.Write(contenido);
+                    
                 }
 
                 return rutaYNomArchivo;
@@ -430,8 +431,8 @@ namespace Web_Service
                         Detalle += documentoRps.RPS.ISSRetido;
 
                     //Indicador longitud CPF
-                    if (documentoRps.RPS.CPFCNPJTomador.CPF.Length == 14) Detalle += "1";
-                    else if (documentoRps.RPS.CPFCNPJTomador.CPF.Length == 11) Detalle += "2";
+                    if (documentoRps.RPS.CPFCNPJTomador.CPF.Length == 14) Detalle += "2";
+                    else if (documentoRps.RPS.CPFCNPJTomador.CPF.Length == 11) Detalle += "1";
                     else if (documentoRps.RPS.CPFCNPJTomador.CPF.Length == 0) Detalle += "3";
                     else
                     {
@@ -474,6 +475,8 @@ namespace Web_Service
                     Detalle += documentoRps.RPS.EnderecoTomador.UF.PadRight(2).Substring(0, 2);
                     Detalle += documentoRps.RPS.EnderecoTomador.CEP.PadRight(8).Substring(0, 8);
                     Detalle += documentoRps.RPS.EmailTomador.PadRight(75).Substring(0, 75);
+            
+
                     if (documentoRps.RPS.Discriminacao == null ||
                         documentoRps.RPS.Discriminacao.Length == 0)
                     {
