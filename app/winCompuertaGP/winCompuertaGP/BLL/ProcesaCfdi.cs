@@ -78,6 +78,7 @@ namespace cfd.FacturaElectronica
                             var documentoRps = serviciosPrefectura.GeneraDatosRPS(docGpBrasil);
                             var documentoTxt = serviciosPrefectura.PreparaDatosArchivoTxt(documentoRps);
                             detalleDocTxt += documentoTxt.Item2 + Environment.NewLine;
+                            //MSAL
                             cabeceraDocTxt = documentoTxt.Item1;
                             TotalServicios += documentoTxt.Item3;
                             TotalDeducciones += documentoTxt.Item4;
@@ -152,10 +153,11 @@ namespace cfd.FacturaElectronica
                 if (!string.IsNullOrEmpty(detalleDocTxt))
                 {
                     //Genero finalmente con los totales el header y el trailer.
+                    //MSAL
                     cabeceraDocTxt = cabeceraDocTxt.Substring(0, 12) + MinFecha + MaxFecha;
-                    trailerDocTxt = "9" + TotalRPS.ToString().PadLeft(7, '0') + TotalServicios.ToString().PadLeft(15, '0') + TotalDeducciones.ToString().PadLeft(15, '0');
+                    trailerDocTxt = "9" + TotalRPS.ToString().PadLeft(7, '0') + TotalServicios.ToString().PadLeft(15, '0') + TotalDeducciones.ToString().PadLeft(15, '0') ;
 
-                    string rn = serviciosPrefectura.GuardaArchivoTxt(ruta, nombreArchivo, extension, cabeceraDocTxt + Environment.NewLine + detalleDocTxt + Environment.NewLine + trailerDocTxt);
+                    string rn = serviciosPrefectura.GuardaArchivoTxt(ruta, nombreArchivo, extension, cabeceraDocTxt + Environment.NewLine +  detalleDocTxt  + trailerDocTxt);
                     OnProgreso(100, "Archivo guardado en: " + rn);
                 }
                 else
