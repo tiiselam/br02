@@ -30,6 +30,11 @@ namespace notaFiscalCsvHelper
                         using (var csv = new CsvReader(reader))
                         {
                             csv.Configuration.HasHeaderRecord = false;
+                            csv.Configuration.MissingFieldFound = (headerNames, index, context) =>
+                            {
+                                OnProgreso(0, $"Los siguientes campos: ['{string.Join("', '", headerNames)}'] de la fila '{index}' no existen. ");
+                            };
+
                             if (archivoCsv.ToUpper().Contains("RF"))
                             {
                                 var records = csv.GetRecords<SerieB_RF>();
@@ -64,7 +69,7 @@ namespace notaFiscalCsvHelper
                                 var xl = CreaExcel_paxp(records, archivoCsv, culInfo);
                                 archivosXl.Add(xl);
                             }
-                            else if (archivoCsv.ToUpper().Contains("PREMIUM"))
+                            else if (archivoCsv.ToUpper().Contains("CUSTOM"))
                             {
                                 var records = csv.GetRecords<Premium>();
                                 var xl = CreaExcel_Premium(records, archivoCsv, culInfo);
@@ -120,7 +125,8 @@ namespace notaFiscalCsvHelper
                     worksheet.Cells[i, 19].Value = record.Cep;
                     worksheet.Cells[i, 20].Value = record.email;
                     worksheet.Cells[i, 21].Value = record.Descricao;
-                    worksheet.Cells[i, 22].Value = record.DataVencimento;
+                    if (record?.DataVencimento != null)
+                        worksheet.Cells[i, 22].Value = record.DataVencimento;
 
                     worksheet.Cells[i, 23].Value = record.ImageNumber;
                     worksheet.Cells[i, 24].Value = record.Usage;
@@ -142,6 +148,7 @@ namespace notaFiscalCsvHelper
                     worksheet.Cells[i, 35].Value = unitprice;
                     worksheet.Cells[i, 36].Value = record.Prefixo + record.CodigoServicio1 + record.CodigoServicio2;
                     worksheet.Cells[i, 37].Value = string.Concat(record.TipoLogradouro, " ", record.Logradouro);
+                    worksheet.Cells[i, 38].Value = record.CCM;
                     i++;
                 }
 
@@ -191,7 +198,9 @@ namespace notaFiscalCsvHelper
                     worksheet.Cells[i, 19].Value = record.Cep;
                     worksheet.Cells[i, 20].Value = record.email;
                     worksheet.Cells[i, 21].Value = record.Descricao;
-                    worksheet.Cells[i, 22].Value = record.DataVencimento;
+
+                    if(record?.DataVencimento != null)
+                        worksheet.Cells[i, 22].Value = record.DataVencimento;
 
                     worksheet.Cells[i, 23].Value = record.ImageDescription;
                     worksheet.Cells[i, 24].Value = record.ImageDescription2;
@@ -204,6 +213,7 @@ namespace notaFiscalCsvHelper
                     worksheet.Cells[i, 35].Value = unitprice;
                     worksheet.Cells[i, 36].Value = record.Prefixo + record.CodigoServicio1 + record.CodigoServicio2;
                     worksheet.Cells[i, 37].Value = string.Concat(record.TipoLogradouro, " ", record.Logradouro);
+                    worksheet.Cells[i, 38].Value = record.CCM;
                     i++;
                 }
 
@@ -253,7 +263,8 @@ namespace notaFiscalCsvHelper
                     worksheet.Cells[i, 19].Value = record.Cep;
                     worksheet.Cells[i, 20].Value = record.email;
                     worksheet.Cells[i, 21].Value = record.Descricao;
-                    worksheet.Cells[i, 22].Value = record.DataVencimento;
+                    if (record?.DataVencimento != null)
+                        worksheet.Cells[i, 22].Value = record.DataVencimento;
 
                     worksheet.Cells[i, 23].Value = record.ImageDescription;
                     worksheet.Cells[i, 24].Value = record.ImageDescription2;
@@ -266,6 +277,7 @@ namespace notaFiscalCsvHelper
                     worksheet.Cells[i, 35].Value = unitprice;
                     worksheet.Cells[i, 36].Value = record.Prefixo + record.CodigoServicio1 + record.CodigoServicio2;
                     worksheet.Cells[i, 37].Value = string.Concat(record.TipoLogradouro, " ", record.Logradouro);
+                    worksheet.Cells[i, 38].Value = record.CCM;
                     i++;
                 }
 
@@ -315,7 +327,8 @@ namespace notaFiscalCsvHelper
                     worksheet.Cells[i, 19].Value = record.Cep;
                     worksheet.Cells[i, 20].Value = record.email;
                     worksheet.Cells[i, 21].Value = record.Descricao;
-                    worksheet.Cells[i, 22].Value = record.DataVencimento;
+                    if (record?.DataVencimento != null)
+                        worksheet.Cells[i, 22].Value = record.DataVencimento;
                     worksheet.Cells[i, 23].Value = record.ImageNumber;
                     worksheet.Cells[i, 24].Value = record.DescricaoColecao;
 
@@ -327,6 +340,7 @@ namespace notaFiscalCsvHelper
                     worksheet.Cells[i, 35].Value = unitprice;
                     worksheet.Cells[i, 36].Value = record.Prefixo + record.CodigoServicio1 + record.CodigoServicio2;
                     worksheet.Cells[i, 37].Value = string.Concat( record.TipoLogradouro, " ", record.Logradouro);
+                    worksheet.Cells[i, 38].Value = record.CCM;
                     i++;
                 }
 
@@ -376,7 +390,8 @@ namespace notaFiscalCsvHelper
                     worksheet.Cells[i, 19].Value = record.Cep;
                     worksheet.Cells[i, 20].Value = record.email;
                     worksheet.Cells[i, 21].Value = record.Descricao;
-                    worksheet.Cells[i, 22].Value = record.DataVencimento;
+                    if (record?.DataVencimento != null)
+                        worksheet.Cells[i, 22].Value = record.DataVencimento;
                     worksheet.Cells[i, 23].Value = record.ImageNumber;
                     worksheet.Cells[i, 24].Value = record.DescricaoColecao;
 
@@ -397,6 +412,7 @@ namespace notaFiscalCsvHelper
                     worksheet.Cells[i, 35].Value = unitprice;
                     worksheet.Cells[i, 36].Value = record.Prefixo + record.CodigoServicio1 + record.CodigoServicio2;
                     worksheet.Cells[i, 37].Value = string.Concat(record.TipoLogradouro, " ", record.Logradouro);
+                    worksheet.Cells[i, 38].Value = record.CCM;
                     i++;
                 }
 
@@ -446,7 +462,8 @@ namespace notaFiscalCsvHelper
                     worksheet.Cells[i, 19].Value = record.Cep;
                     worksheet.Cells[i, 20].Value = record.email;
                     worksheet.Cells[i, 21].Value = record.Descricao;
-                    worksheet.Cells[i, 22].Value = record.DataVencimento;
+                    if (record?.DataVencimento != null)
+                        worksheet.Cells[i, 22].Value = record.DataVencimento;
                     worksheet.Cells[i, 23].Value = record.ImageNumber;
                     worksheet.Cells[i, 24].Value = record.Usage;
 
@@ -463,6 +480,7 @@ namespace notaFiscalCsvHelper
                     worksheet.Cells[i, 35].Value = unitprice;
                     worksheet.Cells[i, 36].Value = record.Prefixo + record.CodigoServicio1 + record.CodigoServicio2;
                     worksheet.Cells[i, 37].Value = string.Concat(record.TipoLogradouro, " ", record.Logradouro);
+                    worksheet.Cells[i, 38].Value = record.CCM;
                     i++;
                 }
 

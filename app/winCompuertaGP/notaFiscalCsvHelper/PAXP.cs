@@ -70,7 +70,7 @@ namespace notaFiscalCsvHelper
         public string Descricao { get; set; }
 
         [Index(21)]
-        public DateTime DataVencimento { get; set; }
+        public DateTime? DataVencimento { get; set; }
 
         [Index(22)]
         public string ImageDescription { get; set; }
