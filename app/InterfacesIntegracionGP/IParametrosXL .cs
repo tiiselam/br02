@@ -31,7 +31,7 @@ namespace IntegradorDeGP
         int FacturaSopCliEstado { get; set; }
         int FacturaSopCliZipCode { get; set; }
         int FacturaSopCliEmail { get; set; }
-
+        int FacturaSopCCMCliente { get; set; }
         int FacturaSopItemnmbr { get; set; }
         int FacturaSopItemnmbrDescr { get; set; }
         int FacturaSopCodServicio { get ; set ; }

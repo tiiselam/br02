@@ -48,6 +48,7 @@ namespace winCompuertaGP
         private int _facturaSopCliZipCode;
         private int _facturaSopCliEmail;
         private int _facturaSopUNITPRCE;
+        private int _facturaSopCCMCliente;
         private int _facturaSopDeUNITPRCE;
         private int _facturaSopItemnmbr;
         private int _facturaSopItemnmbrDescr;
@@ -165,7 +166,7 @@ namespace winCompuertaGP
                 _facturaSopCUSTNAME = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopCa/CUSTNAME/text()").Value);
                 _facturaSopReferencia = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopCa/referencia/text()").Value);
                 _facturaSopUNITPRCE = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopCa/UNITPRCE/text()").Value);
-
+                _facturaSopCCMCliente = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopCa/cliCCM/text()").Value);
                 _facturaSopCliDireccion1 = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopCa/cliDireccion1/text()").Value);
                 _facturaSopCliDireccion2 = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopCa/cliDireccion2/text()").Value);
                 _facturaSopCliDireccion3 = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopCa/cliDireccion3/text()").Value);
@@ -427,6 +428,7 @@ namespace winCompuertaGP
         public int FacturaSopCliEstado { get => _facturaSopCliEstado; set => _facturaSopCliEstado = value; }
         public int FacturaSopCliZipCode { get => _facturaSopCliZipCode; set => _facturaSopCliZipCode = value; }
         public int FacturaSopCliEmail { get => _facturaSopCliEmail; set => _facturaSopCliEmail = value; }
+        public int FacturaSopCCMCliente { get => _facturaSopCCMCliente; set => _facturaSopCCMCliente = value; }
     }
 
 }
