@@ -399,7 +399,7 @@ namespace notaFiscalCsvHelper
                     worksheet.Cells[i, 26].Value = record.Protecao;
                     worksheet.Cells[i, 27].Value = record.InicioDireitoDeUso;
                     worksheet.Cells[i, 28].Value = record.FinDireitoDeUso;
-                    worksheet.Cells[i, 29].Value = record.Veiculacao;
+                    worksheet.Cells[i, 29].Value = record.Veiculacao;   //territorio
 
                     unitprice = Convert.ToDecimal(record.ValorUnitario, culInfo);
                     worksheet.Cells[i, 30].Value = unitprice;
@@ -407,7 +407,7 @@ namespace notaFiscalCsvHelper
                     //RM y RR deben tener los mismos campos
                     worksheet.Cells[i, 32].Value = record.InicioDireitoDeUso;
                     worksheet.Cells[i, 33].Value = record.FinDireitoDeUso;
-                    worksheet.Cells[i, 34].Value = record.Usage;
+                    worksheet.Cells[i, 34].Value = record.Protecao +"-"+ record.Veiculacao + "-" + record.Usage;
                     //RF, RR, RM deben tener unitprice en el mismo campo
                     worksheet.Cells[i, 35].Value = unitprice;
                     worksheet.Cells[i, 36].Value = record.Prefixo + record.CodigoServicio1 + record.CodigoServicio2;
