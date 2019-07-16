@@ -1,19 +1,19 @@
 USE [GBRA]
 GO
 
-/****** Object:  View [dbo].[vwCfdiGeneraDocumentoDeVentaBRA]    Script Date: 3/29/2019 2:38:15 PM ******/
-IF OBJECT_ID (N'dbo.vwCfdiGeneraDocumentoDeVentaBRA') IS NOT NULL
-DROP VIEW [dbo].[vwCfdiGeneraDocumentoDeVentaBRA]
-GO
-
-/****** Object:  View [dbo].[vwCfdiGeneraDocumentoDeVentaBRA]    Script Date: 3/29/2019 2:38:15 PM ******/
+/****** Object:  View [dbo].[vwCfdiGeneraDocumentoDeVentaBRA]    Script Date: 16/07/2019 12:39:41 ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE view [dbo].[vwCfdiGeneraDocumentoDeVentaBRA]
+
+
+
+
+
+ALTER view [dbo].[vwCfdiGeneraDocumentoDeVentaBRA]
 as
 --Propósito. Elabora un comprobante xml para factura electrónica cfdi Perú
 --Requisitos.  
@@ -72,7 +72,9 @@ as
 		--+ CASE WHEN em.emailCC is not null then em.emailCC END 
 		--+CASE WHEN em.emailCCO is not null then em.emailCCO END					
 																				EmailTomador ,
-		RTRIM(dbo.fncGetConceptoBra(DET.SOPTYPE,DET.SOPNUMBE))		
+		'Cessão de dereitos'  +' |'
+		+ RTRIM(dbo.fncGetConceptoBra(DET.SOPTYPE,DET.SOPNUMBE,'RF'))
+		+ 'Venc: ' +  + RIGHT(RTRIM(CONVERT(CHAR,FAC.DUEDATE,3)),8)  + '|' --Inicio
 		+ REPLACE(REPLACE(REPLACE(RTRIM(Substring(INFO.INETINFO,charindex('FIX_MSJ=',INFO.INETINFO,1)+8
 								 ,charindex('TRIB=',INFO.INETINFO,1)-8 - charindex('FIX_MSJ=',INFO.INETINFO,1))
 					),CHAR(9),''),CHAR(10),''),CHAR(13),'')  +' |'
@@ -148,10 +150,12 @@ select
 		--+ CASE WHEN em.emailCC is not null then em.emailCC END 
 		--+CASE WHEN em.emailCCO is not null then em.emailCCO END					
 																				EmailTomador ,
-		RTRIM(dbo.fncGetConceptoBra(DET.SOPTYPE,DET.SOPNUMBE))		
+		'Cessão de dereitos'  +' |'
+		+ RTRIM(dbo.fncGetConceptoBra(DET.SOPTYPE,DET.SOPNUMBE,'RF'))
+		+ 'Venc: ' +  + RIGHT(RTRIM(CONVERT(CHAR,FAC.DUEDATE,3)),8) + '|' --Inicio
 		+ REPLACE(REPLACE(REPLACE(RTRIM(Substring(INFO.INETINFO,charindex('FIX_MSJ=',INFO.INETINFO,1)+8
 								 ,charindex('TRIB=',INFO.INETINFO,1)-8 - charindex('FIX_MSJ=',INFO.INETINFO,1))
-					),CHAR(9),''),CHAR(10),''),CHAR(13),'')  +' |'
+					),CHAR(9),''),CHAR(10),''),CHAR(13),'')  +'|'
 		+ REPLACE(REPLACE(REPLACE(RTRIM(Substring(INFO.INETINFO,charindex('TRIB=',INFO.INETINFO,1)+5
 								 ,charindex('FONTE=',INFO.INETINFO,1)-5 - charindex('TRIB=',INFO.INETINFO,1))
 		
@@ -175,6 +179,11 @@ from  SOP10100                AS FAC
 	where CMP.INTERID = DB_NAME()
      AND  INFO.ADRSCODE = 'NOTA_FISCAL' 
 	 AND  INFO.MASTER_TYPE = 'CMP'
+
+
+
+
+
 
 
 
