@@ -1,7 +1,11 @@
 USE [GBRA]
 GO
 
-/****** Object:  View [dbo].[vwCfdiGeneraDocumentoDeVentaBRA]    Script Date: 16/07/2019 12:39:41 ******/
+/****** Object:  View [dbo].[vwCfdiGeneraDocumentoDeVentaBRA]    Script Date: 18/07/2019 07:57:26 ******/
+DROP VIEW [dbo].[vwCfdiGeneraDocumentoDeVentaBRA]
+GO
+
+/****** Object:  View [dbo].[vwCfdiGeneraDocumentoDeVentaBRA]    Script Date: 18/07/2019 07:57:26 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -13,7 +17,8 @@ GO
 
 
 
-ALTER view [dbo].[vwCfdiGeneraDocumentoDeVentaBRA]
+
+CREATE view [dbo].[vwCfdiGeneraDocumentoDeVentaBRA]
 as
 --Propósito. Elabora un comprobante xml para factura electrónica cfdi Perú
 --Requisitos.  
@@ -24,7 +29,7 @@ as
 --08/11/18 jcf Agrega ajustes para ubl 2.1
 --16/01/19 jcf Agrega dirección
 --21/02/19 jcf Agrega leyenda por factura
-
+--18/07/19 msal incorpora datos adicionales para identificar el archivo
 	select	
 		convert(varchar(20),1)													correlativo, 
 		CMP.TAXREGTN															CPFCNPJRemetente,
@@ -73,7 +78,7 @@ as
 		--+CASE WHEN em.emailCCO is not null then em.emailCCO END					
 																				EmailTomador ,
 		'Cessão de dereitos'  +' |'
-		+ RTRIM(dbo.fncGetConceptoBra(DET.SOPTYPE,DET.SOPNUMBE,'RF'))
+		+ RTRIM(dbo.fncGetConceptoBra(DET.SOPTYPE,DET.SOPNUMBE,FAC.REFRENCE))
 		+ 'Venc: ' +  + RIGHT(RTRIM(CONVERT(CHAR,FAC.DUEDATE,3)),8)  + '|' --Inicio
 		+ REPLACE(REPLACE(REPLACE(RTRIM(Substring(INFO.INETINFO,charindex('FIX_MSJ=',INFO.INETINFO,1)+8
 								 ,charindex('TRIB=',INFO.INETINFO,1)-8 - charindex('FIX_MSJ=',INFO.INETINFO,1))
@@ -151,7 +156,7 @@ select
 		--+CASE WHEN em.emailCCO is not null then em.emailCCO END					
 																				EmailTomador ,
 		'Cessão de dereitos'  +' |'
-		+ RTRIM(dbo.fncGetConceptoBra(DET.SOPTYPE,DET.SOPNUMBE,'RF'))
+		+ RTRIM(dbo.fncGetConceptoBra(DET.SOPTYPE,DET.SOPNUMBE,FAC.REFRENCE))
 		+ 'Venc: ' +  + RIGHT(RTRIM(CONVERT(CHAR,FAC.DUEDATE,3)),8) + '|' --Inicio
 		+ REPLACE(REPLACE(REPLACE(RTRIM(Substring(INFO.INETINFO,charindex('FIX_MSJ=',INFO.INETINFO,1)+8
 								 ,charindex('TRIB=',INFO.INETINFO,1)-8 - charindex('FIX_MSJ=',INFO.INETINFO,1))
@@ -179,6 +184,7 @@ from  SOP10100                AS FAC
 	where CMP.INTERID = DB_NAME()
      AND  INFO.ADRSCODE = 'NOTA_FISCAL' 
 	 AND  INFO.MASTER_TYPE = 'CMP'
+
 
 
 
