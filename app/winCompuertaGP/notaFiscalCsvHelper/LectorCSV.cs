@@ -69,7 +69,7 @@ namespace notaFiscalCsvHelper
                                 var xl = CreaExcel_paxp(records, archivoCsv, culInfo);
                                 archivosXl.Add(xl);
                             }
-                            else if (archivoCsv.ToUpper().Contains("CUSTOM"))
+                            else if (archivoCsv.ToUpper().Contains("CUSTOM") || archivoCsv.ToUpper().Contains("PREMIUM"))
                             {
                                 var records = csv.GetRecords<Premium>();
                                 var xl = CreaExcel_Premium(records, archivoCsv, culInfo);
