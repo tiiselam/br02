@@ -1,12 +1,13 @@
 USE [GBRA]
 GO
 
-/****** Object:  View [dbo].[vwCfdiGeneraDocumentoDeVentaBRA]    Script Date: 23/07/2019 11:10:50 ******/
+/****** Object:  View [dbo].[vwCfdiGeneraDocumentoDeVentaBRA]    Script Date: 23/07/2019 13:07:58 ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
+
 
 
 
@@ -76,6 +77,7 @@ as
 																				EmailTomador ,
 		RTRIM(dbo.fncGetConceptoBra(DET.SOPTYPE,DET.SOPNUMBE,FAC.REFRENCE,DET.ITEMDESC))
 		+ 'Venc: ' +  + RIGHT(RTRIM(CONVERT(CHAR,FAC.DUEDATE,3)),8)  + '|' --Inicio
+		+ 'Obs: ' + isnull(LTRIM(RTRIM(CONVERT(CHAR,B.CMMTTEXT))),' ')  + '|' 
 		+ REPLACE(REPLACE(REPLACE(RTRIM(Substring(INFO.INETINFO,charindex('FIX_MSJ=',INFO.INETINFO,1)+8
 								 ,charindex('TRIB=',INFO.INETINFO,1)-8 - charindex('FIX_MSJ=',INFO.INETINFO,1))
 					),CHAR(9),''),CHAR(10),''),CHAR(13),'')  +' |'
@@ -153,6 +155,7 @@ select
 																				EmailTomador ,
 		RTRIM(dbo.fncGetConceptoBra(DET.SOPTYPE,DET.SOPNUMBE,FAC.REFRENCE,DET.ITEMDESC))
 		+ 'Venc: ' +  + RIGHT(RTRIM(CONVERT(CHAR,FAC.DUEDATE,3)),8) + '|' --Inicio
+		+ 'Obs: ' + isnull(LTRIM(RTRIM(CONVERT(CHAR,B.CMMTTEXT))),' ')  + '|' 
 		+ REPLACE(REPLACE(REPLACE(RTRIM(Substring(INFO.INETINFO,charindex('FIX_MSJ=',INFO.INETINFO,1)+8
 								 ,charindex('TRIB=',INFO.INETINFO,1)-8 - charindex('FIX_MSJ=',INFO.INETINFO,1))
 					),CHAR(9),''),CHAR(10),''),CHAR(13),'')  +'|'
@@ -179,6 +182,7 @@ from  SOP10100                AS FAC
 	where CMP.INTERID = DB_NAME()
      AND  INFO.ADRSCODE = 'NOTA_FISCAL' 
 	 AND  INFO.MASTER_TYPE = 'CMP'
+
 
 
 
