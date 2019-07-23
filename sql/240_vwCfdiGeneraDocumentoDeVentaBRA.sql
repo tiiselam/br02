@@ -1,11 +1,7 @@
 USE [GBRA]
 GO
 
-/****** Object:  View [dbo].[vwCfdiGeneraDocumentoDeVentaBRA]    Script Date: 18/07/2019 07:57:26 ******/
-DROP VIEW [dbo].[vwCfdiGeneraDocumentoDeVentaBRA]
-GO
-
-/****** Object:  View [dbo].[vwCfdiGeneraDocumentoDeVentaBRA]    Script Date: 18/07/2019 07:57:26 ******/
+/****** Object:  View [dbo].[vwCfdiGeneraDocumentoDeVentaBRA]    Script Date: 23/07/2019 11:10:50 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -18,7 +14,8 @@ GO
 
 
 
-CREATE view [dbo].[vwCfdiGeneraDocumentoDeVentaBRA]
+
+ALTER view [dbo].[vwCfdiGeneraDocumentoDeVentaBRA]
 as
 --Propósito. Elabora un comprobante xml para factura electrónica cfdi Perú
 --Requisitos.  
@@ -77,8 +74,7 @@ as
 		--+ CASE WHEN em.emailCC is not null then em.emailCC END 
 		--+CASE WHEN em.emailCCO is not null then em.emailCCO END					
 																				EmailTomador ,
-		'Cessão de dereitos'  +' |'
-		+ RTRIM(dbo.fncGetConceptoBra(DET.SOPTYPE,DET.SOPNUMBE,FAC.REFRENCE))
+		RTRIM(dbo.fncGetConceptoBra(DET.SOPTYPE,DET.SOPNUMBE,FAC.REFRENCE,DET.ITEMDESC))
 		+ 'Venc: ' +  + RIGHT(RTRIM(CONVERT(CHAR,FAC.DUEDATE,3)),8)  + '|' --Inicio
 		+ REPLACE(REPLACE(REPLACE(RTRIM(Substring(INFO.INETINFO,charindex('FIX_MSJ=',INFO.INETINFO,1)+8
 								 ,charindex('TRIB=',INFO.INETINFO,1)-8 - charindex('FIX_MSJ=',INFO.INETINFO,1))
@@ -155,8 +151,7 @@ select
 		--+ CASE WHEN em.emailCC is not null then em.emailCC END 
 		--+CASE WHEN em.emailCCO is not null then em.emailCCO END					
 																				EmailTomador ,
-		'Cessão de dereitos'  +' |'
-		+ RTRIM(dbo.fncGetConceptoBra(DET.SOPTYPE,DET.SOPNUMBE,FAC.REFRENCE))
+		RTRIM(dbo.fncGetConceptoBra(DET.SOPTYPE,DET.SOPNUMBE,FAC.REFRENCE,DET.ITEMDESC))
 		+ 'Venc: ' +  + RIGHT(RTRIM(CONVERT(CHAR,FAC.DUEDATE,3)),8) + '|' --Inicio
 		+ REPLACE(REPLACE(REPLACE(RTRIM(Substring(INFO.INETINFO,charindex('FIX_MSJ=',INFO.INETINFO,1)+8
 								 ,charindex('TRIB=',INFO.INETINFO,1)-8 - charindex('FIX_MSJ=',INFO.INETINFO,1))
@@ -184,6 +179,7 @@ from  SOP10100                AS FAC
 	where CMP.INTERID = DB_NAME()
      AND  INFO.ADRSCODE = 'NOTA_FISCAL' 
 	 AND  INFO.MASTER_TYPE = 'CMP'
+
 
 
 
