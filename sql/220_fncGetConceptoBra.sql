@@ -1,21 +1,12 @@
 USE [GBRA]
 GO
 
-/****** Object:  UserDefinedFunction [dbo].[fncGetConceptoBra]    Script Date: 23/07/2019 11:10:03 ******/
+/****** Object:  UserDefinedFunction [dbo].[fncGetConceptoBra]    Script Date: 7/25/2019 2:11:38 PM ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
-
-
-
-
-
-
-
-
-
 
 ALTER FUNCTION [dbo].[fncGetConceptoBra] (@INSopType smallint
 										 ,@INSopNumbe CHAR(21)
@@ -35,25 +26,25 @@ BEGIN
 					CASE 
 						WHEN UPPER(Substring(RTRIM(@INFileType),1,charindex('-',@INFileType,1)-2)) in( 'RM') THEN			    
 								LEFT(LTRIM(RTRIM(A.ITEMNMBR))+REPLICATE(' ', 12),12) + ' ' -- Imagem
-								+ LEFT(LTRIM(RTRIM(A.ITEMDESC))+ REPLICATE(' ', 30),30) + ' ' -- Uso
-								+ RIGHT(REPLICATE(' ',22)+ isnull(Substring(C.COMMENT_1,charindex('-',C.COMMENT_1,charindex('-',C.COMMENT_1,1)+1)+1,22),' '),22) + ' '-- Industria
+								+ LEFT(LTRIM(RTRIM(A.ITEMDESC))+ REPLICATE(' ', 24),24) + ' ' -- Uso
+								+ RIGHT(REPLICATE(' ',16)+ isnull(Substring(C.COMMENT_1,charindex('-',C.COMMENT_1,charindex('-',C.COMMENT_1,1)+1)+1,16),' '),16) + ' '-- Industria
 								+ RIGHT(isnull(Substring(RTRIM(CONVERT(CHAR,C.COMMENT_1)),1,1),'  '),2) + ' '-- Prot
 								+ RIGHT(RTRIM(CONVERT(CHAR,A.ReqShipDate,3)),8) + ' ' --Inicio
 								+ RIGHT(RTRIM(CONVERT(CHAR,A.ACTLSHIP,3)),8) + ' ' --Fin
 								+ ISNULL(Substring(RTRIM(C.COMMENT_1),charindex('-',C.COMMENT_1,1)+1,2),'  ') + ' '-- Territ
-							    + RIGHT(REPLICATE(' ',12) + RTRIM(cast(format(A.UNITPRCE, 'N', 'de-de') as char)),12) + '|' --VAlor
+							    + RIGHT(REPLICATE(' ',11) + RTRIM(cast(format(A.UNITPRCE, 'N', 'de-de') as char)),11) + '|' --VAlor
 						WHEN UPPER(Substring(RTRIM(@INFileType),1,charindex('-',@INFileType,1)-2)) in( 'PREMIUM') THEN			    
 								LEFT(LTRIM(RTRIM(A.ITEMNMBR))+REPLICATE(' ', 20),20) + ' ' -- Imagem
 								+ LEFT(LTRIM(RTRIM(A.ITEMDESC))+ REPLICATE(' ', 30),30) + ' ' -- Uso
-								+ REPLICATE(' ',17+2+8+8+2) + ' '
-							    + RIGHT(REPLICATE(' ',12) + RTRIM(cast(format(A.UNITPRCE, 'N', 'de-de') as char)),12) + '|' --VAlor
+								+ REPLICATE(' ',17) + ' '
+							    + RIGHT(REPLICATE(' ',11) + RTRIM(cast(format(A.UNITPRCE, 'N', 'de-de') as char)),11) + '|' --VAlor
 						WHEN UPPER(Substring(RTRIM(@INFileType),1,charindex('-',@INFileType,1)-2)) in('RF','ISTOCK','PAXP') THEN
 								LEFT(LTRIM(RTRIM(A.ITEMNMBR))+REPLICATE(' ', 20),20) + ' ' -- Imagem
-								+ LEFT(RTRIM(A.ITEMDESC)+REPLICATE(' ', 67) ,67) + ' '-- Descipsao Tamabnho
+								+ LEFT(RTRIM(A.ITEMDESC)+REPLICATE(' ', 55) ,55) + ' '-- Descipsao Tamabnho
 								+ RIGHT(REPLICATE(' ',12) + RTRIM(cast(format(A.UNITPRCE, 'N', 'de-de') as char)),12) + '|' --VAlor
 						WHEN UPPER(Substring(RTRIM(@INFileType),1,charindex('-',@INFileType,1)-2)) in('RR') THEN			    
 								LEFT(LTRIM(RTRIM(A.ITEMNMBR))+REPLICATE(' ', 12),12) + ' ' -- Imagem
-								+ LEFT(LTRIM(RTRIM(A.ITEMDESC))+ REPLICATE(' ', 50),50) + ' ' -- Utilizasao
+								+ LEFT(LTRIM(RTRIM(A.ITEMDESC))+ REPLICATE(' ', 40),40) + ' ' -- Utilizasao
 								+ RIGHT(RTRIM(CONVERT(CHAR,A.ReqShipDate,3)),8) + ' ' --Inicio
 								+ RIGHT(RTRIM(CONVERT(CHAR,A.ACTLSHIP,3)),8) + ' ' --Fin
 								+ RIGHT(REPLICATE(' ',12) + RTRIM(cast(format(A.UNITPRCE, 'N', 'de-de') as char)),12) + '|' --VAlor
@@ -69,25 +60,25 @@ BEGIN
 					CASE
 						WHEN UPPER(Substring(RTRIM(@INFileType),1,charindex('-',@INFileType,1)-2)) in( 'RM') THEN			    
 								LEFT(LTRIM(RTRIM(A.ITEMNMBR))+REPLICATE(' ', 12),12) + ' ' -- Imagem
-								+ LEFT(LTRIM(RTRIM(A.ITEMDESC))+ REPLICATE(' ', 30),30) + ' ' -- Uso
-								+ RIGHT(REPLICATE(' ',22)+ isnull(Substring(C.COMMENT_1,charindex('-',C.COMMENT_1,charindex('-',C.COMMENT_1,1)+1)+1,22),' '),22) + ' '-- Industria
+								+ LEFT(LTRIM(RTRIM(A.ITEMDESC))+ REPLICATE(' ', 24),24) + ' ' -- Uso
+								+ RIGHT(REPLICATE(' ',16)+ isnull(Substring(C.COMMENT_1,charindex('-',C.COMMENT_1,charindex('-',C.COMMENT_1,1)+1)+1,16),' '),16) + ' '-- Industria
 								+ RIGHT(isnull(Substring(RTRIM(CONVERT(CHAR,C.COMMENT_1)),1,1),'  '),2) + ' '-- Prot
 								+ RIGHT(RTRIM(CONVERT(CHAR,A.ReqShipDate,3)),8) + ' ' --Inicio
 								+ RIGHT(RTRIM(CONVERT(CHAR,A.ACTLSHIP,3)),8) + ' ' --Fin
 								+ ISNULL(Substring(RTRIM(C.COMMENT_1),charindex('-',C.COMMENT_1,1)+1,2),'  ') + ' '-- Territ
-							    + RIGHT(REPLICATE(' ',12) + RTRIM(cast(format(A.UNITPRCE, 'N', 'de-de') as char)),12) + '|' --VAlor
+							    + RIGHT(REPLICATE(' ',11) + RTRIM(cast(format(A.UNITPRCE, 'N', 'de-de') as char)),11) + '|' --VAlor
 						WHEN UPPER(Substring(RTRIM(@INFileType),1,charindex('-',@INFileType,1)-2)) in( 'PREMIUM') THEN			    
 								LEFT(LTRIM(RTRIM(A.ITEMNMBR))+REPLICATE(' ', 20),20) + ' ' -- Imagem
-								+ LEFT(LTRIM(RTRIM(A.ITEMDESC))+ REPLICATE(' ', 30),30) + ' ' -- Uso
-								+ REPLICATE(' ',17+2+8+8+2) + ' '
-							    + RIGHT(REPLICATE(' ',12) + RTRIM(cast(format(A.UNITPRCE, 'N', 'de-de') as char)),12) + '|' --VAlor
+								+ LEFT(LTRIM(RTRIM(A.ITEMDESC))+ REPLICATE(' ', 32),32) + ' ' -- Uso
+								+ REPLICATE(' ',19) + ' '
+							    + RIGHT(REPLICATE(' ',11) + RTRIM(cast(format(A.UNITPRCE, 'N', 'de-de') as char)),11) + '|' --VAlor
 						WHEN UPPER(Substring(RTRIM(@INFileType),1,charindex('-',@INFileType,1)-2)) in('RF','ISTOCK','PAXP') THEN
 								LEFT(LTRIM(RTRIM(A.ITEMNMBR))+REPLICATE(' ', 20),20) + ' ' -- Imagem
-								+ LEFT(RTRIM(A.ITEMDESC)+REPLICATE(' ', 67) ,67) + ' '-- Descipsao Tamabnho
+								+ LEFT(RTRIM(A.ITEMDESC)+REPLICATE(' ', 55) ,55) + ' '-- Descipsao Tamabnho
 								+ RIGHT(REPLICATE(' ',12) + RTRIM(cast(format(A.UNITPRCE, 'N', 'de-de') as char)),12) + '|' --VAlor
 						WHEN UPPER(Substring(RTRIM(@INFileType),1,charindex('-',@INFileType,1)-2)) in('RR') THEN			    	    
 								LEFT(LTRIM(RTRIM(A.ITEMNMBR))+REPLICATE(' ', 12),12) + ' ' -- Imagem
-								+ LEFT(LTRIM(RTRIM(A.ITEMDESC))+ REPLICATE(' ', 50),50) + ' ' -- Utilizasao
+								+ LEFT(LTRIM(RTRIM(A.ITEMDESC))+ REPLICATE(' ', 40),40) + ' ' -- Utilizasao
 								+ RIGHT(RTRIM(CONVERT(CHAR,A.ReqShipDate,3)),8) + ' ' --Inicio
 								+ RIGHT(RTRIM(CONVERT(CHAR,A.ACTLSHIP,3)),8) + ' ' --Fin
 								+ RIGHT(REPLICATE(' ',12) + RTRIM(cast(format(A.UNITPRCE, 'N', 'de-de') as char)),12) + '|' --VAlor
@@ -105,23 +96,23 @@ BEGIN
 							--'Imagem	            Uso	              Industria       Prot Inicio   Termino  Territ   Valor|'
 							'Cessão de dereitos'  +' |'
 							+ LEFT(LTRIM(RTRIM('Imagem'))+REPLICATE(' ', 12),12) + ' ' -- Imagem
-							+ LEFT(LTRIM(RTRIM('Uso'	))+ REPLICATE(' ', 30),30) + ' ' -- Uso
-							+ Substring('Industria               ',1,22) + ' '-- Industria
+							+ LEFT(LTRIM(RTRIM('Uso'	))+ REPLICATE(' ', 24),24) + ' ' -- Uso
+							+ Substring('Industria               ',1,16) + ' '-- Industria
 							+ RIGHT(Substring(RTRIM(CONVERT(CHAR,'Prot')),1,1),2) + ' '-- Prot
 							+ RIGHT(REPLICATE(' ',8)+'Início',8) + ' ' --Inicio
 							+ RIGHT(REPLICATE(' ',8)+'Término',8) + ' ' --Fin
 							+ Substring(RTRIM('Territ'),1,2) + ' '-- Territ
-							+ RIGHT(REPLICATE(' ',12) + RTRIM('Valor'),12) + '|' --VAlor
+							+ RIGHT(REPLICATE(' ',11) + RTRIM('Valor'),11) + '|' --VAlor
 					WHEN UPPER(Substring(RTRIM(@INFileType),1,charindex('-',@INFileType,1)-2)) in('RF','ISTOCK','PAXP') THEN 
 							-- 123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
 							'Cessão de dereitos'  +' |'
 							+ LEFT(LTRIM(RTRIM('Imagem'))+REPLICATE(' ', 20),20) + ' ' -- Imagem
-							+ LEFT(RTRIM('Descripção Tamanho')+REPLICATE(' ', 67) ,67) + ' '-- Descipsao Tamabnho
+							+ LEFT(RTRIM('Descripção Tamanho')+REPLICATE(' ', 55) ,55) + ' '-- Descipsao Tamabnho
 							+ RIGHT(REPLICATE(' ',12) + RTRIM('Valor'),12) + '|' --VAlor
 					WHEN UPPER(Substring(RTRIM(@INFileType),1,charindex('-',@INFileType,1)-2)) in('RR') THEN 
 							'Cessão de dereitos'  +' |'
 							+ LEFT(LTRIM(RTRIM('Imagem'))+REPLICATE(' ', 12),12) + ' ' -- Imagem
-							+ LEFT(LTRIM(RTRIM('Utilização'))+ REPLICATE(' ', 50),50) + ' ' -- Utilizasao
+							+ LEFT(LTRIM(RTRIM('Utilização'))+ REPLICATE(' ', 40),40) + ' ' -- Utilizasao
 							+ RIGHT(REPLICATE(' ',8)+'Início',8) + ' ' --Inicio
 							+ RIGHT(REPLICATE(' ',8)+'Término',8) + ' ' --Fin
 							+ RIGHT(REPLICATE(' ',12) + RTRIM('Valor'),12) + '|' --VAlor
@@ -150,14 +141,3 @@ BEGIN
 	Return @Concepto
 	
 END
-
-
-
-
-
-
-
-
-GO
-
-

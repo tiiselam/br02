@@ -1,20 +1,12 @@
 USE [GBRA]
 GO
 
-/****** Object:  View [dbo].[vwCfdiGeneraDocumentoDeVentaBRA]    Script Date: 23/07/2019 13:07:58 ******/
+/****** Object:  View [dbo].[vwCfdiGeneraDocumentoDeVentaBRA]    Script Date: 7/25/2019 2:30:20 PM ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
-
-
-
-
-
-
-
-
 
 ALTER view [dbo].[vwCfdiGeneraDocumentoDeVentaBRA]
 as
@@ -71,13 +63,13 @@ as
 		RTRIM(CST.CITY)															Emisor_Cidade ,
 		RTRIM(CST.STATE)														Emisor_UF ,
 		RTRIM(CST.ZIP)															Emisor_CEP ,
-		CASE WHEN em.emailTo is not null then em.emailTo  END 
+		CASE WHEN em.emailTo is not null then Substring(em.emailTo,charindex(',',em.emailTo,1)+1,100)  END 
 		--+ CASE WHEN em.emailCC is not null then em.emailCC END 
 		--+CASE WHEN em.emailCCO is not null then em.emailCCO END					
 																				EmailTomador ,
 		RTRIM(dbo.fncGetConceptoBra(DET.SOPTYPE,DET.SOPNUMBE,FAC.REFRENCE,DET.ITEMDESC))
 		+ 'Venc: ' +  + RIGHT(RTRIM(CONVERT(CHAR,FAC.DUEDATE,3)),8)  + '|' --Inicio
-		+ 'Obs: ' + isnull(LTRIM(RTRIM(CONVERT(CHAR,B.CMMTTEXT))),' ')  + '|' 
+		+ 'Obs: ' + isnull(DET.ITEMDESC,' ')  + '|' 
 		+ REPLACE(REPLACE(REPLACE(RTRIM(Substring(INFO.INETINFO,charindex('FIX_MSJ=',INFO.INETINFO,1)+8
 								 ,charindex('TRIB=',INFO.INETINFO,1)-8 - charindex('FIX_MSJ=',INFO.INETINFO,1))
 					),CHAR(9),''),CHAR(10),''),CHAR(13),'')  +' |'
@@ -149,13 +141,13 @@ select
 		RTRIM(CST.CITY)															Emisor_Cidade ,
 		RTRIM(CST.STATE)														Emisor_UF ,
 		RTRIM(CST.ZIP)															Emisor_CEP ,
-		CASE WHEN em.emailTo is not null then em.emailTo  END 
+		CASE WHEN em.emailTo is not null then  Substring(em.emailTo,charindex(',',em.emailTo,1)+1,100)  END 
 		--+ CASE WHEN em.emailCC is not null then em.emailCC END 
 		--+CASE WHEN em.emailCCO is not null then em.emailCCO END					
 																				EmailTomador ,
 		RTRIM(dbo.fncGetConceptoBra(DET.SOPTYPE,DET.SOPNUMBE,FAC.REFRENCE,DET.ITEMDESC))
 		+ 'Venc: ' +  + RIGHT(RTRIM(CONVERT(CHAR,FAC.DUEDATE,3)),8) + '|' --Inicio
-		+ 'Obs: ' + isnull(LTRIM(RTRIM(CONVERT(CHAR,B.CMMTTEXT))),' ')  + '|' 
+		+ 'Obs: ' + isnull(DET.ITEMDESC,' ')  + '|' 
 		+ REPLACE(REPLACE(REPLACE(RTRIM(Substring(INFO.INETINFO,charindex('FIX_MSJ=',INFO.INETINFO,1)+8
 								 ,charindex('TRIB=',INFO.INETINFO,1)-8 - charindex('FIX_MSJ=',INFO.INETINFO,1))
 					),CHAR(9),''),CHAR(10),''),CHAR(13),'')  +'|'
@@ -195,6 +187,5 @@ from  SOP10100                AS FAC
 
 
 
+
 GO
-
-
