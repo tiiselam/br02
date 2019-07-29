@@ -482,7 +482,7 @@ namespace Web_Service
                     {
                         Errores += "\tError: El campo Discriminacao no puede ser nulo o vacio" + Environment.NewLine;
                     }
-                    else Detalle += Utiles.Izquierda(documentoRps.RPS.Discriminacao, 1000);
+                    else Detalle += Utiles.Izquierda(documentoRps.RPS.Discriminacao, 1950);
                     //MSAL
                     //Detalle += "\n\r";
                   
