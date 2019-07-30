@@ -56,6 +56,7 @@ namespace winCompuertaGP
         private int _facturaSopDeReqShipDate;
         private int _facturaSopDeActlShipDate;
         private int _facturaSopDeCmmttext;
+        private string _facturaSopDeGPCuentaDefault;
         private string _incluirUserDef;
         private string _usrtab01_predetValue;
         private string _usrtab02_predetValue;
@@ -192,6 +193,7 @@ namespace winCompuertaGP
                 _facturaSopDeActlShipDate = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopDe/ActlShipDate/text()").Value);
                 _facturaSopDeCmmttext = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopDe/CMMTTEXT/text()").Value);
 
+                _facturaSopDeGPCuentaDefault = elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopDe/GPCuentaDefault/text()").Value;
             }
             catch (Exception ae)
             {
@@ -414,6 +416,7 @@ namespace winCompuertaGP
         public int FacturaSopDeReqShipDate { get => _facturaSopDeReqShipDate; set => _facturaSopDeReqShipDate = value; }
         public int FacturaSopDeActlShipDate { get => _facturaSopDeActlShipDate; set => _facturaSopDeActlShipDate = value; }
         public int FacturaSopDeCmmttext { get => _facturaSopDeCmmttext; set => _facturaSopDeCmmttext = value; }
+        public string FacturaSopDeGPCuentaDefault { get => _facturaSopDeGPCuentaDefault; set => _facturaSopDeGPCuentaDefault = value; }
 
         public int intEstadoCompletado { get => int.Parse(_intEstadoCompletado); set => _intEstadoCompletado = value.ToString(); }
         public int intEstadosPermitidos { get => int.Parse(_intEstadosPermitidos); set => _intEstadosPermitidos = value.ToString(); }
@@ -429,6 +432,7 @@ namespace winCompuertaGP
         public int FacturaSopCliZipCode { get => _facturaSopCliZipCode; set => _facturaSopCliZipCode = value; }
         public int FacturaSopCliEmail { get => _facturaSopCliEmail; set => _facturaSopCliEmail = value; }
         public int FacturaSopCCMCliente { get => _facturaSopCCMCliente; set => _facturaSopCCMCliente = value; }
+
     }
 
 }
