@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<listaParametros>
+  <servidor defaultDB="GBRA">25.7.201.114</servidor>
+  <!--1: seguridad windows, 0: seguridad sql-->
+  <seguridadIntegrada>1</seguridadIntegrada>
+  <usuariosql>sa</usuariosql>
+  <passwordsql>na</passwordsql>
+  <compannia bd="GBRA" nombre="TEST GETTY BRASIL" metadataGP="metadata=res://*/BLL.ModelGP.csdl|res://*/BLL.ModelGP.ssdl|res://*/BLL.ModelGP.msl;provider=System.Data.SqlClient;" metadataIntegra="metadata=res://*/BLL.ModelIntegra.csdl|res://*/BLL.ModelIntegra.ssdl|res://*/BLL.ModelIntegra.msl;provider=System.Data.SqlClient;" metadataUI="metadata=res://*/ModelEntidadesGP.csdl|res://*/ModelEntidadesGP.ssdl|res://*/ModelEntidadesGP.msl;provider=System.Data.SqlClient;">
+    <TargetGPDB>GBRA</TargetGPDB>
+	<formatoFechaDB>dd/MM/yyyy</formatoFechaDB>
+	<formatoFechaXL>dd/MM/yyyy</formatoFechaXL>
+  <!--La cultura de-DE permite montos con coma decimal y punto como separador de miles:-->
+  <culturaParaMontos>de-DE</culturaParaMontos>
+	<RutaLog>c:\gpUsuario</RutaLog>
+	<rutaCarpeta>C:\jcTii\Desarrollo\BRA_DocsElectronicos\F_QualityAndTesting\SOPUploadNotaFiscal\2018novNotasEjemplo</rutaCarpeta>
+	<idsDocumentoSOP idAriane="01" idGP="FV A0001"></idsDocumentoSOP>
+  <BrasilServicios>
+    <!--Tipos especiales de archivos y sus respectivos códigos de servicios:-->
+    <CodigoServicioDflt tipoVenta="TRILHA" codigoServicio="02962"></CodigoServicioDflt>
+		<CodigoServicioDflt tipoVenta="PRODUCAO" codigoServicio="06807"></CodigoServicioDflt>
+		<CodigoServicioDflt tipoVenta="MMS" codigoServicio="02684"></CodigoServicioDflt>
+	</BrasilServicios>
+    <facturaSopCa>
+      <!--Números de columna de la planilla excel para la cabecera de la factura:-->
+      <filaInicial>1</filaInicial>
+			<columnaMensajes>39</columnaMensajes>
+			<serie>1</serie>
+			<sopnumbe>2</sopnumbe>
+			<facturaSopSerieYNumbeSeparados>SI</facturaSopSerieYNumbeSeparados>
+			<docdate>3</docdate>
+			<duedate>22</duedate>
+			<TXRGNNUM>9</TXRGNNUM>
+			<CUSTNAME>11</CUSTNAME>
+			<UNITPRCE>5</UNITPRCE>
+			<referencia>21</referencia>
+			<cliCCM>38</cliCCM>
+			<cliDireccion1>37</cliDireccion1>
+			<cliDireccion2>14</cliDireccion2>
+			<cliDireccion3>16</cliDireccion3>
+			<cliCiudad>17</cliCiudad>
+			<cliEstado>18</cliEstado>
+			<cliZipCode>19</cliZipCode>
+			<cliEmail>20</cliEmail>
+	</facturaSopCa>
+	<facturaSopDe>
+    <!--Números de columna de la planilla excel para el detalle de la factura:-->
+      <filaInicial>0</filaInicial>
+			<UNITPRCE>35</UNITPRCE>
+			<itemnmbr>23</itemnmbr>
+			<codservicio>36</codservicio>
+			<itemnmbrDescr>24</itemnmbrDescr>
+			<ReqShipDate>32</ReqShipDate>
+			<ActlShipDate>33</ActlShipDate>
+			<CMMTTEXT>34</CMMTTEXT>
+    <!--Cuenta contable GP que se asigna de forma predeterminada a los items con cantidad 0:-->
+    <GPCuentaDefault>30403-1332</GPCuentaDefault>
+	</facturaSopDe>
+	<sopUserDefined>
+    <!--Datos predeterminados que ingresan en los campos definidos por el usuario de la factura sop:-->
+      <incluirUserDef>true</incluirUserDef>
+			<usrtab01_predetValue>T</usrtab01_predetValue>
+			<usrtab02_predetValue>2</usrtab02_predetValue>
+	</sopUserDefined>
+    <Cliente>
+      <DefaultCUSTCLAS>GENERAL</DefaultCUSTCLAS>
+    </Cliente>
+	<intEstadoCompletado>1</intEstadoCompletado>
+	<intEstadosPermitidos>1</intEstadosPermitidos>
+	</compannia>
+</listaParametros>

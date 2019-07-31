@@ -28,6 +28,7 @@ namespace winCompuertaGP
         private string _culturaParaMontos;
         private string rutaLog;
         Dictionary<string, string> idsDocumento;
+        Dictionary<string, string> _codigosServicioDflt;
         private string _rutaCarpeta;
         private string _clienteDefaultCUSTCLAS;
         private int _facturaSopFilaInicial;
@@ -65,8 +66,6 @@ namespace winCompuertaGP
 
         public ParametrosDB()
         {
-            //try
-            //{
                 XmlDocument listaParametros = new XmlDocument();
                 listaParametros.Load(new XmlTextReader(nombreArchivoParametros));
 
@@ -91,11 +90,6 @@ namespace winCompuertaGP
                     });
                 }
 
-            //}
-            //catch (Exception eprm)
-            //{
-            //    ultimoMensaje = "Contacte al administrador. No se pudo obtener la configuración general. [Parametros()]" + eprm.Message;
-            //}
         }
 
         public void GetParametros(int idxEmpresa)
@@ -143,6 +137,20 @@ namespace winCompuertaGP
             catch (Exception ae)
             {
                 throw new ArgumentException("Excepción en los parámetros de la sección idsDocumentoSOP. [GetParametros(int)] " + ae.Message);
+            }
+
+            try
+            {
+                XmlNodeList codigoServicioDflt = listaParametros.DocumentElement.SelectNodes("//compannia[@bd='" + IdCompannia + "']/BrasilServicios/CodigoServicioDflt");
+                _codigosServicioDflt = new Dictionary<string, string>();
+                foreach (XmlNode n in codigoServicioDflt)
+                {
+                    _codigosServicioDflt.Add(n.Attributes["tipoVenta"].Value, n.Attributes["codigoServicio"].Value);
+                }
+            }
+            catch (Exception ae)
+            {
+                throw new ArgumentException("Excepción en los parámetros de la sección CodigoServicioDflt. [GetParametros(int)] " + ae.Message);
             }
 
             try
@@ -393,6 +401,7 @@ namespace winCompuertaGP
                 idsDocumento = value;
             }
         }
+        public Dictionary<string, string> CodigosServicioDflt { get => _codigosServicioDflt; set => _codigosServicioDflt = value; }
 
         public string rutaCarpeta { get => _rutaCarpeta; set => _rutaCarpeta = value; }
         public string ClienteDefaultCUSTCLAS { get => _clienteDefaultCUSTCLAS; set => _clienteDefaultCUSTCLAS = value; }
@@ -432,7 +441,6 @@ namespace winCompuertaGP
         public int FacturaSopCliZipCode { get => _facturaSopCliZipCode; set => _facturaSopCliZipCode = value; }
         public int FacturaSopCliEmail { get => _facturaSopCliEmail; set => _facturaSopCliEmail = value; }
         public int FacturaSopCCMCliente { get => _facturaSopCCMCliente; set => _facturaSopCCMCliente = value; }
-
     }
 
 }

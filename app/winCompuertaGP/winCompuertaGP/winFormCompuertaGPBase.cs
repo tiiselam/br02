@@ -394,7 +394,7 @@ namespace winCompuertaGP
 
                     bandejaXL.ProgressHandler += reportaProgreso;
 
-                    LectorCSV csv = new LectorCSV();
+                    LectorCSV csv = new LectorCSV(configuracion.CodigosServicioDflt);
                     csv.ProgressHandler += reportaProgreso;
 
                     System.Globalization.CultureInfo culInfo = new System.Globalization.CultureInfo(configuracion.CulturaParaMontos);
