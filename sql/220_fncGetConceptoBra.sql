@@ -1,14 +1,18 @@
 USE [GBRA]
 GO
 
-/****** Object:  UserDefinedFunction [dbo].[fncGetConceptoBra]    Script Date: 7/25/2019 2:11:38 PM ******/
+/****** Object:  UserDefinedFunction [dbo].[fncGetConceptoBra]    Script Date: 06/08/2019 08:23:28 ******/
+DROP FUNCTION [dbo].[fncGetConceptoBra]
+GO
+
+/****** Object:  UserDefinedFunction [dbo].[fncGetConceptoBra]    Script Date: 06/08/2019 08:23:28 ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
 
-ALTER FUNCTION [dbo].[fncGetConceptoBra] (@INSopType smallint
+CREATE FUNCTION [dbo].[fncGetConceptoBra] (@INSopType smallint
 										 ,@INSopNumbe CHAR(21)
 										 ,@INFileType CHAR(30)
 										 ,@INLeyenda  CHAR(1650)
@@ -33,12 +37,12 @@ BEGIN
 								+ RIGHT(RTRIM(CONVERT(CHAR,A.ACTLSHIP,3)),8) + ' ' --Fin
 								+ ISNULL(Substring(RTRIM(C.COMMENT_1),charindex('-',C.COMMENT_1,1)+1,2),'  ') + ' '-- Territ
 							    + RIGHT(REPLICATE(' ',11) + RTRIM(cast(format(A.UNITPRCE, 'N', 'de-de') as char)),11) + '|' --VAlor
-						WHEN UPPER(Substring(RTRIM(@INFileType),1,charindex('-',@INFileType,1)-2)) in( 'PREMIUM') THEN			    
+						WHEN UPPER(Substring(RTRIM(@INFileType),1,charindex('-',@INFileType,1)-2)) in( 'PREMIUM','PRODUCAO','MMS') THEN			    
 								LEFT(LTRIM(RTRIM(A.ITEMNMBR))+REPLICATE(' ', 20),20) + ' ' -- Imagem
 								+ LEFT(LTRIM(RTRIM(A.ITEMDESC))+ REPLICATE(' ', 30),30) + ' ' -- Uso
-								+ REPLICATE(' ',17) + ' '
+								+ REPLICATE(' ',23) + ' '
 							    + RIGHT(REPLICATE(' ',11) + RTRIM(cast(format(A.UNITPRCE, 'N', 'de-de') as char)),11) + '|' --VAlor
-						WHEN UPPER(Substring(RTRIM(@INFileType),1,charindex('-',@INFileType,1)-2)) in('RF','ISTOCK','PAXP') THEN
+						WHEN UPPER(Substring(RTRIM(@INFileType),1,charindex('-',@INFileType,1)-2)) in('RF','ISTOCK','PAXP','TRILHA') THEN
 								LEFT(LTRIM(RTRIM(A.ITEMNMBR))+REPLICATE(' ', 20),20) + ' ' -- Imagem
 								+ LEFT(RTRIM(A.ITEMDESC)+REPLICATE(' ', 55) ,55) + ' '-- Descipsao Tamabnho
 								+ RIGHT(REPLICATE(' ',12) + RTRIM(cast(format(A.UNITPRCE, 'N', 'de-de') as char)),12) + '|' --VAlor
@@ -67,12 +71,12 @@ BEGIN
 								+ RIGHT(RTRIM(CONVERT(CHAR,A.ACTLSHIP,3)),8) + ' ' --Fin
 								+ ISNULL(Substring(RTRIM(C.COMMENT_1),charindex('-',C.COMMENT_1,1)+1,2),'  ') + ' '-- Territ
 							    + RIGHT(REPLICATE(' ',11) + RTRIM(cast(format(A.UNITPRCE, 'N', 'de-de') as char)),11) + '|' --VAlor
-						WHEN UPPER(Substring(RTRIM(@INFileType),1,charindex('-',@INFileType,1)-2)) in( 'PREMIUM') THEN			    
+						WHEN UPPER(Substring(RTRIM(@INFileType),1,charindex('-',@INFileType,1)-2)) in( 'PREMIUM','PRODUCAO','MMS') THEN			    
 								LEFT(LTRIM(RTRIM(A.ITEMNMBR))+REPLICATE(' ', 20),20) + ' ' -- Imagem
 								+ LEFT(LTRIM(RTRIM(A.ITEMDESC))+ REPLICATE(' ', 32),32) + ' ' -- Uso
-								+ REPLICATE(' ',19) + ' '
+								+ REPLICATE(' ',23) + ' '
 							    + RIGHT(REPLICATE(' ',11) + RTRIM(cast(format(A.UNITPRCE, 'N', 'de-de') as char)),11) + '|' --VAlor
-						WHEN UPPER(Substring(RTRIM(@INFileType),1,charindex('-',@INFileType,1)-2)) in('RF','ISTOCK','PAXP') THEN
+						WHEN UPPER(Substring(RTRIM(@INFileType),1,charindex('-',@INFileType,1)-2)) in('RF','ISTOCK','PAXP','TRILHA') THEN
 								LEFT(LTRIM(RTRIM(A.ITEMNMBR))+REPLICATE(' ', 20),20) + ' ' -- Imagem
 								+ LEFT(RTRIM(A.ITEMDESC)+REPLICATE(' ', 55) ,55) + ' '-- Descipsao Tamabnho
 								+ RIGHT(REPLICATE(' ',12) + RTRIM(cast(format(A.UNITPRCE, 'N', 'de-de') as char)),12) + '|' --VAlor
@@ -91,10 +95,10 @@ BEGIN
 				AND A.QUANTITY = 0        
 	
 	SELECT @TEMP=CASE 
-					WHEN UPPER(Substring(RTRIM(@INFileType),1,charindex('-',@INFileType,1)-2)) in( 'RM','PREMIUM') THEN
+					WHEN UPPER(Substring(RTRIM(@INFileType),1,charindex('-',@INFileType,1)-2)) in( 'RM','PREMIUM','PRODUCAO','MMS') THEN
 							-- 123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
 							--'Imagem	            Uso	              Industria       Prot Inicio   Termino  Territ   Valor|'
-							'Cessão de dereitos'  +' |'
+							'Cessão de direitos'  +' |'
 							+ LEFT(LTRIM(RTRIM('Imagem'))+REPLICATE(' ', 12),12) + ' ' -- Imagem
 							+ LEFT(LTRIM(RTRIM('Uso'	))+ REPLICATE(' ', 24),24) + ' ' -- Uso
 							+ Substring('Industria               ',1,16) + ' '-- Industria
@@ -103,14 +107,14 @@ BEGIN
 							+ RIGHT(REPLICATE(' ',8)+'Término',8) + ' ' --Fin
 							+ Substring(RTRIM('Territ'),1,2) + ' '-- Territ
 							+ RIGHT(REPLICATE(' ',11) + RTRIM('Valor'),11) + '|' --VAlor
-					WHEN UPPER(Substring(RTRIM(@INFileType),1,charindex('-',@INFileType,1)-2)) in('RF','ISTOCK','PAXP') THEN 
+					WHEN UPPER(Substring(RTRIM(@INFileType),1,charindex('-',@INFileType,1)-2)) in('RF','ISTOCK','PAXP','TRILHA') THEN 
 							-- 123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
-							'Cessão de dereitos'  +' |'
+							'Cessão de direitos'  +' |'
 							+ LEFT(LTRIM(RTRIM('Imagem'))+REPLICATE(' ', 20),20) + ' ' -- Imagem
-							+ LEFT(RTRIM('Descripção Tamanho')+REPLICATE(' ', 55) ,55) + ' '-- Descipsao Tamabnho
+							+ LEFT(RTRIM('Descrição Tamanho')+REPLICATE(' ', 55) ,55) + ' '-- Descipsao Tamabnho
 							+ RIGHT(REPLICATE(' ',12) + RTRIM('Valor'),12) + '|' --VAlor
 					WHEN UPPER(Substring(RTRIM(@INFileType),1,charindex('-',@INFileType,1)-2)) in('RR') THEN 
-							'Cessão de dereitos'  +' |'
+							'Cessão de direitos'  +' |'
 							+ LEFT(LTRIM(RTRIM('Imagem'))+REPLICATE(' ', 12),12) + ' ' -- Imagem
 							+ LEFT(LTRIM(RTRIM('Utilização'))+ REPLICATE(' ', 40),40) + ' ' -- Utilizasao
 							+ RIGHT(REPLICATE(' ',8)+'Início',8) + ' ' --Inicio
@@ -141,3 +145,18 @@ BEGIN
 	Return @Concepto
 	
 END
+
+
+
+
+
+
+
+
+
+
+
+
+GO
+
+

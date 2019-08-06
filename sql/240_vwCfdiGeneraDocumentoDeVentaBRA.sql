@@ -1,14 +1,18 @@
 USE [GBRA]
 GO
 
-/****** Object:  View [dbo].[vwCfdiGeneraDocumentoDeVentaBRA]    Script Date: 7/25/2019 2:30:20 PM ******/
+/****** Object:  View [dbo].[vwCfdiGeneraDocumentoDeVentaBRA]    Script Date: 06/08/2019 08:24:32 ******/
+DROP VIEW [dbo].[vwCfdiGeneraDocumentoDeVentaBRA]
+GO
+
+/****** Object:  View [dbo].[vwCfdiGeneraDocumentoDeVentaBRA]    Script Date: 06/08/2019 08:24:32 ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
 
-ALTER view [dbo].[vwCfdiGeneraDocumentoDeVentaBRA]
+CREATE view [dbo].[vwCfdiGeneraDocumentoDeVentaBRA]
 as
 --Propósito. Elabora un comprobante xml para factura electrónica cfdi Perú
 --Requisitos.  
@@ -69,7 +73,7 @@ as
 																				EmailTomador ,
 		RTRIM(dbo.fncGetConceptoBra(DET.SOPTYPE,DET.SOPNUMBE,FAC.REFRENCE,DET.ITEMDESC))
 		+ 'Venc: ' +  + RIGHT(RTRIM(CONVERT(CHAR,FAC.DUEDATE,3)),8)  + '|' --Inicio
-		+ 'Obs: ' + isnull(DET.ITEMDESC,' ')  + '|' 
+		+ 'Obs: ' + isnull(RTRIM(COM.COMMENT_1),' ') + isnull(RTRIM(COM.COMMENT_2),' ') + isnull(RTRIM(COM.COMMENT_3),' ')+ '|' 
 		+ REPLACE(REPLACE(REPLACE(RTRIM(Substring(INFO.INETINFO,charindex('FIX_MSJ=',INFO.INETINFO,1)+8
 								 ,charindex('TRIB=',INFO.INETINFO,1)-8 - charindex('FIX_MSJ=',INFO.INETINFO,1))
 					),CHAR(9),''),CHAR(10),''),CHAR(13),'')  +' |'
@@ -88,6 +92,7 @@ as
 	from  SOP30200                AS FAC
 		  LEFT OUTER JOIN SOP10106	  AS UDF ON FAC.SOPTYPE = UDF.SOPTYPE AND FAC.SOPNUMBE = UDF.SOPNUMBE
 		  InNER JOIN SOP30300		AS DET ON FAC.SOPTYPE = DET.SOPTYPE AND FAC.SOPNUMBE = DET.SOPNUMBE AND DET.QUANTITY != 0
+		  LEFT OUTER JOIN SOP10202  AS COM ON COM.SOPTYPE = DET.SOPTYPE and COM.SOPNUMBE = DET.SOPNUMBE AND COM.LNITMSEQ = DET.LNITMSEQ
 		  INNER JOIN IV00101		AS ITE ON DET.ITEMNMBR = ITE.ITEMNMBR
 		  INNER JOIN RM00101		AS CST ON FAC.CUSTNMBR = CST.CUSTNMBR
 		  LEFT OUTER JOIN SY04200 B ON B.COMMNTID = FAC.COMMNTID
@@ -147,7 +152,7 @@ select
 																				EmailTomador ,
 		RTRIM(dbo.fncGetConceptoBra(DET.SOPTYPE,DET.SOPNUMBE,FAC.REFRENCE,DET.ITEMDESC))
 		+ 'Venc: ' +  + RIGHT(RTRIM(CONVERT(CHAR,FAC.DUEDATE,3)),8) + '|' --Inicio
-		+ 'Obs: ' + isnull(DET.ITEMDESC,' ')  + '|' 
+		+ 'Obs: ' + isnull(RTRIM(COM.COMMENT_1),' ') + isnull(RTRIM(COM.COMMENT_2),' ') + isnull(RTRIM(COM.COMMENT_3),' ')+ '|' 
 		+ REPLACE(REPLACE(REPLACE(RTRIM(Substring(INFO.INETINFO,charindex('FIX_MSJ=',INFO.INETINFO,1)+8
 								 ,charindex('TRIB=',INFO.INETINFO,1)-8 - charindex('FIX_MSJ=',INFO.INETINFO,1))
 					),CHAR(9),''),CHAR(10),''),CHAR(13),'')  +'|'
@@ -165,6 +170,7 @@ select
 from  SOP10100                AS FAC
 		  LEFT OUTER JOIN SOP10106	  AS UDF ON FAC.SOPTYPE = UDF.SOPTYPE AND FAC.SOPNUMBE = UDF.SOPNUMBE
 		  InNER JOIN SOP10200		AS DET ON FAC.SOPTYPE = DET.SOPTYPE AND FAC.SOPNUMBE = DET.SOPNUMBE AND DET.QUANTITY != 0
+		  LEFT OUTER JOIN SOP10202  AS COM ON COM.SOPTYPE = DET.SOPTYPE and COM.SOPNUMBE = DET.SOPNUMBE AND COM.LNITMSEQ = DET.LNITMSEQ
 		  INNER JOIN IV00101		AS ITE ON DET.ITEMNMBR = ITE.ITEMNMBR
 		  INNER JOIN RM00101		AS CST ON FAC.CUSTNMBR = CST.CUSTNMBR
 		  LEFT OUTER JOIN SY04200 B ON B.COMMNTID = FAC.COMMNTID
@@ -176,16 +182,6 @@ from  SOP10100                AS FAC
 	 AND  INFO.MASTER_TYPE = 'CMP'
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 GO
+
+
