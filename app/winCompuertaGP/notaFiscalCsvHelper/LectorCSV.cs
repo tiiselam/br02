@@ -46,6 +46,7 @@ namespace notaFiscalCsvHelper
                         using (var csv = new CsvReader(reader))
                         {
                             csv.Configuration.HasHeaderRecord = false;
+                            csv.Configuration.BadDataFound = null;
                             csv.Configuration.MissingFieldFound = (headerNames, index, context) =>
                             {
                                 OnProgreso(0, $"Los siguientes campos: ['{string.Join("', '", headerNames)}'] de la fila '{index}' no existen. ");

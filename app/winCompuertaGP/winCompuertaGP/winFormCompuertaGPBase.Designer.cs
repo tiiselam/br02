@@ -454,7 +454,7 @@
             // 
             this.genFacturaElectrónicaV10ToolStripMenuItem.Name = "genFacturaElectrónicaV10ToolStripMenuItem";
             this.genFacturaElectrónicaV10ToolStripMenuItem.Size = new System.Drawing.Size(266, 22);
-            this.genFacturaElectrónicaV10ToolStripMenuItem.Text = "Nota Fiscal y Boleto Bancario v. 1.3.3";
+            this.genFacturaElectrónicaV10ToolStripMenuItem.Text = "Nota Fiscal y Boleto Bancario v. 1.3.4";
             // 
             // toolStripMenuItem2
             // 
