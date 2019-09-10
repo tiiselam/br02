@@ -439,7 +439,7 @@ namespace Web_Service
                         Errores += "\tError: EL Numero de CPF/CNPJ no tiene una longitud valida" + Environment.NewLine;
 
                     }
-                    Detalle += documentoRps.RPS.CPFCNPJTomador.CPF;
+                    Detalle += documentoRps.RPS.CPFCNPJTomador.CPF.PadRight(14);
 
                     // Indicador Tomador
                     if (documentoRps.RPS.InscricaoMunicipalTomador.Length > 8)
