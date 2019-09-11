@@ -7,7 +7,7 @@ using CsvHelper.Configuration.Attributes;
 
 namespace notaFiscalCsvHelper
 {
-    class iStock
+    class Trilha
     {
         [Index(0)]
         public string Prefixo { get; set; }
@@ -83,6 +83,5 @@ namespace notaFiscalCsvHelper
 
         [Index(25)]
         public string CCM { get; set; }
-
     }
 }

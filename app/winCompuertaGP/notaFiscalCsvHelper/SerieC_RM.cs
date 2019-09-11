@@ -85,10 +85,10 @@ namespace notaFiscalCsvHelper
         public string Protecao { get; set; }
 
         [Index(26)]
-        public DateTime InicioDireitoDeUso { get; set; }
+        public DateTime? InicioDireitoDeUso { get; set; }
 
         [Index(27)]
-        public DateTime FinDireitoDeUso { get; set; }
+        public DateTime? FinDireitoDeUso { get; set; }
 
         [Index(28)]
         public string Veiculacao { get; set; }

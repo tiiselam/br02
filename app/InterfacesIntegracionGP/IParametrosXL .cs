@@ -39,6 +39,7 @@ namespace IntegradorDeGP
         int FacturaSopDeReqShipDate { get; set; }
         int FacturaSopDeActlShipDate { get; set; }
         int FacturaSopDeCmmttext { get; set; }
+        string FacturaSopDeGPCuentaDefault { get; set; }
 
         bool IncluirUserDef { get; set; }
         string Usrtab01_predetValue { get; set; }

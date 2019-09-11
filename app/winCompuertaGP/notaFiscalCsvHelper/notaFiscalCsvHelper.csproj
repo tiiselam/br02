@@ -57,12 +57,15 @@
   <ItemGroup>
     <Compile Include="iStock.cs" />
     <Compile Include="LectorCSV.cs" />
+    <Compile Include="MMS.cs" />
     <Compile Include="PAXP.cs" />
     <Compile Include="Premium.cs" />
+    <Compile Include="Producao.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SerieB_RF.cs" />
     <Compile Include="SerieC_RM.cs" />
     <Compile Include="SerieC_RR.cs" />
+    <Compile Include="Trilha.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

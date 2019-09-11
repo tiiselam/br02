@@ -28,6 +28,7 @@ namespace winCompuertaGP
         private string _culturaParaMontos;
         private string rutaLog;
         Dictionary<string, string> idsDocumento;
+        Dictionary<string, string> _codigosServicioDflt;
         private string _rutaCarpeta;
         private string _clienteDefaultCUSTCLAS;
         private int _facturaSopFilaInicial;
@@ -56,6 +57,7 @@ namespace winCompuertaGP
         private int _facturaSopDeReqShipDate;
         private int _facturaSopDeActlShipDate;
         private int _facturaSopDeCmmttext;
+        private string _facturaSopDeGPCuentaDefault;
         private string _incluirUserDef;
         private string _usrtab01_predetValue;
         private string _usrtab02_predetValue;
@@ -64,8 +66,6 @@ namespace winCompuertaGP
 
         public ParametrosDB()
         {
-            //try
-            //{
                 XmlDocument listaParametros = new XmlDocument();
                 listaParametros.Load(new XmlTextReader(nombreArchivoParametros));
 
@@ -90,11 +90,6 @@ namespace winCompuertaGP
                     });
                 }
 
-            //}
-            //catch (Exception eprm)
-            //{
-            //    ultimoMensaje = "Contacte al administrador. No se pudo obtener la configuración general. [Parametros()]" + eprm.Message;
-            //}
         }
 
         public void GetParametros(int idxEmpresa)
@@ -146,6 +141,20 @@ namespace winCompuertaGP
 
             try
             {
+                XmlNodeList codigoServicioDflt = listaParametros.DocumentElement.SelectNodes("//compannia[@bd='" + IdCompannia + "']/BrasilServicios/CodigoServicioDflt");
+                _codigosServicioDflt = new Dictionary<string, string>();
+                foreach (XmlNode n in codigoServicioDflt)
+                {
+                    _codigosServicioDflt.Add(n.Attributes["tipoVenta"].Value, n.Attributes["codigoServicio"].Value);
+                }
+            }
+            catch (Exception ae)
+            {
+                throw new ArgumentException("Excepción en los parámetros de la sección CodigoServicioDflt. [GetParametros(int)] " + ae.Message);
+            }
+
+            try
+            {
                 _clienteDefaultCUSTCLAS = elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/Cliente/DefaultCUSTCLAS/text()").Value;
             }
             catch (Exception ae)
@@ -192,6 +201,7 @@ namespace winCompuertaGP
                 _facturaSopDeActlShipDate = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopDe/ActlShipDate/text()").Value);
                 _facturaSopDeCmmttext = int.Parse(elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopDe/CMMTTEXT/text()").Value);
 
+                _facturaSopDeGPCuentaDefault = elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/facturaSopDe/GPCuentaDefault/text()").Value;
             }
             catch (Exception ae)
             {
@@ -391,6 +401,7 @@ namespace winCompuertaGP
                 idsDocumento = value;
             }
         }
+        public Dictionary<string, string> CodigosServicioDflt { get => _codigosServicioDflt; set => _codigosServicioDflt = value; }
 
         public string rutaCarpeta { get => _rutaCarpeta; set => _rutaCarpeta = value; }
         public string ClienteDefaultCUSTCLAS { get => _clienteDefaultCUSTCLAS; set => _clienteDefaultCUSTCLAS = value; }
@@ -414,6 +425,7 @@ namespace winCompuertaGP
         public int FacturaSopDeReqShipDate { get => _facturaSopDeReqShipDate; set => _facturaSopDeReqShipDate = value; }
         public int FacturaSopDeActlShipDate { get => _facturaSopDeActlShipDate; set => _facturaSopDeActlShipDate = value; }
         public int FacturaSopDeCmmttext { get => _facturaSopDeCmmttext; set => _facturaSopDeCmmttext = value; }
+        public string FacturaSopDeGPCuentaDefault { get => _facturaSopDeGPCuentaDefault; set => _facturaSopDeGPCuentaDefault = value; }
 
         public int intEstadoCompletado { get => int.Parse(_intEstadoCompletado); set => _intEstadoCompletado = value.ToString(); }
         public int intEstadosPermitidos { get => int.Parse(_intEstadosPermitidos); set => _intEstadosPermitidos = value.ToString(); }
