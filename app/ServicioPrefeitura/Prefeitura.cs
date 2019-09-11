@@ -439,7 +439,7 @@ namespace Web_Service
                         Errores += "\tError: EL Numero de CPF/CNPJ no tiene una longitud valida" + Environment.NewLine;
 
                     }
-                    Detalle += documentoRps.RPS.CPFCNPJTomador.CPF;
+                    Detalle += documentoRps.RPS.CPFCNPJTomador.CPF.PadRight(14);
 
                     // Indicador Tomador
                     if (documentoRps.RPS.InscricaoMunicipalTomador.Length > 8)
@@ -482,7 +482,7 @@ namespace Web_Service
                     {
                         Errores += "\tError: El campo Discriminacao no puede ser nulo o vacio" + Environment.NewLine;
                     }
-                    else Detalle += Utiles.Izquierda(documentoRps.RPS.Discriminacao, 1000);
+                    else Detalle += Utiles.Izquierda(documentoRps.RPS.Discriminacao, 1950);
                     //MSAL
                     //Detalle += "\n\r";
                   

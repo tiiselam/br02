@@ -1,19 +1,19 @@
 USE [GBRA]
 GO
 
-/****** Object:  View [dbo].[vwCfdiGeneraDocumentoDeVentaBRA]    Script Date: 3/29/2019 2:38:15 PM ******/
-IF OBJECT_ID (N'dbo.vwCfdiGeneraDocumentoDeVentaBRA') IS NOT NULL
-DROP VIEW [dbo].[vwCfdiGeneraDocumentoDeVentaBRA]
-GO
-
-/****** Object:  View [dbo].[vwCfdiGeneraDocumentoDeVentaBRA]    Script Date: 3/29/2019 2:38:15 PM ******/
+/****** Object:  View [dbo].[vwCfdiGeneraDocumentoDeVentaBRA]    Script Date: 05/09/2019 08:56:27 ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE view [dbo].[vwCfdiGeneraDocumentoDeVentaBRA]
+
+
+
+
+
+ALTER view [dbo].[vwCfdiGeneraDocumentoDeVentaBRA]
 as
 --Propósito. Elabora un comprobante xml para factura electrónica cfdi Perú
 --Requisitos.  
@@ -24,7 +24,7 @@ as
 --08/11/18 jcf Agrega ajustes para ubl 2.1
 --16/01/19 jcf Agrega dirección
 --21/02/19 jcf Agrega leyenda por factura
-
+--18/07/19 msal incorpora datos adicionales para identificar el archivo
 	select	
 		convert(varchar(20),1)													correlativo, 
 		CMP.TAXREGTN															CPFCNPJRemetente,
@@ -68,21 +68,34 @@ as
 		RTRIM(CST.CITY)															Emisor_Cidade ,
 		RTRIM(CST.STATE)														Emisor_UF ,
 		RTRIM(CST.ZIP)															Emisor_CEP ,
-		CASE WHEN em.emailTo is not null then em.emailTo  END 
+		CASE WHEN em.emailTo is not null then Substring(em.emailTo,charindex(',',em.emailTo,1)+1,100)  END 
 		--+ CASE WHEN em.emailCC is not null then em.emailCC END 
 		--+CASE WHEN em.emailCCO is not null then em.emailCCO END					
 																				EmailTomador ,
-		RTRIM(dbo.fncGetConceptoBra(DET.SOPTYPE,DET.SOPNUMBE))		
+		case 
+		--	when dbo.fncGetConceptoBra(DET.SOPTYPE,DET.SOPNUMBE,FAC.REFRENCE,DET.ITEMDESC) is NULL then
+		    when CAST(NT.TXTFIELD as varchar(1650)) is not null then
+					isnull(CAST(NT.TXTFIELD as varchar(1650)),'') + '|'
+					+ 'Venc: ' +  + RIGHT(RTRIM(CONVERT(CHAR,FAC.DUEDATE,3)),8) + '|' --Inicio
+			when LEN(isnull(RTRIM(CAST(COM.CMMTTEXT as VARCHAR(500))),' ')) > 200 or
+			     dbo.fncGetConceptoBra(DET.SOPTYPE,DET.SOPNUMBE,FAC.REFRENCE,DET.ITEMDESC) is NULL  then
+					isnull(RTRIM(CAST(COM.CMMTTEXT as VARCHAR(500))),' ') + '|'
+					+ 'Venc: ' +  + RIGHT(RTRIM(CONVERT(CHAR,FAC.DUEDATE,3)),8) + '|' --Inicio
+			else
+					RTRIM(dbo.fncGetConceptoBra(DET.SOPTYPE,DET.SOPNUMBE,FAC.REFRENCE,DET.ITEMDESC))
+					+ 'Venc: ' +  + RIGHT(RTRIM(CONVERT(CHAR,FAC.DUEDATE,3)),8) + '|' --Inicio
+					+ 'Obs: ' + isnull(RTRIM(CAST(COM.CMMTTEXT as VARCHAR(500))),' ') + '|'
+		end   
 		+ REPLACE(REPLACE(REPLACE(RTRIM(Substring(INFO.INETINFO,charindex('FIX_MSJ=',INFO.INETINFO,1)+8
 								 ,charindex('TRIB=',INFO.INETINFO,1)-8 - charindex('FIX_MSJ=',INFO.INETINFO,1))
-					),CHAR(9),''),CHAR(10),''),CHAR(13),'')  +' |'
+					),CHAR(9),''),CHAR(10),''),CHAR(13),'')  +'|'
 		+ REPLACE(REPLACE(REPLACE(RTRIM(Substring(INFO.INETINFO,charindex('TRIB=',INFO.INETINFO,1)+5
 								 ,charindex('FONTE=',INFO.INETINFO,1)-5 - charindex('TRIB=',INFO.INETINFO,1))
 		
 				),CHAR(9),''),CHAR(10),''),CHAR(13),'') +' '
  		+ REPLACE(REPLACE(REPLACE(RTRIM(Substring(INFO.INETINFO,charindex('FONTE=',INFO.INETINFO,1)+6
 								 , 100)),CHAR(9),''),CHAR(10),''),CHAR(13),'')
-											Concepto ,
+													Concepto ,
 		0											ValorCargaTributaria ,
 		0											PercentualCargaTributaria ,
 		'IBPT'										FonteCargaTributaria ,
@@ -91,9 +104,11 @@ as
 	from  SOP30200                AS FAC
 		  LEFT OUTER JOIN SOP10106	  AS UDF ON FAC.SOPTYPE = UDF.SOPTYPE AND FAC.SOPNUMBE = UDF.SOPNUMBE
 		  InNER JOIN SOP30300		AS DET ON FAC.SOPTYPE = DET.SOPTYPE AND FAC.SOPNUMBE = DET.SOPNUMBE AND DET.QUANTITY != 0
+		  LEFT OUTER JOIN SOP10202  AS COM ON COM.SOPTYPE = DET.SOPTYPE and COM.SOPNUMBE = DET.SOPNUMBE AND COM.LNITMSEQ = DET.LNITMSEQ
 		  INNER JOIN IV00101		AS ITE ON DET.ITEMNMBR = ITE.ITEMNMBR
 		  INNER JOIN RM00101		AS CST ON FAC.CUSTNMBR = CST.CUSTNMBR
-		  LEFT OUTER JOIN SY04200 B ON B.COMMNTID = FAC.COMMNTID
+		  --LEFT OUTER JOIN SY04200 B ON B.COMMNTID = FAC.COMMNTID
+		  LEFT OUTER JOIN SY03900   AS NT  ON FAC.NOTEINDX = NT.NOTEINDX
 		  LEFT OUTER JOIN vwCfdClienteDireccionesCorreo em ON FAC.CUSTNMBR = em.CUSTNMBR,
 		  DYNAMICS.dbo.SY01500    AS CMP
 		  LEFT OUTER JOIN SY01200 AS INFO ON CMP.INTERID = INFO.MASTER_ID
@@ -144,21 +159,34 @@ select
 		RTRIM(CST.CITY)															Emisor_Cidade ,
 		RTRIM(CST.STATE)														Emisor_UF ,
 		RTRIM(CST.ZIP)															Emisor_CEP ,
-		CASE WHEN em.emailTo is not null then em.emailTo  END 
+		CASE WHEN em.emailTo is not null then  Substring(em.emailTo,charindex(',',em.emailTo,1)+1,100)  END 
 		--+ CASE WHEN em.emailCC is not null then em.emailCC END 
 		--+CASE WHEN em.emailCCO is not null then em.emailCCO END					
 																				EmailTomador ,
-		RTRIM(dbo.fncGetConceptoBra(DET.SOPTYPE,DET.SOPNUMBE))		
+		case 
+			--when dbo.fncGetConceptoBra(DET.SOPTYPE,DET.SOPNUMBE,FAC.REFRENCE,DET.ITEMDESC) is NULL then
+			when CAST(NT.TXTFIELD as varchar(1650)) is not null then
+					isnull(CAST(NT.TXTFIELD as varchar(1650)),'') + '|'
+					+ 'Venc: ' +  + RIGHT(RTRIM(CONVERT(CHAR,FAC.DUEDATE,3)),8) + '|' --Inicio
+			when LEN(isnull(RTRIM(CAST(COM.CMMTTEXT as VARCHAR(500))),' ')) > 200 or
+			     dbo.fncGetConceptoBra(DET.SOPTYPE,DET.SOPNUMBE,FAC.REFRENCE,DET.ITEMDESC) is NULL  then
+					isnull(RTRIM(CAST(COM.CMMTTEXT as VARCHAR(500))),' ') + '|'
+					+ 'Venc: ' +  + RIGHT(RTRIM(CONVERT(CHAR,FAC.DUEDATE,3)),8) + '|' --Inicio
+			else
+					RTRIM(dbo.fncGetConceptoBra(DET.SOPTYPE,DET.SOPNUMBE,FAC.REFRENCE,DET.ITEMDESC))
+					+ 'Venc: ' +  + RIGHT(RTRIM(CONVERT(CHAR,FAC.DUEDATE,3)),8) + '|' --Inicio
+					+ 'Obs: ' + isnull(RTRIM(CAST(COM.CMMTTEXT as VARCHAR(500))),' ') + '|'
+		end   
 		+ REPLACE(REPLACE(REPLACE(RTRIM(Substring(INFO.INETINFO,charindex('FIX_MSJ=',INFO.INETINFO,1)+8
 								 ,charindex('TRIB=',INFO.INETINFO,1)-8 - charindex('FIX_MSJ=',INFO.INETINFO,1))
-					),CHAR(9),''),CHAR(10),''),CHAR(13),'')  +' |'
+					),CHAR(9),''),CHAR(10),''),CHAR(13),'')  +'|'
 		+ REPLACE(REPLACE(REPLACE(RTRIM(Substring(INFO.INETINFO,charindex('TRIB=',INFO.INETINFO,1)+5
 								 ,charindex('FONTE=',INFO.INETINFO,1)-5 - charindex('TRIB=',INFO.INETINFO,1))
 		
 				),CHAR(9),''),CHAR(10),''),CHAR(13),'') +' '
  		+ REPLACE(REPLACE(REPLACE(RTRIM(Substring(INFO.INETINFO,charindex('FONTE=',INFO.INETINFO,1)+6
 								 , 100)),CHAR(9),''),CHAR(10),''),CHAR(13),'')
-											Concepto ,
+													Concepto ,
 		0											ValorCargaTributaria ,
 		0											PercentualCargaTributaria ,
 		'IBPT'										FonteCargaTributaria ,
@@ -166,15 +194,19 @@ select
 from  SOP10100                AS FAC
 		  LEFT OUTER JOIN SOP10106	  AS UDF ON FAC.SOPTYPE = UDF.SOPTYPE AND FAC.SOPNUMBE = UDF.SOPNUMBE
 		  InNER JOIN SOP10200		AS DET ON FAC.SOPTYPE = DET.SOPTYPE AND FAC.SOPNUMBE = DET.SOPNUMBE AND DET.QUANTITY != 0
+		  LEFT OUTER JOIN SOP10202  AS COM ON COM.SOPTYPE = DET.SOPTYPE and COM.SOPNUMBE = DET.SOPNUMBE AND COM.LNITMSEQ = DET.LNITMSEQ
 		  INNER JOIN IV00101		AS ITE ON DET.ITEMNMBR = ITE.ITEMNMBR
 		  INNER JOIN RM00101		AS CST ON FAC.CUSTNMBR = CST.CUSTNMBR
-		  LEFT OUTER JOIN SY04200 B ON B.COMMNTID = FAC.COMMNTID
+		 -- LEFT OUTER JOIN SY04200 B ON B.COMMNTID = FAC.COMMNTID
+		  LEFT OUTER JOIN SY03900   AS NT  ON FAC.NOTEINDX = NT.NOTEINDX
 		  LEFT OUTER JOIN vwCfdClienteDireccionesCorreo em ON FAC.CUSTNMBR = em.CUSTNMBR,
 		  DYNAMICS.dbo.SY01500    AS CMP
 		  LEFT OUTER JOIN SY01200 AS INFO ON CMP.INTERID = INFO.MASTER_ID
 	where CMP.INTERID = DB_NAME()
      AND  INFO.ADRSCODE = 'NOTA_FISCAL' 
 	 AND  INFO.MASTER_TYPE = 'CMP'
+
+
 
 
 
