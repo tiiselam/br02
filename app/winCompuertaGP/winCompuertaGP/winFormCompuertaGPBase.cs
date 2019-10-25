@@ -463,58 +463,6 @@ namespace winCompuertaGP
             //    txtbxMensajes.Text = "Para cambiar de pestaña debe guardar los cambios realizados." + "\r\n";
         }
 
-        private void toolStripButton13_Click(object sender, EventArgs e)
-        {
-            var filas = getFilasSeleccionadas(dgvFacturas);
-            //if (filas.Count > 0)
-            //{
-            //    var dialogResult = MessageBox.Show(this, "¿Confirma que desea eliminar los elementos seleccionados?", "Confirmación", MessageBoxButtons.OKCancel);
-            //    if (dialogResult == DialogResult.OK)
-            //    {
-            //        txtbxMensajes.Text = "";
-
-            //        var c = 0;
-            //        foreach (DataGridViewRow item in filas)
-            //        {
-            //            var id = Convert.ToInt32(item.Cells[1].Value);
-            //            var prefactura = mainController.findPrefactura(id);
-            //            if (prefactura != null)
-            //            {
-            //                if (prefactura.STATUS.Equals("BORRADOR"))
-            //                {
-            //                    try
-            //                    {
-            //                        mainController.removePrefactura(id);
-            //                        c++;
-            //                    }
-            //                    catch (Exception exc)
-            //                    {
-            //                        txtbxMensajes.AppendText("No se pudo eliminar la prefactura con número " + prefactura.NUMERO_PF + "\r\n");
-            //                        txtbxMensajes.AppendText(exc.Message + "\r\n");
-            //                    }
-            //                }
-            //                else
-            //                {
-            //                    txtbxMensajes.AppendText("No se pudo eliminar la prefactura con número " + prefactura.NUMERO_PF + "; el estado no es BORRADOR.\r\n");
-            //                }
-            //            }
-            //        }
-
-            //        if (c > 0)
-            //        {
-            //            var cant = filtrarPacientes();
-
-            //            txtbxMensajes.AppendText("Prefacturas eliminadas satisfactoriamente: " + c + "\r\n");
-            //            txtbxMensajes.AppendText("Total de prefacturas existentes: " + cant + "\r\n");
-            //        }
-            //    }
-            //}
-            //else
-            //{
-            //    MessageBox.Show(this, "No existen elementos seleccionados.", "Información");
-            //}
-        }
-
         private void dgvPacientes_CurrentCellDirtyStateChanged(object sender, EventArgs e)
         {
             if (dgvFacturas.IsCurrentCellDirty)
@@ -757,7 +705,7 @@ namespace winCompuertaGP
             cmbBxCompannia.Enabled = cambiaCia;
             tsBtnIntegraFactura.Enabled = integra;  
             tsButtonGenerarTxt.Enabled = emite;
-            tsButtonGeneraXml.Enabled = emite;
+            //tsButtonGeneraXml.Enabled = emite;
 
             //toolStripConsulta.Enabled = emite || anula || imprime || publica || envia;
             btnBuscar.Enabled = emite || anula || imprime || publica || envia || integra;
@@ -826,5 +774,7 @@ namespace winCompuertaGP
         {
             InicializaCheckBoxDelGrid(dgvFacturas, idxChkBox, checkBoxMark.Checked);
         }
+
+
     }
 }

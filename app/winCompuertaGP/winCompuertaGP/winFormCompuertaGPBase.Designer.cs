@@ -85,11 +85,9 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.tsButtonGenerarTxt = new System.Windows.Forms.ToolStripButton();
-            this.tsButtonGeneraXml = new System.Windows.Forms.ToolStripButton();
             this.toolStripAcciones5 = new System.Windows.Forms.ToolStrip();
             this.toolStripButton11 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton12 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton13 = new System.Windows.Forms.ToolStripButton();
             this.toolStripAcciones4 = new System.Windows.Forms.ToolStrip();
             this.tsSplitBCambiarStatus = new System.Windows.Forms.ToolStripSplitButton();
             this.tsMenuItemCambiarAListo = new System.Windows.Forms.ToolStripMenuItem();
@@ -123,6 +121,8 @@
             this.panel8 = new System.Windows.Forms.Panel();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
+            this.tsButtonGeneraXml = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.dgvFacturas)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.tsConfirma1.SuspendLayout();
@@ -422,7 +422,7 @@
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
             this.menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.menuStrip1.Size = new System.Drawing.Size(272, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(152, 24);
             this.menuStrip1.TabIndex = 14;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -589,9 +589,9 @@
             // toolStrip2
             // 
             this.toolStrip2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.toolStrip2.Location = new System.Drawing.Point(450, 25);
+            this.toolStrip2.Location = new System.Drawing.Point(531, 25);
             this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(727, 63);
+            this.toolStrip2.Size = new System.Drawing.Size(646, 63);
             this.toolStrip2.TabIndex = 86;
             this.toolStrip2.Text = "toolStrip2";
             // 
@@ -599,9 +599,9 @@
             // 
             this.toolStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsDropDownFiltro});
-            this.toolStrip3.Location = new System.Drawing.Point(450, 0);
+            this.toolStrip3.Location = new System.Drawing.Point(531, 0);
             this.toolStrip3.Name = "toolStrip3";
-            this.toolStrip3.Size = new System.Drawing.Size(727, 25);
+            this.toolStrip3.Size = new System.Drawing.Size(646, 25);
             this.toolStrip3.TabIndex = 85;
             this.toolStrip3.Text = "toolStrip3";
             // 
@@ -670,11 +670,11 @@
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButton2,
             this.tsButtonGenerarTxt,
-            this.tsButtonGeneraXml});
+            this.toolStripButton3});
             this.toolStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
-            this.toolStrip1.Location = new System.Drawing.Point(247, 0);
+            this.toolStrip1.Location = new System.Drawing.Point(160, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(203, 88);
+            this.toolStrip1.Size = new System.Drawing.Size(371, 88);
             this.toolStrip1.TabIndex = 78;
             this.toolStrip1.Text = "toolStrip2";
             // 
@@ -694,28 +694,18 @@
             this.tsButtonGenerarTxt.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsButtonGenerarTxt.Click += new System.EventHandler(this.tsButtonGenerarTxt_Click);
             // 
-            // tsButtonGeneraXml
-            // 
-            this.tsButtonGeneraXml.Image = ((System.Drawing.Image)(resources.GetObject("tsButtonGeneraXml.Image")));
-            this.tsButtonGeneraXml.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.tsButtonGeneraXml.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsButtonGeneraXml.Name = "tsButtonGeneraXml";
-            this.tsButtonGeneraXml.Size = new System.Drawing.Size(101, 79);
-            this.tsButtonGeneraXml.Text = "Usar Web Service";
-            this.tsButtonGeneraXml.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            // 
             // toolStripAcciones5
             // 
             this.toolStripAcciones5.AutoSize = false;
             this.toolStripAcciones5.Dock = System.Windows.Forms.DockStyle.Left;
             this.toolStripAcciones5.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsButtonGeneraXml,
             this.toolStripButton11,
-            this.toolStripButton12,
-            this.toolStripButton13});
+            this.toolStripButton12});
             this.toolStripAcciones5.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
-            this.toolStripAcciones5.Location = new System.Drawing.Point(236, 0);
+            this.toolStripAcciones5.Location = new System.Drawing.Point(132, 0);
             this.toolStripAcciones5.Name = "toolStripAcciones5";
-            this.toolStripAcciones5.Size = new System.Drawing.Size(11, 88);
+            this.toolStripAcciones5.Size = new System.Drawing.Size(28, 88);
             this.toolStripAcciones5.TabIndex = 75;
             this.toolStripAcciones5.Text = "toolStrip2";
             // 
@@ -735,17 +725,6 @@
             this.toolStripButton12.Visible = false;
             this.toolStripButton12.Click += new System.EventHandler(this.toolStripButton12_Click);
             // 
-            // toolStripButton13
-            // 
-            this.toolStripButton13.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton13.Image")));
-            this.toolStripButton13.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton13.Name = "toolStripButton13";
-            this.toolStripButton13.Size = new System.Drawing.Size(70, 20);
-            this.toolStripButton13.Text = "Eliminar";
-            this.toolStripButton13.ToolTipText = "Aplica Reglas";
-            this.toolStripButton13.Visible = false;
-            this.toolStripButton13.Click += new System.EventHandler(this.toolStripButton13_Click);
-            // 
             // toolStripAcciones4
             // 
             this.toolStripAcciones4.AutoSize = false;
@@ -756,7 +735,7 @@
             this.toolStripAcciones4.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
             this.toolStripAcciones4.Location = new System.Drawing.Point(105, 0);
             this.toolStripAcciones4.Name = "toolStripAcciones4";
-            this.toolStripAcciones4.Size = new System.Drawing.Size(131, 88);
+            this.toolStripAcciones4.Size = new System.Drawing.Size(27, 88);
             this.toolStripAcciones4.TabIndex = 73;
             this.toolStripAcciones4.Text = "toolStripEmail";
             // 
@@ -772,6 +751,7 @@
             this.tsSplitBCambiarStatus.Size = new System.Drawing.Size(125, 20);
             this.tsSplitBCambiarStatus.Text = "Para reintegrar...";
             this.tsSplitBCambiarStatus.ToolTipText = "Cambiar estado del documento";
+            this.tsSplitBCambiarStatus.Visible = false;
             // 
             // tsMenuItemCambiarAListo
             // 
@@ -796,6 +776,7 @@
             this.tsbActualizarStatus.Size = new System.Drawing.Size(114, 20);
             this.tsbActualizarStatus.Text = "Actualizar Status";
             this.tsbActualizarStatus.ToolTipText = "Actualizar el status de las facturas contabilizadas";
+            this.tsbActualizarStatus.Visible = false;
             this.tsbActualizarStatus.Click += new System.EventHandler(this.tsbActualizarStatus_Click);
             // 
             // toolStripAcciones3
@@ -1100,6 +1081,25 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
+            // toolStripButton3
+            // 
+            this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
+            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton3.Name = "toolStripButton3";
+            this.toolStripButton3.Size = new System.Drawing.Size(142, 20);
+            this.toolStripButton3.Text = "Cargar números NFSe";
+            // 
+            // tsButtonGeneraXml
+            // 
+            this.tsButtonGeneraXml.Image = ((System.Drawing.Image)(resources.GetObject("tsButtonGeneraXml.Image")));
+            this.tsButtonGeneraXml.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tsButtonGeneraXml.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsButtonGeneraXml.Name = "tsButtonGeneraXml";
+            this.tsButtonGeneraXml.Size = new System.Drawing.Size(75, 79);
+            this.tsButtonGeneraXml.Text = "Web Service";
+            this.tsButtonGeneraXml.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tsButtonGeneraXml.Visible = false;
+            // 
             // winFormCompuertaGPBase
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1213,7 +1213,6 @@
         private System.Windows.Forms.CheckBox checkBoxPacientes_nombre_cliente;
         private System.Windows.Forms.ToolStripButton toolStripButton11;
         private System.Windows.Forms.ToolStripButton toolStripButton12;
-        private System.Windows.Forms.ToolStripButton toolStripButton13;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripProgressBar tsProgressBar1;
         private System.Windows.Forms.Panel panel8;
@@ -1238,7 +1237,6 @@
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton toolStripButton2;
         private System.Windows.Forms.ToolStripButton tsButtonGenerarTxt;
-        private System.Windows.Forms.ToolStripButton tsButtonGeneraXml;
         private System.Windows.Forms.ToolStrip toolStrip2;
         private System.Windows.Forms.CheckBox checkBoxMark;
         private System.Windows.Forms.DataGridViewCheckBoxColumn M;
@@ -1253,6 +1251,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn MENSAJE;
         private System.Windows.Forms.DataGridViewCheckBoxColumn voidstts;
         private System.Windows.Forms.DataGridViewTextBoxColumn mensajeEA;
+        private System.Windows.Forms.ToolStripButton toolStripButton3;
+        private System.Windows.Forms.ToolStripButton tsButtonGeneraXml;
     }
 }
 
