@@ -87,7 +87,7 @@ namespace MaquinaDeEstados
                         throw new ArgumentException("No tiene permisos para generar el archivo txt. Verifique los permisos en la ventana de mantenimiento de Certificados de GP.");
                 }
 
-                if (evento == Maquina.eventoPrefecturaAcepta)
+                if (evento == Maquina.eventoUploadTxtPrefectura)
                 {
                     ok = true;
                 }

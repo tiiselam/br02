@@ -8,6 +8,7 @@ using Web_Service;
 using cfd.FacturaElectronica;
 using notaFiscalCsvHelper;
 using OfficeOpenXml;
+using System.IO;
 
 namespace winCompuertaGP
 {
@@ -412,6 +413,41 @@ namespace winCompuertaGP
 
         }
 
+        private void tsButtonCargaNumNFSe_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                openFileDialog1.Filter = "CSV files|*.csv"; // "Excel Files|*.xls|*.xlsx";
+                openFileDialog1.Multiselect = false;
+                DialogResult dr = openFileDialog1.ShowDialog();
+
+                if (dr == DialogResult.OK)
+                {
+                    string[] filenames = openFileDialog1.FileNames;
+                    var nombreArchivos = filenames
+                            .Select(y => new {
+                                archivo = System.IO.Path.GetFileName(y),
+                                carpeta = System.IO.Path.GetDirectoryName(y)
+                            });
+                    string nombreArchivo = nombreArchivos.Select(a => a.archivo).ToList().FirstOrDefault();
+                    string carpetaOrigen = nombreArchivos.Select(a => a.carpeta).FirstOrDefault();
+
+                    System.Globalization.CultureInfo culInfo = new System.Globalization.CultureInfo(configuracion.CulturaParaMontos);
+                    LectorCSV csv = new LectorCSV(configuracion.CodigosServicioDflt);
+                    csv.ProgressHandler += reportaProgreso;
+                    var archivoCsv = csv.LeeArchivoCsv(carpetaOrigen, nombreArchivo, culInfo);
+
+                    ProcesaCfdi proc = new ProcesaCfdi(lblUsuario.Text);
+                    proc.ProcesaActualizacionDeNumeroFiscalE(archivoCsv, carpetaOrigen, nombreArchivo, mainController);
+
+                    filtrarFacturas();
+                }
+            }
+            catch (Exception ex)
+            {
+                reportaProgreso(0, ex.Message);
+            }
+        }
         #endregion
 
         #region Otros
@@ -774,7 +810,6 @@ namespace winCompuertaGP
         {
             InicializaCheckBoxDelGrid(dgvFacturas, idxChkBox, checkBoxMark.Checked);
         }
-
 
     }
 }

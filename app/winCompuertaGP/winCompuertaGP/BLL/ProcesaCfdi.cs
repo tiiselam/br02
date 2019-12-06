@@ -12,6 +12,7 @@ using System.Xml;
 using System.Xml.Linq;
 using cfdiEntidadesGP;
 using Prefeitura;
+using notaFiscalCsvHelper;
 
 namespace cfd.FacturaElectronica
 {
@@ -170,6 +171,69 @@ namespace cfd.FacturaElectronica
             OnProgreso(100, "Proceso finalizado!");
         }
 
+        public void ProcesaActualizacionDeNumeroFiscalE(IEnumerable<NFSe> listaFacturasNfse, string carpetaOrigen, string nombreArchivo, MainDB bdGP)
+        {
+            string rutaYNombreArchivo = string.Empty;
+            int numRegistros = listaFacturasNfse.Count();
+            try
+            {
+                String msj = String.Empty;
+                int errores = 0;
+                int i = 0;
+                OnProgreso(1, "INICIANDO ACTUALIZACION DE NFS-e...");
+
+                foreach (NFSe nfselectronica in listaFacturasNfse)
+                {
+                    rutaYNombreArchivo = Path.Combine(carpetaOrigen.Trim(), nombreArchivo);
+                    msj = String.Empty;
+                    var docVenta = bdGP.getFacturas(false, string.Empty, string.Empty,
+                                                false, DateTime.Today, DateTime.Today,
+                                                false, string.Empty,
+                                                false, string.Empty,
+                                                false, string.Empty,
+                                                true, nfselectronica.Sopnumbe, nfselectronica.Sopnumbe).FirstOrDefault();
+                    try
+                    {
+                        string tipoMEstados = "DOCVENTA-" + docVenta.estadoContabilizado;
+                        nfselectronica.CicloDeVida = new Maquina(docVenta.estadoActual, docVenta.regimen, docVenta.voidstts, "emisor", tipoMEstados);
+                        if (nfselectronica.CicloDeVida.Transiciona(Maquina.eventoUploadTxtPrefectura, 1))
+                        {
+                            bdGP.ActualizaNumeroFiscalElectronico(docVenta.soptype, nfselectronica.numNFSe, nfselectronica.Sopnumbe, out msj);
+
+                            bdGP.CreaLogFactura(docVenta.soptype, nfselectronica.Sopnumbe, string.Empty, nfselectronica.CicloDeVida.idxTargetSingleStatus.ToString(), _usuario, string.Empty, nfselectronica.CicloDeVida.targetSingleStatus,
+                                                        nfselectronica.CicloDeVida.targetBinStatus, nfselectronica.CicloDeVida.EstadoEnPalabras(nfselectronica.CicloDeVida.targetBinStatus));
+
+                            bdGP.ActualizaOCreaLogFactura(docVenta.soptype, nfselectronica.Sopnumbe, rutaYNombreArchivo, nfselectronica.CicloDeVida.idxTargetSingleStatus.ToString(), _usuario, string.Empty,
+                                                        Maquina.estadoBaseEmisor, Maquina.estadoBaseEmisor,
+                                                        nfselectronica.CicloDeVida.targetBinStatus, nfselectronica.CicloDeVida.EstadoEnPalabras(nfselectronica.CicloDeVida.targetBinStatus));
+                        }
+                        else
+                        {
+                            msj += nfselectronica.CicloDeVida.sMsj;
+                        }
+                    }
+                    catch (Exception lo)
+                    {
+                        string imsj = lo.InnerException == null ? "" : lo.InnerException.ToString();
+                        msj = lo.Message + " " + imsj + Environment.NewLine + lo.StackTrace;
+                        bdGP.CreaLogFactura(docVenta.soptype, nfselectronica.Sopnumbe, msj, "errDesconocido", _usuario, string.Empty, Maquina.estadoBaseError,
+                                                    nfselectronica.CicloDeVida.targetBinStatus, lo.Message);
+                        errores++;
+                    }
+                    finally
+                    {
+                        OnProgreso(i * 100 / numRegistros, "Doc:" + nfselectronica.Sopnumbe + " " + msj.Trim() + Environment.NewLine);              //Notifica al suscriptor
+                        i++;
+                    }
+                    if (errores > 10) break;
+                }
+            }
+            finally
+            {
+                OnProgreso(100, "-----------");
+            }
+            OnProgreso(100, "Proceso finalizado!");
+        }
 
     }
 }

@@ -248,5 +248,22 @@ namespace cfdiEntidadesGP
             return _DocVenta;
         }
 
+        public void ActualizaNumeroFiscalElectronico(short soptype, string nsfe, string sopnumbe, out string mensaje)
+        {
+            System.Data.Entity.Core.Objects.ObjectParameter msj = new System.Data.Entity.Core.Objects.ObjectParameter("MENS", typeof(string)) ;
+            using (var db = this.getDbContext())
+            {
+                if (!this.probarConexion())
+                {
+                    ErrorEventArgsEntidadesGP args = new ErrorEventArgsEntidadesGP();
+                    args.mensajeError = "No se pudo establecer la conexión con el servidor al tratar de actualizar los NFS-e.";
+                    OnErrorDB(args);
+                }
+
+                var ejecutaSp = db.spCfdiActualizaNumeroFiscalElectronico(soptype, nsfe, sopnumbe, msj);
+                mensaje = msj.ToString();
+
+            }
+        }
     }
 }

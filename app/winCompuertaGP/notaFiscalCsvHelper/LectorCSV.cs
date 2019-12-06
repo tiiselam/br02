@@ -25,15 +25,42 @@ namespace notaFiscalCsvHelper
             ProgressHandler?.Invoke(iAvance, sMsj);
         }
 
+        public IEnumerable<NFSe> LeeArchivoCsv(string carpetaOrigen, string nombreArchivo, CultureInfo culInfo)
+        {
+            IEnumerable<NFSe> records = null;
+                try
+                {
+                    using (var reader = new StreamReader(Path.Combine(carpetaOrigen, nombreArchivo), Encoding.GetEncoding("windows-1254")))
+                    {
+                        using (var csv = new CsvReader(reader))
+                        {
+                            csv.Configuration.HasHeaderRecord = true;
+                            csv.Configuration.BadDataFound = null;
+                            csv.Configuration.MissingFieldFound = (headerNames, index, context) =>
+                            {
+                                OnProgreso(0, $"Los siguientes campos: ['{string.Join("', '", headerNames)}'] de la fila '{index}' no existen. ");
+                            };
+
+                            records = csv.GetRecords<NFSe>();
+                        }
+                    }
+                }
+                catch (Exception csv)
+                {
+                    OnProgreso(0, csv.Message);
+                }
+            return records;
+
+        }
         /// <summary>
-        /// Convierte los archivos csv del parámetro lNombreArchivos a una lista de objetos excel
-        /// Los tipos RM y CUSTOM tienen el mismo formato
-        /// Los tipos RF, paxp, istock tienen el mismo formato
-        /// </summary>
-        /// <param name="carpetaOrigen"></param>
-        /// <param name="lNombreArchivos"></param>
-        /// <param name="culInfo"></param>
-        /// <returns></returns>
+                /// Convierte los archivos csv del parámetro lNombreArchivos a una lista de objetos excel
+                /// Los tipos RM y CUSTOM tienen el mismo formato
+                /// Los tipos RF, paxp, istock tienen el mismo formato
+                /// </summary>
+                /// <param name="carpetaOrigen"></param>
+                /// <param name="lNombreArchivos"></param>
+                /// <param name="culInfo"></param>
+                /// <returns></returns>
         public IEnumerable<ExcelPackage> ConvierteCsvAExcel(string carpetaOrigen, IEnumerable<string> lNombreArchivos, CultureInfo culInfo)
         {
             List<ExcelPackage> archivosXl = new List<ExcelPackage>();

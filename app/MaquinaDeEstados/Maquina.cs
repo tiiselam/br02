@@ -15,7 +15,7 @@ namespace MaquinaDeEstados
         public const int eventoObtienePdf = 10;
         public const int eventoModificaFacturaEnLote = 9;
         public const int eventoAnulaNfse = 12;
-        public const int eventoPrefecturaAcepta = 13;
+        //public const int eventoPrefecturaAcepta = 13;
         public const int eventoGeneraTxt = 14;
         public const int eventoUploadTxtPrefectura = 16;
 
@@ -142,7 +142,6 @@ namespace MaquinaDeEstados
                                     //Eventos de factura electrónica
                                     new Transicion(eventoGeneraTxt, "Genera archivo texto", "std", _Estados.Where(x=>x.Nombre.Equals("no emitido")).First().Idx, _Estados.Where(x=>x.Nombre.Equals("txt generado")).First().Idx),
                                     new Transicion(eventoGeneraTxt, "Genera archivo texto", "std", _Estados.Where(x=>x.Nombre.Equals("txt generado")).First().Idx, _Estados.Where(x=>x.Nombre.Equals("txt generado")).First().Idx),
-                                    new Transicion(eventoPrefecturaAcepta, "Prefectura acepta", "std", _Estados.Where(x=>x.Nombre.Equals("txt generado")).First().Idx, _Estados.Where(x=>x.Nombre.Equals("txt aceptado")).First().Idx),
                                     new Transicion(eventoAnulaNfse, "Anula NFSe", "std", _Estados.Where(x=>x.Nombre.Equals("txt aceptado")).First().Idx, _Estados.Where(x=>x.Nombre.Equals("nfse anulada")).First().Idx),
                                     new Transicion(eventoUploadTxtPrefectura, "Actualiza número NFSe", "std", _Estados.Where(x=>x.Nombre.Equals("txt generado")).First().Idx, _Estados.Where(x=>x.Nombre.Equals("txt aceptado")).First().Idx),
                                     };
@@ -170,7 +169,6 @@ namespace MaquinaDeEstados
                 _matrizTransiciones = new Transicion[] {
                                     new Transicion(eventoGeneraTxt, "Genera archivo texto", "std", _Estados.Where(x=>x.Nombre.Equals("no emitido")).First().Idx, _Estados.Where(x=>x.Nombre.Equals("txt generado")).First().Idx),
                                     new Transicion(eventoGeneraTxt, "Genera archivo texto", "std", _Estados.Where(x=>x.Nombre.Equals("txt generado")).First().Idx, _Estados.Where(x=>x.Nombre.Equals("txt generado")).First().Idx),
-                                    new Transicion(eventoPrefecturaAcepta, "Prefectura acepta", "std", _Estados.Where(x=>x.Nombre.Equals("txt generado")).First().Idx, _Estados.Where(x=>x.Nombre.Equals("txt aceptado")).First().Idx),
                                     new Transicion(eventoModificaFacturaEnLote, "Modifica factura en lote", "std", _Estados.Where(x=>x.Nombre.Equals("txt aceptado")).First().Idx, _Estados.Where(x=>x.Nombre.Equals("no emitido")).First().Idx),
                                     new Transicion(eventoAnulaNfse, "Anula NFSe", "std", _Estados.Where(x=>x.Nombre.Equals("txt aceptado")).First().Idx, _Estados.Where(x=>x.Nombre.Equals("nfse anulada")).First().Idx),
                                     new Transicion(eventoUploadTxtPrefectura, "Actualiza número NFSe", "std", _Estados.Where(x=>x.Nombre.Equals("txt generado")).First().Idx, _Estados.Where(x=>x.Nombre.Equals("txt aceptado")).First().Idx),

@@ -85,7 +85,9 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.tsButtonGenerarTxt = new System.Windows.Forms.ToolStripButton();
+            this.tsButtonCargaNumNFSe = new System.Windows.Forms.ToolStripButton();
             this.toolStripAcciones5 = new System.Windows.Forms.ToolStrip();
+            this.tsButtonGeneraXml = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton11 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton12 = new System.Windows.Forms.ToolStripButton();
             this.toolStripAcciones4 = new System.Windows.Forms.ToolStrip();
@@ -121,8 +123,6 @@
             this.panel8 = new System.Windows.Forms.Panel();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
-            this.tsButtonGeneraXml = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.dgvFacturas)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.tsConfirma1.SuspendLayout();
@@ -422,7 +422,7 @@
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
             this.menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.menuStrip1.Size = new System.Drawing.Size(152, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(272, 24);
             this.menuStrip1.TabIndex = 14;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -454,7 +454,7 @@
             // 
             this.genFacturaElectrónicaV10ToolStripMenuItem.Name = "genFacturaElectrónicaV10ToolStripMenuItem";
             this.genFacturaElectrónicaV10ToolStripMenuItem.Size = new System.Drawing.Size(266, 22);
-            this.genFacturaElectrónicaV10ToolStripMenuItem.Text = "Nota Fiscal y Boleto Bancario v. 1.3.4";
+            this.genFacturaElectrónicaV10ToolStripMenuItem.Text = "Nota Fiscal y Boleto Bancario v. 1.4.4";
             // 
             // toolStripMenuItem2
             // 
@@ -476,6 +476,7 @@
             this.tsTextBoxUsuario.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.tsTextBoxUsuario.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
             this.tsTextBoxUsuario.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tsTextBoxUsuario.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tsTextBoxUsuario.Name = "tsTextBoxUsuario";
             this.tsTextBoxUsuario.ReadOnly = true;
             this.tsTextBoxUsuario.Size = new System.Drawing.Size(200, 23);
@@ -670,7 +671,7 @@
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButton2,
             this.tsButtonGenerarTxt,
-            this.toolStripButton3});
+            this.tsButtonCargaNumNFSe});
             this.toolStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
             this.toolStrip1.Location = new System.Drawing.Point(160, 0);
             this.toolStrip1.Name = "toolStrip1";
@@ -694,6 +695,15 @@
             this.tsButtonGenerarTxt.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsButtonGenerarTxt.Click += new System.EventHandler(this.tsButtonGenerarTxt_Click);
             // 
+            // tsButtonCargaNumNFSe
+            // 
+            this.tsButtonCargaNumNFSe.Image = ((System.Drawing.Image)(resources.GetObject("tsButtonCargaNumNFSe.Image")));
+            this.tsButtonCargaNumNFSe.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsButtonCargaNumNFSe.Name = "tsButtonCargaNumNFSe";
+            this.tsButtonCargaNumNFSe.Size = new System.Drawing.Size(142, 20);
+            this.tsButtonCargaNumNFSe.Text = "Cargar números NFSe";
+            this.tsButtonCargaNumNFSe.Click += new System.EventHandler(this.tsButtonCargaNumNFSe_Click);
+            // 
             // toolStripAcciones5
             // 
             this.toolStripAcciones5.AutoSize = false;
@@ -708,6 +718,17 @@
             this.toolStripAcciones5.Size = new System.Drawing.Size(28, 88);
             this.toolStripAcciones5.TabIndex = 75;
             this.toolStripAcciones5.Text = "toolStrip2";
+            // 
+            // tsButtonGeneraXml
+            // 
+            this.tsButtonGeneraXml.Image = ((System.Drawing.Image)(resources.GetObject("tsButtonGeneraXml.Image")));
+            this.tsButtonGeneraXml.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tsButtonGeneraXml.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsButtonGeneraXml.Name = "tsButtonGeneraXml";
+            this.tsButtonGeneraXml.Size = new System.Drawing.Size(75, 79);
+            this.tsButtonGeneraXml.Text = "Web Service";
+            this.tsButtonGeneraXml.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tsButtonGeneraXml.Visible = false;
             // 
             // toolStripButton11
             // 
@@ -1081,25 +1102,6 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // toolStripButton3
-            // 
-            this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
-            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(142, 20);
-            this.toolStripButton3.Text = "Cargar números NFSe";
-            // 
-            // tsButtonGeneraXml
-            // 
-            this.tsButtonGeneraXml.Image = ((System.Drawing.Image)(resources.GetObject("tsButtonGeneraXml.Image")));
-            this.tsButtonGeneraXml.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.tsButtonGeneraXml.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsButtonGeneraXml.Name = "tsButtonGeneraXml";
-            this.tsButtonGeneraXml.Size = new System.Drawing.Size(75, 79);
-            this.tsButtonGeneraXml.Text = "Web Service";
-            this.tsButtonGeneraXml.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.tsButtonGeneraXml.Visible = false;
-            // 
             // winFormCompuertaGPBase
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1251,7 +1253,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn MENSAJE;
         private System.Windows.Forms.DataGridViewCheckBoxColumn voidstts;
         private System.Windows.Forms.DataGridViewTextBoxColumn mensajeEA;
-        private System.Windows.Forms.ToolStripButton toolStripButton3;
+        private System.Windows.Forms.ToolStripButton tsButtonCargaNumNFSe;
         private System.Windows.Forms.ToolStripButton tsButtonGeneraXml;
     }
 }

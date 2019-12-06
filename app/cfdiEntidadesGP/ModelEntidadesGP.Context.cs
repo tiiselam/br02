@@ -12,6 +12,8 @@ namespace cfdiEntidadesGP
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class GBRAEntities : DbContext
     {
@@ -28,5 +30,22 @@ namespace cfdiEntidadesGP
         public virtual DbSet<vwCfdiTransaccionesDeVenta> vwCfdiTransaccionesDeVenta { get; set; }
         public virtual DbSet<vwCfdiGeneraDocumentoDeVentaBRA> vwCfdiGeneraDocumentoDeVentaBRA { get; set; }
         public virtual DbSet<cfdLogFacturaXML> cfdLogFacturaXML { get; set; }
+    
+        public virtual int spCfdiActualizaNumeroFiscalElectronico(Nullable<short> sOPTYPE, string nUMFAC, string sERNUM, ObjectParameter mENS)
+        {
+            var sOPTYPEParameter = sOPTYPE.HasValue ?
+                new ObjectParameter("SOPTYPE", sOPTYPE) :
+                new ObjectParameter("SOPTYPE", typeof(short));
+    
+            var nUMFACParameter = nUMFAC != null ?
+                new ObjectParameter("NUMFAC", nUMFAC) :
+                new ObjectParameter("NUMFAC", typeof(string));
+    
+            var sERNUMParameter = sERNUM != null ?
+                new ObjectParameter("SERNUM", sERNUM) :
+                new ObjectParameter("SERNUM", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spCfdiActualizaNumeroFiscalElectronico", sOPTYPEParameter, nUMFACParameter, sERNUMParameter, mENS);
+        }
     }
 }
