@@ -11,12 +11,6 @@ namespace notaFiscalCsvHelper
 {
     public class NFSe
     {
-        public Maquina CicloDeVida { get; set; }
-        public string Sopnumbe {
-            get { return this.SeriedoRPS + this.NumerodoRPS; }
-            set { }
-        }
-
         [Index(0)] 
         public string TipodeRegistro { get; set; }
         [Index(1)] 
@@ -114,6 +108,13 @@ namespace notaFiscalCsvHelper
         [Index(47)] 
         public string DiscriminacaodosServicos { get; set; }
 
+        public Maquina CicloDeVida { get; set; }
+
+        public string Sopnumbe
+        {
+            get { return this.SeriedoRPS + this.NumerodoRPS; }
+            set { }
+        }
     }
 
 }

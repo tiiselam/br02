@@ -2,6 +2,7 @@
 using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -25,23 +26,28 @@ namespace notaFiscalCsvHelper
             ProgressHandler?.Invoke(iAvance, sMsj);
         }
 
-        public IEnumerable<NFSe> LeeArchivoCsv(string carpetaOrigen, string nombreArchivo, CultureInfo culInfo)
+        public List<NFSe> LeeArchivoCsv(string carpetaOrigen, string nombreArchivo, CultureInfo culInfo)
         {
-            IEnumerable<NFSe> records = null;
+            List<NFSe> records = new List<NFSe>();
                 try
                 {
                     using (var reader = new StreamReader(Path.Combine(carpetaOrigen, nombreArchivo), Encoding.GetEncoding("windows-1254")))
                     {
                         using (var csv = new CsvReader(reader))
                         {
-                            csv.Configuration.HasHeaderRecord = true;
-                            csv.Configuration.BadDataFound = null;
-                            csv.Configuration.MissingFieldFound = (headerNames, index, context) =>
+                            csv.Read();
+                            csv.ReadHeader();
+                            while (csv.Read())
                             {
-                                OnProgreso(0, $"Los siguientes campos: ['{string.Join("', '", headerNames)}'] de la fila '{index}' no existen. ");
-                            };
-
-                            records = csv.GetRecords<NFSe>();
+                                var record = new NFSe
+                                {
+                                    numNFSe = csv.GetField(1),
+                                    SeriedoRPS = csv.GetField(5),
+                                    NumerodoRPS = csv.GetField(6) 
+                                };
+                                if (!string.IsNullOrEmpty( record.NumerodoRPS))
+                                    records.Add(record);
+                            }
                         }
                     }
                 }

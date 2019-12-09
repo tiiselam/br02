@@ -31,18 +31,6 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(winFormCompuertaGPBase));
             this.dgvFacturas = new System.Windows.Forms.DataGridView();
-            this.M = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.docid = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.soptype = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sopnumbe = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fechahora = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nombreCliente = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.idImpuestoCliente = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.total = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.estado = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MENSAJE = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.voidstts = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.mensajeEA = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cmbBEstado = new System.Windows.Forms.ComboBox();
             this.checkBoxEstado = new System.Windows.Forms.CheckBox();
             this.checkBoxPacientes_numero_pf = new System.Windows.Forms.CheckBox();
@@ -92,7 +80,7 @@
             this.toolStripButton12 = new System.Windows.Forms.ToolStripButton();
             this.toolStripAcciones4 = new System.Windows.Forms.ToolStrip();
             this.tsSplitBCambiarStatus = new System.Windows.Forms.ToolStripSplitButton();
-            this.tsMenuItemCambiarAListo = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsMenuItemCambiarANoEmitido = new System.Windows.Forms.ToolStripMenuItem();
             this.anuleDespuesDeContabilizadaTsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsbActualizarStatus = new System.Windows.Forms.ToolStripButton();
             this.toolStripAcciones3 = new System.Windows.Forms.ToolStrip();
@@ -123,6 +111,18 @@
             this.panel8 = new System.Windows.Forms.Panel();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.M = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.docid = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.soptype = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.sopnumbe = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fechahora = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nombreCliente = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.idImpuestoCliente = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.total = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.estado = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MENSAJE = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.voidstts = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.mensajeEA = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvFacturas)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.tsConfirma1.SuspendLayout();
@@ -168,118 +168,17 @@
             this.MENSAJE,
             this.voidstts,
             this.mensajeEA});
+            this.dgvFacturas.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvFacturas.Location = new System.Drawing.Point(0, 0);
             this.dgvFacturas.Name = "dgvFacturas";
             this.dgvFacturas.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.dgvFacturas.RowHeadersWidth = 15;
             this.dgvFacturas.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvFacturas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dgvFacturas.Size = new System.Drawing.Size(1177, 311);
+            this.dgvFacturas.Size = new System.Drawing.Size(1177, 310);
             this.dgvFacturas.TabIndex = 50;
             this.dgvFacturas.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvPacientes_CellDoubleClick);
             this.dgvFacturas.CurrentCellDirtyStateChanged += new System.EventHandler(this.dgvPacientes_CurrentCellDirtyStateChanged);
-            // 
-            // M
-            // 
-            this.M.FalseValue = "0";
-            this.M.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.M.Frozen = true;
-            this.M.HeaderText = "M";
-            this.M.IndeterminateValue = "-1";
-            this.M.MinimumWidth = 20;
-            this.M.Name = "M";
-            this.M.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.M.TrueValue = "1";
-            this.M.Width = 20;
-            // 
-            // docid
-            // 
-            this.docid.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.docid.DataPropertyName = "docid";
-            this.docid.FillWeight = 20F;
-            this.docid.HeaderText = "Id. Doc.";
-            this.docid.Name = "docid";
-            this.docid.Width = 70;
-            // 
-            // soptype
-            // 
-            this.soptype.DataPropertyName = "soptype";
-            this.soptype.HeaderText = "Tipo";
-            this.soptype.Name = "soptype";
-            this.soptype.Width = 45;
-            // 
-            // sopnumbe
-            // 
-            this.sopnumbe.DataPropertyName = "sopnumbe";
-            this.sopnumbe.FillWeight = 60F;
-            this.sopnumbe.HeaderText = "Número Doc.";
-            this.sopnumbe.Name = "sopnumbe";
-            this.sopnumbe.ReadOnly = true;
-            // 
-            // fechahora
-            // 
-            this.fechahora.DataPropertyName = "fechahora";
-            this.fechahora.HeaderText = "Fecha";
-            this.fechahora.MinimumWidth = 40;
-            this.fechahora.Name = "fechahora";
-            this.fechahora.Width = 50;
-            // 
-            // nombreCliente
-            // 
-            this.nombreCliente.DataPropertyName = "nombreCliente";
-            this.nombreCliente.HeaderText = "Nombre Cliente";
-            this.nombreCliente.MinimumWidth = 100;
-            this.nombreCliente.Name = "nombreCliente";
-            this.nombreCliente.Width = 120;
-            // 
-            // idImpuestoCliente
-            // 
-            this.idImpuestoCliente.DataPropertyName = "idImpuestoCliente";
-            this.idImpuestoCliente.FillWeight = 60F;
-            this.idImpuestoCliente.HeaderText = "Id de Impuesto";
-            this.idImpuestoCliente.Name = "idImpuestoCliente";
-            this.idImpuestoCliente.ReadOnly = true;
-            this.idImpuestoCliente.Width = 102;
-            // 
-            // total
-            // 
-            this.total.DataPropertyName = "total";
-            this.total.HeaderText = "Total";
-            this.total.Name = "total";
-            // 
-            // estado
-            // 
-            this.estado.DataPropertyName = "estado";
-            this.estado.FillWeight = 60F;
-            this.estado.HeaderText = "Estado";
-            this.estado.Name = "estado";
-            this.estado.ReadOnly = true;
-            // 
-            // MENSAJE
-            // 
-            this.MENSAJE.DataPropertyName = "mensaje";
-            this.MENSAJE.FillWeight = 60F;
-            this.MENSAJE.HeaderText = "Mensaje";
-            this.MENSAJE.Name = "MENSAJE";
-            // 
-            // voidstts
-            // 
-            this.voidstts.FalseValue = "0";
-            this.voidstts.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.voidstts.HeaderText = "Anulado";
-            this.voidstts.Name = "voidstts";
-            this.voidstts.ReadOnly = true;
-            this.voidstts.TrueValue = "1";
-            this.voidstts.Width = 50;
-            // 
-            // mensajeEA
-            // 
-            this.mensajeEA.DataPropertyName = "mensajeEA";
-            this.mensajeEA.FillWeight = 60F;
-            this.mensajeEA.HeaderText = "Observaciones";
-            this.mensajeEA.MinimumWidth = 100;
-            this.mensajeEA.Name = "mensajeEA";
-            this.mensajeEA.Width = 150;
             // 
             // cmbBEstado
             // 
@@ -396,7 +295,7 @@
             this.txtbxMensajes.Multiline = true;
             this.txtbxMensajes.Name = "txtbxMensajes";
             this.txtbxMensajes.ReadOnly = true;
-            this.txtbxMensajes.Size = new System.Drawing.Size(674, 137);
+            this.txtbxMensajes.Size = new System.Drawing.Size(674, 138);
             this.txtbxMensajes.TabIndex = 60;
             // 
             // toolStripProgressBar2
@@ -422,7 +321,7 @@
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
             this.menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.menuStrip1.Size = new System.Drawing.Size(272, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(152, 24);
             this.menuStrip1.TabIndex = 14;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -590,9 +489,9 @@
             // toolStrip2
             // 
             this.toolStrip2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.toolStrip2.Location = new System.Drawing.Point(531, 25);
+            this.toolStrip2.Location = new System.Drawing.Point(649, 25);
             this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(646, 63);
+            this.toolStrip2.Size = new System.Drawing.Size(528, 63);
             this.toolStrip2.TabIndex = 86;
             this.toolStrip2.Text = "toolStrip2";
             // 
@@ -600,9 +499,9 @@
             // 
             this.toolStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsDropDownFiltro});
-            this.toolStrip3.Location = new System.Drawing.Point(531, 0);
+            this.toolStrip3.Location = new System.Drawing.Point(649, 0);
             this.toolStrip3.Name = "toolStrip3";
-            this.toolStrip3.Size = new System.Drawing.Size(646, 25);
+            this.toolStrip3.Size = new System.Drawing.Size(528, 25);
             this.toolStrip3.TabIndex = 85;
             this.toolStrip3.Text = "toolStrip3";
             // 
@@ -673,7 +572,7 @@
             this.tsButtonGenerarTxt,
             this.tsButtonCargaNumNFSe});
             this.toolStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
-            this.toolStrip1.Location = new System.Drawing.Point(160, 0);
+            this.toolStrip1.Location = new System.Drawing.Point(278, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(371, 88);
             this.toolStrip1.TabIndex = 78;
@@ -713,7 +612,7 @@
             this.toolStripButton11,
             this.toolStripButton12});
             this.toolStripAcciones5.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
-            this.toolStripAcciones5.Location = new System.Drawing.Point(132, 0);
+            this.toolStripAcciones5.Location = new System.Drawing.Point(250, 0);
             this.toolStripAcciones5.Name = "toolStripAcciones5";
             this.toolStripAcciones5.Size = new System.Drawing.Size(28, 88);
             this.toolStripAcciones5.TabIndex = 75;
@@ -756,36 +655,35 @@
             this.toolStripAcciones4.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
             this.toolStripAcciones4.Location = new System.Drawing.Point(105, 0);
             this.toolStripAcciones4.Name = "toolStripAcciones4";
-            this.toolStripAcciones4.Size = new System.Drawing.Size(27, 88);
+            this.toolStripAcciones4.Size = new System.Drawing.Size(145, 88);
             this.toolStripAcciones4.TabIndex = 73;
             this.toolStripAcciones4.Text = "toolStripEmail";
             // 
             // tsSplitBCambiarStatus
             // 
             this.tsSplitBCambiarStatus.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsMenuItemCambiarAListo,
+            this.tsMenuItemCambiarANoEmitido,
             this.anuleDespuesDeContabilizadaTsMenuItem});
-            this.tsSplitBCambiarStatus.Enabled = false;
             this.tsSplitBCambiarStatus.Image = ((System.Drawing.Image)(resources.GetObject("tsSplitBCambiarStatus.Image")));
             this.tsSplitBCambiarStatus.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsSplitBCambiarStatus.Name = "tsSplitBCambiarStatus";
             this.tsSplitBCambiarStatus.Size = new System.Drawing.Size(125, 20);
             this.tsSplitBCambiarStatus.Text = "Para reintegrar...";
             this.tsSplitBCambiarStatus.ToolTipText = "Cambiar estado del documento";
-            this.tsSplitBCambiarStatus.Visible = false;
             // 
-            // tsMenuItemCambiarAListo
+            // tsMenuItemCambiarANoEmitido
             // 
-            this.tsMenuItemCambiarAListo.Name = "tsMenuItemCambiarAListo";
-            this.tsMenuItemCambiarAListo.Size = new System.Drawing.Size(292, 22);
-            this.tsMenuItemCambiarAListo.Text = "Eliminé la factura en GP";
-            this.tsMenuItemCambiarAListo.Click += new System.EventHandler(this.tsMenuItemCambiarAListo_Click);
+            this.tsMenuItemCambiarANoEmitido.Name = "tsMenuItemCambiarANoEmitido";
+            this.tsMenuItemCambiarANoEmitido.Size = new System.Drawing.Size(292, 22);
+            this.tsMenuItemCambiarANoEmitido.Text = "Modifiqué el RPS en Sodatech";
+            this.tsMenuItemCambiarANoEmitido.Click += new System.EventHandler(this.tsMenuItemCambiarAListo_Click);
             // 
             // anuleDespuesDeContabilizadaTsMenuItem
             // 
             this.anuleDespuesDeContabilizadaTsMenuItem.Name = "anuleDespuesDeContabilizadaTsMenuItem";
             this.anuleDespuesDeContabilizadaTsMenuItem.Size = new System.Drawing.Size(292, 22);
             this.anuleDespuesDeContabilizadaTsMenuItem.Text = "Anulé la factura después de contabilizada";
+            this.anuleDespuesDeContabilizadaTsMenuItem.Visible = false;
             this.anuleDespuesDeContabilizadaTsMenuItem.Click += new System.EventHandler(this.anuleDespuesDeContabilizadaTsMenuItem_Click);
             // 
             // tsbActualizarStatus
@@ -848,7 +746,7 @@
             this.tabNotaFiscal.Multiline = true;
             this.tabNotaFiscal.Name = "tabNotaFiscal";
             this.tabNotaFiscal.SelectedIndex = 0;
-            this.tabNotaFiscal.Size = new System.Drawing.Size(1231, 475);
+            this.tabNotaFiscal.Size = new System.Drawing.Size(1231, 474);
             this.tabNotaFiscal.TabIndex = 78;
             this.tabNotaFiscal.SelectedIndexChanged += new System.EventHandler(this.tabControlPrefactura_SelectedIndexChanged);
             this.tabNotaFiscal.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tabControlPreFactura_Selecting);
@@ -861,7 +759,7 @@
             this.gpFactura.Location = new System.Drawing.Point(44, 4);
             this.gpFactura.Name = "gpFactura";
             this.gpFactura.Padding = new System.Windows.Forms.Padding(3);
-            this.gpFactura.Size = new System.Drawing.Size(1183, 467);
+            this.gpFactura.Size = new System.Drawing.Size(1183, 466);
             this.gpFactura.TabIndex = 0;
             this.gpFactura.Text = "NOTA FISCAL";
             this.gpFactura.UseVisualStyleBackColor = true;
@@ -873,7 +771,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(3, 153);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1177, 311);
+            this.panel1.Size = new System.Drawing.Size(1177, 310);
             this.panel1.TabIndex = 79;
             // 
             // checkBoxMark
@@ -1031,7 +929,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.txtbxMensajes);
-            this.splitContainer1.Size = new System.Drawing.Size(1231, 137);
+            this.splitContainer1.Size = new System.Drawing.Size(1231, 138);
             this.splitContainer1.SplitterDistance = 553;
             this.splitContainer1.TabIndex = 79;
             // 
@@ -1043,7 +941,7 @@
             this.textBoxAlertas.Multiline = true;
             this.textBoxAlertas.Name = "textBoxAlertas";
             this.textBoxAlertas.ReadOnly = true;
-            this.textBoxAlertas.Size = new System.Drawing.Size(553, 137);
+            this.textBoxAlertas.Size = new System.Drawing.Size(553, 138);
             this.textBoxAlertas.TabIndex = 61;
             // 
             // panel3
@@ -1074,10 +972,10 @@
             // panel7
             // 
             this.panel7.Controls.Add(this.tabNotaFiscal);
-            this.panel7.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel7.Location = new System.Drawing.Point(0, 26);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(1231, 475);
+            this.panel7.Size = new System.Drawing.Size(1231, 474);
             this.panel7.TabIndex = 81;
             // 
             // toolStripButton1
@@ -1092,26 +990,132 @@
             // panel8
             // 
             this.panel8.Controls.Add(this.splitContainer1);
-            this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel8.Location = new System.Drawing.Point(0, 501);
+            this.panel8.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel8.Location = new System.Drawing.Point(0, 500);
             this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(1231, 137);
+            this.panel8.Size = new System.Drawing.Size(1231, 138);
             this.panel8.TabIndex = 81;
             // 
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
+            // M
+            // 
+            this.M.FalseValue = "0";
+            this.M.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.M.Frozen = true;
+            this.M.HeaderText = "M";
+            this.M.IndeterminateValue = "-1";
+            this.M.MinimumWidth = 20;
+            this.M.Name = "M";
+            this.M.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.M.TrueValue = "1";
+            this.M.Width = 20;
+            // 
+            // docid
+            // 
+            this.docid.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.docid.DataPropertyName = "docid";
+            this.docid.FillWeight = 20F;
+            this.docid.HeaderText = "Id. Doc.";
+            this.docid.Name = "docid";
+            this.docid.Width = 70;
+            // 
+            // soptype
+            // 
+            this.soptype.DataPropertyName = "soptype";
+            this.soptype.HeaderText = "Tipo";
+            this.soptype.Name = "soptype";
+            this.soptype.Width = 45;
+            // 
+            // sopnumbe
+            // 
+            this.sopnumbe.DataPropertyName = "sopnumbe";
+            this.sopnumbe.FillWeight = 60F;
+            this.sopnumbe.HeaderText = "Número Doc.";
+            this.sopnumbe.Name = "sopnumbe";
+            this.sopnumbe.ReadOnly = true;
+            // 
+            // fechahora
+            // 
+            this.fechahora.DataPropertyName = "fechahora";
+            this.fechahora.FillWeight = 60F;
+            this.fechahora.HeaderText = "Fecha";
+            this.fechahora.MinimumWidth = 40;
+            this.fechahora.Name = "fechahora";
+            this.fechahora.Width = 50;
+            // 
+            // nombreCliente
+            // 
+            this.nombreCliente.DataPropertyName = "nombreCliente";
+            this.nombreCliente.FillWeight = 80F;
+            this.nombreCliente.HeaderText = "Nombre Cliente";
+            this.nombreCliente.MinimumWidth = 100;
+            this.nombreCliente.Name = "nombreCliente";
+            this.nombreCliente.Width = 120;
+            // 
+            // idImpuestoCliente
+            // 
+            this.idImpuestoCliente.DataPropertyName = "idImpuestoCliente";
+            this.idImpuestoCliente.FillWeight = 60F;
+            this.idImpuestoCliente.HeaderText = "Id de Impuesto";
+            this.idImpuestoCliente.Name = "idImpuestoCliente";
+            this.idImpuestoCliente.ReadOnly = true;
+            this.idImpuestoCliente.Width = 102;
+            // 
+            // total
+            // 
+            this.total.DataPropertyName = "total";
+            this.total.FillWeight = 90F;
+            this.total.HeaderText = "Total";
+            this.total.Name = "total";
+            // 
+            // estado
+            // 
+            this.estado.DataPropertyName = "estado";
+            this.estado.FillWeight = 60F;
+            this.estado.HeaderText = "Estado";
+            this.estado.Name = "estado";
+            this.estado.ReadOnly = true;
+            this.estado.Visible = false;
+            // 
+            // MENSAJE
+            // 
+            this.MENSAJE.DataPropertyName = "mensaje";
+            this.MENSAJE.FillWeight = 60F;
+            this.MENSAJE.HeaderText = "Mensaje";
+            this.MENSAJE.Name = "MENSAJE";
+            // 
+            // voidstts
+            // 
+            this.voidstts.FalseValue = "0";
+            this.voidstts.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.voidstts.HeaderText = "Anulado";
+            this.voidstts.Name = "voidstts";
+            this.voidstts.ReadOnly = true;
+            this.voidstts.TrueValue = "1";
+            this.voidstts.Width = 50;
+            // 
+            // mensajeEA
+            // 
+            this.mensajeEA.DataPropertyName = "mensajeEA";
+            this.mensajeEA.FillWeight = 60F;
+            this.mensajeEA.HeaderText = "Observaciones";
+            this.mensajeEA.MinimumWidth = 100;
+            this.mensajeEA.Name = "mensajeEA";
+            this.mensajeEA.Width = 150;
+            // 
             // winFormCompuertaGPBase
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1231, 661);
-            this.Controls.Add(this.panel8);
-            this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel7);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.tsConfirma1);
+            this.Controls.Add(this.panel8);
+            this.Controls.Add(this.panel3);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "winFormCompuertaGPBase";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
@@ -1198,7 +1202,6 @@
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.TextBox textBoxAlertas;
         private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.ToolStrip toolStripAcciones5;
         private System.Windows.Forms.ToolStrip toolStripAcciones4;
         private System.Windows.Forms.ToolStrip toolStripAcciones3;
@@ -1217,14 +1220,13 @@
         private System.Windows.Forms.ToolStripButton toolStripButton12;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripProgressBar tsProgressBar1;
-        private System.Windows.Forms.Panel panel8;
         protected System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         protected System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
         protected System.Windows.Forms.Panel panel4;
         protected System.Windows.Forms.TabControl tabNotaFiscal;
         private System.Windows.Forms.BindingSource bindingSource1;
         private System.Windows.Forms.ToolStripSplitButton tsSplitBCambiarStatus;
-        private System.Windows.Forms.ToolStripMenuItem tsMenuItemCambiarAListo;
+        private System.Windows.Forms.ToolStripMenuItem tsMenuItemCambiarANoEmitido;
         private System.Windows.Forms.ToolStripButton tsbActualizarStatus;
         private System.Windows.Forms.ToolStripMenuItem anuleDespuesDeContabilizadaTsMenuItem;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
@@ -1241,6 +1243,8 @@
         private System.Windows.Forms.ToolStripButton tsButtonGenerarTxt;
         private System.Windows.Forms.ToolStrip toolStrip2;
         private System.Windows.Forms.CheckBox checkBoxMark;
+        private System.Windows.Forms.ToolStripButton tsButtonCargaNumNFSe;
+        private System.Windows.Forms.ToolStripButton tsButtonGeneraXml;
         private System.Windows.Forms.DataGridViewCheckBoxColumn M;
         private System.Windows.Forms.DataGridViewTextBoxColumn docid;
         private System.Windows.Forms.DataGridViewTextBoxColumn soptype;
@@ -1253,8 +1257,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn MENSAJE;
         private System.Windows.Forms.DataGridViewCheckBoxColumn voidstts;
         private System.Windows.Forms.DataGridViewTextBoxColumn mensajeEA;
-        private System.Windows.Forms.ToolStripButton tsButtonCargaNumNFSe;
-        private System.Windows.Forms.ToolStripButton tsButtonGeneraXml;
+        protected System.Windows.Forms.Panel panel7;
+        protected System.Windows.Forms.Panel panel8;
     }
 }
 

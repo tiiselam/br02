@@ -171,7 +171,7 @@ namespace cfd.FacturaElectronica
             OnProgreso(100, "Proceso finalizado!");
         }
 
-        public void ProcesaActualizacionDeNumeroFiscalE(IEnumerable<NFSe> listaFacturasNfse, string carpetaOrigen, string nombreArchivo, MainDB bdGP)
+        public void ProcesaActualizacionDeNumeroFiscalE(List<NFSe> listaFacturasNfse, string carpetaOrigen, string nombreArchivo, MainDB bdGP)
         {
             string rutaYNombreArchivo = string.Empty;
             int numRegistros = listaFacturasNfse.Count();
@@ -223,6 +223,59 @@ namespace cfd.FacturaElectronica
                     finally
                     {
                         OnProgreso(i * 100 / numRegistros, "Doc:" + nfselectronica.Sopnumbe + " " + msj.Trim() + Environment.NewLine);              //Notifica al suscriptor
+                        i++;
+                    }
+                    if (errores > 10) break;
+                }
+            }
+            finally
+            {
+                OnProgreso(100, "-----------");
+            }
+            OnProgreso(100, "Proceso finalizado!");
+        }
+
+        public void ProcesaCambioDeStatus(IList<vwCfdiTransaccionesDeVenta> listaTransaccionesVenta, MainDB DocumentosGP)
+        {
+            string rutaYNom = string.Empty;
+            try
+            {
+                String msj = String.Empty;
+                int errores = 0; int i = 1;
+                OnProgreso(1, "INICIANDO CAMBIO DE STATUS...");
+
+                foreach (vwCfdiTransaccionesDeVenta trxVenta in listaTransaccionesVenta)
+                {
+                    msj = String.Empty;
+                    try
+                    {
+                        string tipoMEstados = "DOCVENTA-" + trxVenta.estadoContabilizado;
+                        trxVenta.CicloDeVida = new Maquina(trxVenta.estadoActual, trxVenta.regimen, trxVenta.voidstts, "emisor", tipoMEstados);
+                        if (trxVenta.CicloDeVida.Transiciona(Maquina.eventoModificaFacturaEnLote, 1))
+                        {
+                            DocumentosGP.CreaLogFactura(trxVenta.soptype, trxVenta.sopnumbe, string.Empty, trxVenta.CicloDeVida.idxTargetSingleStatus.ToString(), _usuario, string.Empty, trxVenta.CicloDeVida.targetSingleStatus,
+                                                        trxVenta.CicloDeVida.targetBinStatus, trxVenta.CicloDeVida.EstadoEnPalabras(trxVenta.CicloDeVida.targetBinStatus));
+
+                            DocumentosGP.ActualizaOCreaLogFactura(trxVenta.soptype, trxVenta.sopnumbe, string.Empty, trxVenta.CicloDeVida.idxTargetSingleStatus.ToString(), _usuario, string.Empty,
+                                                        Maquina.estadoBaseEmisor, Maquina.estadoBaseEmisor,
+                                                        trxVenta.CicloDeVida.targetBinStatus, trxVenta.CicloDeVida.EstadoEnPalabras(trxVenta.CicloDeVida.targetBinStatus));
+                        }
+                        else
+                        {
+                            msj += trxVenta.CicloDeVida.sMsj;
+                        }
+                    }
+                    catch (Exception lo)
+                    {
+                        string imsj = lo.InnerException == null ? "" : lo.InnerException.ToString();
+                        msj = lo.Message + " " + imsj + Environment.NewLine + lo.StackTrace;
+                        DocumentosGP.CreaLogFactura(trxVenta.soptype, trxVenta.sopnumbe, msj, "errDesconocido", _usuario, string.Empty, Maquina.estadoBaseError,
+                                                    trxVenta.CicloDeVida.targetBinStatus, lo.Message);
+                        errores++;
+                    }
+                    finally
+                    {
+                        OnProgreso(i * 100 / listaTransaccionesVenta.Count, "Doc:" + trxVenta.sopnumbe + " " + msj.Trim() + Environment.NewLine);              //Notifica al suscriptor
                         i++;
                     }
                     if (errores > 10) break;

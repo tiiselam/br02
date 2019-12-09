@@ -261,7 +261,7 @@ namespace cfdiEntidadesGP
                 }
 
                 var ejecutaSp = db.spCfdiActualizaNumeroFiscalElectronico(soptype, nsfe, sopnumbe, msj);
-                mensaje = msj.ToString();
+                mensaje = msj.Value.ToString();
 
             }
         }

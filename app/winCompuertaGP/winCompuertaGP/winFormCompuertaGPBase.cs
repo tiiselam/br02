@@ -438,6 +438,8 @@ namespace winCompuertaGP
                     var archivoCsv = csv.LeeArchivoCsv(carpetaOrigen, nombreArchivo, culInfo);
 
                     ProcesaCfdi proc = new ProcesaCfdi(lblUsuario.Text);
+                    proc.Progreso += new ProcesaCfdi.LogHandler(reportaProgreso);
+
                     proc.ProcesaActualizacionDeNumeroFiscalE(archivoCsv, carpetaOrigen, nombreArchivo, mainController);
 
                     filtrarFacturas();
@@ -569,12 +571,14 @@ namespace winCompuertaGP
             else
                 try
                 {
-                    string idLog = dgvFacturas.SelectedRows[0].Cells[1].Value.ToString();
-                    string docStatus = dgvFacturas.SelectedRows[0].Cells[8].Value.ToString();
+                    ProcesaCfdi proc = new ProcesaCfdi(lblUsuario.Text);
+                    proc.Progreso += new ProcesaCfdi.LogHandler(reportaProgreso);
 
-                    this.ActualizarStatus(int.Parse(idLog), docStatus, "ELIMINA_FACTURA_EN_GP");
+                    var listaSeleccionadaPorUsuario = filtraListaSeleccionada(listaDeFacturas); //Filtra cfdiTransacciones sólo con docs marcados
+                    proc.ProcesaCambioDeStatus(listaSeleccionadaPorUsuario, mainController);
+
                     filtrarFacturas();
-                    reportaProgreso(0, "Proceso finalizado.");
+
                 }
                 catch (Exception gr)
                 {
