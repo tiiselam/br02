@@ -15,7 +15,7 @@ namespace MaquinaDeEstados
         public const int eventoObtienePdf = 10;
         public const int eventoModificaFacturaEnLote = 9;
         public const int eventoAnulaNfse = 12;
-        public const int eventoPrefecturaAcepta = 13;
+        //public const int eventoPrefecturaAcepta = 13;
         public const int eventoGeneraTxt = 14;
         public const int eventoUploadTxtPrefectura = 16;
 
@@ -140,10 +140,9 @@ namespace MaquinaDeEstados
 
                 _matrizTransiciones = new Transicion[] {
                                     //Eventos de factura electrónica
-                                    new Transicion(eventoGeneraTxt, "Genera archivo texto", "std", _Estados.Where(x=>x.Nombre.Equals("no emitido")).First().Idx, _Estados.Where(x=>x.Nombre.Equals("txt generado")).First().Idx),
-                                    new Transicion(eventoGeneraTxt, "Genera archivo texto", "std", _Estados.Where(x=>x.Nombre.Equals("txt generado")).First().Idx, _Estados.Where(x=>x.Nombre.Equals("txt generado")).First().Idx),
-                                    new Transicion(eventoPrefecturaAcepta, "Prefectura acepta", "std", _Estados.Where(x=>x.Nombre.Equals("txt generado")).First().Idx, _Estados.Where(x=>x.Nombre.Equals("txt aceptado")).First().Idx),
-                                    new Transicion(eventoAnulaNfse, "Anula NFSe", "std", _Estados.Where(x=>x.Nombre.Equals("txt aceptado")).First().Idx, _Estados.Where(x=>x.Nombre.Equals("nfse anulada")).First().Idx),
+                                    new Transicion(eventoGeneraTxt, "Genera archivo texto", "std",          _Estados.Where(x=>x.Nombre.Equals("no emitido")).First().Idx, _Estados.Where(x=>x.Nombre.Equals("txt generado")).First().Idx),
+                                    new Transicion(eventoGeneraTxt, "Genera archivo texto", "std",          _Estados.Where(x=>x.Nombre.Equals("txt generado")).First().Idx, _Estados.Where(x=>x.Nombre.Equals("txt generado")).First().Idx),
+                                    new Transicion(eventoAnulaNfse, "Anula NFSe", "std",                    _Estados.Where(x=>x.Nombre.Equals("txt aceptado")).First().Idx, _Estados.Where(x=>x.Nombre.Equals("nfse anulada")).First().Idx),
                                     new Transicion(eventoUploadTxtPrefectura, "Actualiza número NFSe", "std", _Estados.Where(x=>x.Nombre.Equals("txt generado")).First().Idx, _Estados.Where(x=>x.Nombre.Equals("txt aceptado")).First().Idx),
                                     };
             };
@@ -168,12 +167,11 @@ namespace MaquinaDeEstados
                 };
 
                 _matrizTransiciones = new Transicion[] {
-                                    new Transicion(eventoGeneraTxt, "Genera archivo texto", "std", _Estados.Where(x=>x.Nombre.Equals("no emitido")).First().Idx, _Estados.Where(x=>x.Nombre.Equals("txt generado")).First().Idx),
-                                    new Transicion(eventoGeneraTxt, "Genera archivo texto", "std", _Estados.Where(x=>x.Nombre.Equals("txt generado")).First().Idx, _Estados.Where(x=>x.Nombre.Equals("txt generado")).First().Idx),
-                                    new Transicion(eventoPrefecturaAcepta, "Prefectura acepta", "std", _Estados.Where(x=>x.Nombre.Equals("txt generado")).First().Idx, _Estados.Where(x=>x.Nombre.Equals("txt aceptado")).First().Idx),
+                                    new Transicion(eventoGeneraTxt, "Genera archivo texto", "std",              _Estados.Where(x=>x.Nombre.Equals("no emitido")).First().Idx, _Estados.Where(x=>x.Nombre.Equals("txt generado")).First().Idx),
+                                    new Transicion(eventoGeneraTxt, "Genera archivo texto", "std",              _Estados.Where(x=>x.Nombre.Equals("txt generado")).First().Idx, _Estados.Where(x=>x.Nombre.Equals("txt generado")).First().Idx),
                                     new Transicion(eventoModificaFacturaEnLote, "Modifica factura en lote", "std", _Estados.Where(x=>x.Nombre.Equals("txt aceptado")).First().Idx, _Estados.Where(x=>x.Nombre.Equals("no emitido")).First().Idx),
-                                    new Transicion(eventoAnulaNfse, "Anula NFSe", "std", _Estados.Where(x=>x.Nombre.Equals("txt aceptado")).First().Idx, _Estados.Where(x=>x.Nombre.Equals("nfse anulada")).First().Idx),
-                                    new Transicion(eventoUploadTxtPrefectura, "Actualiza número NFSe", "std", _Estados.Where(x=>x.Nombre.Equals("txt generado")).First().Idx, _Estados.Where(x=>x.Nombre.Equals("txt aceptado")).First().Idx),
+                                    new Transicion(eventoAnulaNfse, "Anula NFSe", "std",                        _Estados.Where(x=>x.Nombre.Equals("txt aceptado")).First().Idx, _Estados.Where(x=>x.Nombre.Equals("nfse anulada")).First().Idx),
+                                    new Transicion(eventoUploadTxtPrefectura, "Actualiza número NFSe", "std",   _Estados.Where(x=>x.Nombre.Equals("txt generado")).First().Idx, _Estados.Where(x=>x.Nombre.Equals("txt aceptado")).First().Idx),
                                     };
                 
             };
@@ -231,21 +229,20 @@ namespace MaquinaDeEstados
                 }
                 else
                 {
-                    throw new InvalidOperationException("El documento no puede cambiar de status porque no existe el status destino correspondiente al Evento: " + evento.ToString() + "");
+                    throw new InvalidOperationException("El documento no debe cambiar del status "+ _idxSingleStatus.ToString() + "-" + _Estados[_idxSingleStatus].Nombre + " a través de la opción que utilizó. [Evento: " + evento.ToString() + "] ");
                 }
                 return guardaCondicion;
 
             }
             catch(ArgumentException ioe)
             {
-                sMsj = "Excepción en la condición de guarda. ";
-                sMsj = sMsj + evento.ToString() + " [binStatus: " + _binStatus.ToString() + " targetBinStatus: " + _targetBinStatus.ToString() + " idxSingleStatus: " + _idxSingleStatus.ToString() + " estadoInicial: " + estadoInicial.ToString() + " voidStts: " + _voidStts.ToString() + "] " + ioe.Message;
+                sMsj = ioe.Message + "[Evento: " + evento.ToString() + " binStatus: " + _binStatus.ToString() + " targetBinStatus: " + _targetBinStatus.ToString() + " idxSingleStatus: " + _idxSingleStatus.ToString() + " estadoInicial: " + estadoInicial.ToString() + " voidStts: " + _voidStts.ToString() + "] " + ioe.TargetSite.ToString() ;
                 return false;
             }
             catch (Exception tr)
             {
-                sMsj = _matrizTransiciones == null ? "No existe transición para este tipo de documento. " : "Excepción desconocida en la transición del evento ";
-                sMsj = sMsj + evento.ToString() + " [binStatus: " + _binStatus.ToString() + " targetBinStatus: " + _targetBinStatus.ToString() + " idxSingleStatus: " + _idxSingleStatus.ToString() + " estadoInicial: " + estadoInicial.ToString() + " voidStts: " + _voidStts.ToString() + "] " + tr.Message;
+                sMsj = _matrizTransiciones == null ? "No existe transición para este tipo de documento. " : "Operación inválida. ";
+                sMsj = sMsj + tr.Message + " [binStatus: " + _binStatus.ToString() + " targetBinStatus: " + _targetBinStatus.ToString() + " estadoInicial: " + estadoInicial.ToString() + " voidStts: " + _voidStts.ToString() + "] " ;
                 return false;
             }
         }
@@ -306,9 +303,9 @@ namespace MaquinaDeEstados
         {
             try
             {
-                Transicion parDondeInsertar = new Transicion();
                 paresOrdenados = new List<Transicion>();
                 idxEBinario = new int[eBinario.Length];
+
                 //obtiene todos los pares origen - destinos del estado binario
                 for (int i = 0; i < eBinario.Length; i++)
                 {
@@ -324,7 +321,7 @@ namespace MaquinaDeEstados
                 paresOrdenados.Add(new Transicion(0, "", "std", -1, estadoInicial));  //estado inicial
                 idxMaxLevel = 0;
                 maxLevel = 0;
-                buscarSiguiente(estadoInicial, 0);
+                ArmaTransicionesEnParesOrdenados(estadoInicial, 0, _idxSingleStatus);
 
                 //convierte los estados a palabras
                 string enPalabras = string.Empty;
@@ -355,28 +352,30 @@ namespace MaquinaDeEstados
         /// </summary>
         /// <param name="destino">estado destino</param>
         /// <param name="nivel">nivel en la jerarquía de recursión</param>
-        public void buscarSiguiente(int destino, int nivel)
+        public void ArmaTransicionesEnParesOrdenados(int destino, int nivel, int idxSingleStatus)
         {
-            var paresDesordenados = _matrizTransiciones.Where(x => idxEBinario.Contains(x.destino)).Select(x => x);
-            foreach (var rec in paresDesordenados.Where(x => x.origen.Equals(destino)).Select(x => x))
+            //No continuar si la cadena ha llegado al estado señalado por _idxSingleStatus. 
+            //Esto previene la recursión infinita cuando hay estados que transicionan circularmente
+            if (destino != idxSingleStatus)
             {
-                bool existeLoop = paresOrdenados.Exists(x => x.destino.Equals(rec.destino));
-
-                //No continuar si la transición de un estado es a si mismo o existe un loop entre estados
-                if (!rec.origen.Equals(rec.destino) && !existeLoop)
+                var paresDesordenados = _matrizTransiciones.Where(x => idxEBinario.Contains(x.destino)).Select(x => x);
+                foreach (var rec in paresDesordenados.Where(x => x.origen.Equals(destino)).Select(x => x))
                 {
-                    paresOrdenados.Add(new Transicion(nivel + 1, "", "std", rec.origen, rec.destino)); //utiliza el parámetro evento de la transición para guardar el nivel
+                    bool existeLoop = paresOrdenados.Exists(x => x.destino.Equals(rec.destino));
 
-                    if (nivel + 1 > maxLevel)
+                    //No continuar si la transición de un estado es a si mismo o existe un loop entre estados
+                    if (!rec.origen.Equals(rec.destino) && !existeLoop)
                     {
-                        maxLevel = nivel + 1;
-                        idxMaxLevel = paresOrdenados.Count() - 1;
-                    }
+                        paresOrdenados.Add(new Transicion(nivel + 1, "", "std", rec.origen, rec.destino)); //utiliza el parámetro evento de la transición para guardar el nivel
 
-                    //No continuar si la cadena ha llegado al estado señalado por _idxSingleStatus. 
-                    //Esto previene la recursión infinita cuando hay estados que transicionan circularmente
-                    if (!rec.destino.Equals(_idxSingleStatus))
-                        buscarSiguiente(rec.destino, nivel + 1);
+                        if (nivel + 1 > maxLevel)
+                        {
+                            maxLevel = nivel + 1;
+                            idxMaxLevel = paresOrdenados.Count() - 1;
+                        }
+
+                        ArmaTransicionesEnParesOrdenados(rec.destino, nivel + 1, idxSingleStatus);
+                    }
                 }
             }
         }

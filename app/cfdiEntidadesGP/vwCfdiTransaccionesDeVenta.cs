@@ -43,5 +43,6 @@ namespace cfdiEntidadesGP
         public string mensajeEA { get; set; }
         public string isocurrc { get; set; }
         public Nullable<int> addenda { get; set; }
+        public string cstponbr { get; set; }
     }
 }

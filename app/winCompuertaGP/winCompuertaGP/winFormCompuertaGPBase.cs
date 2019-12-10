@@ -8,6 +8,7 @@ using Web_Service;
 using cfd.FacturaElectronica;
 using notaFiscalCsvHelper;
 using OfficeOpenXml;
+using System.IO;
 
 namespace winCompuertaGP
 {
@@ -250,7 +251,7 @@ namespace winCompuertaGP
             bool cbFechaMarcada = checkBoxFecha.Checked;
             DateTime fini = dtPickerDesde.Value.Date.AddHours(0).AddMinutes(0).AddSeconds(0);
             DateTime ffin = dtPickerHasta.Value.Date.AddHours(23).AddMinutes(59).AddSeconds(59);
-            if (!checkBoxPacientes_numero_pf.Checked && !checkBoxFecha.Checked && !checkBoxEstado.Checked && !checkBoxPacientes_nombre_cliente.Checked && !checkBoxPacientes_referencia.Checked && !checkBoxPacientes_sopnumbe.Checked)
+            if (!cboxNfse.Checked && !checkBoxFecha.Checked && !checkBoxEstado.Checked && !checkBoxPacientes_nombre_cliente.Checked && !checkBoxPacientes_referencia.Checked && !checkBoxPacientes_sopnumbe.Checked)
             {
                 cbFechaMarcada = true;
                 fini = fechaIni;
@@ -258,9 +259,9 @@ namespace winCompuertaGP
             }
 
             listaDeFacturas = mainController.getFacturas(
-                                                        checkBoxPacientes_numero_pf.Checked,
-                                                        textBoxPacientes_numero_pf_desde.Text,
-                                                        textBoxPacientes_numero_pf_hasta.Text,
+                                                        cboxNfse.Checked,
+                                                        tboxNfse_desde.Text,
+                                                        tBoxNfse_hasta.Text,
                                                         cbFechaMarcada,
                                                         fini,
                                                         ffin,
@@ -302,15 +303,15 @@ namespace winCompuertaGP
 
         private void limpiarFiltrosPreFacturas()
         {
-            checkBoxPacientes_numero_pf.Checked = false;
+            cboxNfse.Checked = false;
             checkBoxPacientes_nombre_cliente.Checked = false;
             checkBoxFecha.Checked = false;
             checkBoxEstado.Checked = false;
             checkBoxPacientes_sopnumbe.Checked = false;
             checkBoxPacientes_referencia.Checked = false;
 
-            textBoxPacientes_numero_pf_desde.Text = "";
-            textBoxPacientes_numero_pf_hasta.Text = "";
+            tboxNfse_desde.Text = "";
+            tBoxNfse_hasta.Text = "";
             textBoxPacientes_nombre_cliente.Text = "";
             dtPickerDesde.ResetText();
             dtPickerHasta.ResetText();
@@ -412,6 +413,43 @@ namespace winCompuertaGP
 
         }
 
+        private void tsButtonCargaNumNFSe_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                openFileDialog1.Filter = "CSV files|*.csv"; // "Excel Files|*.xls|*.xlsx";
+                openFileDialog1.Multiselect = false;
+                DialogResult dr = openFileDialog1.ShowDialog();
+
+                if (dr == DialogResult.OK)
+                {
+                    string[] filenames = openFileDialog1.FileNames;
+                    var nombreArchivos = filenames
+                            .Select(y => new {
+                                archivo = System.IO.Path.GetFileName(y),
+                                carpeta = System.IO.Path.GetDirectoryName(y)
+                            });
+                    string nombreArchivo = nombreArchivos.Select(a => a.archivo).ToList().FirstOrDefault();
+                    string carpetaOrigen = nombreArchivos.Select(a => a.carpeta).FirstOrDefault();
+
+                    System.Globalization.CultureInfo culInfo = new System.Globalization.CultureInfo(configuracion.CulturaParaMontos);
+                    LectorCSV csv = new LectorCSV(configuracion.CodigosServicioDflt);
+                    csv.ProgressHandler += reportaProgreso;
+                    var archivoCsv = csv.LeeArchivoCsv(carpetaOrigen, nombreArchivo, culInfo);
+
+                    ProcesaCfdi proc = new ProcesaCfdi(lblUsuario.Text);
+                    proc.Progreso += new ProcesaCfdi.LogHandler(reportaProgreso);
+
+                    proc.ProcesaActualizacionDeNumeroFiscalE(archivoCsv, carpetaOrigen, nombreArchivo, mainController);
+
+                    filtrarFacturas();
+                }
+            }
+            catch (Exception ex)
+            {
+                reportaProgreso(0, ex.Message);
+            }
+        }
         #endregion
 
         #region Otros
@@ -533,12 +571,14 @@ namespace winCompuertaGP
             else
                 try
                 {
-                    string idLog = dgvFacturas.SelectedRows[0].Cells[1].Value.ToString();
-                    string docStatus = dgvFacturas.SelectedRows[0].Cells[8].Value.ToString();
+                    ProcesaCfdi proc = new ProcesaCfdi(lblUsuario.Text);
+                    proc.Progreso += new ProcesaCfdi.LogHandler(reportaProgreso);
 
-                    this.ActualizarStatus(int.Parse(idLog), docStatus, "ELIMINA_FACTURA_EN_GP");
+                    var listaSeleccionadaPorUsuario = filtraListaSeleccionada(listaDeFacturas); //Filtra cfdiTransacciones sólo con docs marcados
+                    proc.ProcesaCambioDeStatus(listaSeleccionadaPorUsuario, mainController);
+
                     filtrarFacturas();
-                    reportaProgreso(0, "Proceso finalizado.");
+
                 }
                 catch (Exception gr)
                 {
@@ -582,7 +622,9 @@ namespace winCompuertaGP
             fechaFin = DateTime.Today.AddHours(23).AddMinutes(59).AddSeconds(59);
             checkBoxFecha.Checked = false;
             tsDropDownFiltro.Text = ultimos7tsMenuItem6.Text;
-            filtrarFacturas();
+            var c = filtrarFacturas();
+            txtbxMensajes.Text = "";
+            txtbxMensajes.AppendText("Total de documentos encontrados: " + c + Environment.NewLine);
 
         }
 
@@ -592,7 +634,9 @@ namespace winCompuertaGP
             fechaFin = DateTime.Today.AddHours(23).AddMinutes(59).AddSeconds(59);
             checkBoxFecha.Checked = false;
             tsDropDownFiltro.Text = hoytsMenuItem4.Text;
-            filtrarFacturas();
+            var c = filtrarFacturas();
+            txtbxMensajes.Text = "";
+            txtbxMensajes.AppendText("Total de documentos encontrados: " + c + Environment.NewLine);
 
         }
 
@@ -602,7 +646,9 @@ namespace winCompuertaGP
             fechaFin = DateTime.Today.AddDays(-1).AddHours(23).AddMinutes(59).AddSeconds(59);
             checkBoxFecha.Checked = false;
             tsDropDownFiltro.Text = ayertsMenuItem5.Text;
-            filtrarFacturas();
+            var c = filtrarFacturas();
+            txtbxMensajes.Text = "";
+            txtbxMensajes.AppendText("Total de documentos encontrados: " + c + Environment.NewLine);
 
         }
 
@@ -612,7 +658,9 @@ namespace winCompuertaGP
             fechaFin = DateTime.Today.AddHours(23).AddMinutes(59).AddSeconds(59);
             checkBoxFecha.Checked = false;
             tsDropDownFiltro.Text = ultimos30tsMenuItem7.Text;
-            filtrarFacturas();
+            var c = filtrarFacturas();
+            txtbxMensajes.Text = "";
+            txtbxMensajes.AppendText("Total de documentos encontrados: " + c + Environment.NewLine);
 
         }
 
@@ -622,7 +670,9 @@ namespace winCompuertaGP
             fechaFin = DateTime.Today.AddHours(23).AddMinutes(59).AddSeconds(59);
             checkBoxFecha.Checked = false;
             tsDropDownFiltro.Text = ultimos60tsMenuItem8.Text;
-            filtrarFacturas();
+            var c = filtrarFacturas();
+            txtbxMensajes.Text = "";
+            txtbxMensajes.AppendText("Total de documentos encontrados: " + c + Environment.NewLine);
 
         }
 
@@ -634,7 +684,9 @@ namespace winCompuertaGP
             fechaFin = fechaFin.AddDays(-ultimoDia);
             checkBoxFecha.Checked = false;
             tsDropDownFiltro.Text = mesActualtsMenuItem9.Text;
-            filtrarFacturas();
+            var c = filtrarFacturas();
+            txtbxMensajes.Text = "";
+            txtbxMensajes.AppendText("Total de documentos encontrados: " + c + Environment.NewLine);
 
         }
 
@@ -774,7 +826,6 @@ namespace winCompuertaGP
         {
             InicializaCheckBoxDelGrid(dgvFacturas, idxChkBox, checkBoxMark.Checked);
         }
-
 
     }
 }

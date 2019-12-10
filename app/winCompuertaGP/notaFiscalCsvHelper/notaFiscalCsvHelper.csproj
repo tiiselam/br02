@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>notaFiscalCsvHelper</RootNamespace>
     <AssemblyName>notaFiscalCsvHelper</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
@@ -58,6 +58,7 @@
     <Compile Include="iStock.cs" />
     <Compile Include="LectorCSV.cs" />
     <Compile Include="MMS.cs" />
+    <Compile Include="NFSe.cs" />
     <Compile Include="PAXP.cs" />
     <Compile Include="Premium.cs" />
     <Compile Include="Producao.cs" />
@@ -69,6 +70,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\MaquinaDeEstados\MaquinaDeEstados.csproj">
+      <Project>{3325d053-41aa-48a1-9166-11dc6afea8d7}</Project>
+      <Name>MaquinaDeEstados</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

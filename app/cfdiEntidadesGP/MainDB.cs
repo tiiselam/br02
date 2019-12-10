@@ -55,7 +55,8 @@ namespace cfdiEntidadesGP
         }
 
         //// Devuelve las prefacturas que cumplan con los criterios de filtrado seleccionados
-        public IList<vwCfdiTransaccionesDeVenta> getFacturas(bool filtrarNumPF, string numPFDesde, string numPFHasta,
+        public IList<vwCfdiTransaccionesDeVenta> getFacturas(
+                                                            bool filtrarNfse, string numNfseDesde, string numNfseHasta,
                                                             bool filtrarFecha, DateTime fechaDesde, DateTime fechaHasta,
                                                             bool filtrarEstado, string estado,
                                                             bool filtrarCliente, string idCliente,
@@ -74,22 +75,18 @@ namespace cfdiEntidadesGP
 
                 var datos = db.vwCfdiTransaccionesDeVenta.AsQueryable();
 
-                // Filtrado por número de prefactura
-                if (filtrarNumPF)
+                // Filtrado por número de nfse
+                if (filtrarNfse)
                 {
-                    if (numPFDesde != "")
+                    if (numNfseDesde != "")
                     {
-                        //int npfDesde = Convert.ToInt32(numPFDesde);
-                        datos = datos.Where(m => m.sopnumbe.CompareTo(numPFDesde) >= 0);
+                        datos = datos.Where(m => m.cstponbr.CompareTo(numNfseDesde) >= 0);
                     }
-
-                    if (numPFHasta != "")
+                    if (numNfseHasta != "")
                     {
-                        //int npfHasta = Convert.ToInt32(numPFHasta);
-                        datos = datos.Where(m => m.sopnumbe.CompareTo(numPFHasta) <= 0);
+                        datos = datos.Where(m => m.cstponbr.CompareTo(numNfseHasta) <= 0);
                     }
                 }
-
                 // Filtrado por fecha
                 if (filtrarFecha)
                 {
@@ -102,14 +99,10 @@ namespace cfdiEntidadesGP
                     datos = datos.Where(m => m.estado.Equals(estado));
                 }
 
-                //if (filtrarId) {
-                //    datos = datos.Where(m => m.ID_PACIENTE.Equals(id));
-                //}
-
                 // Filtrado por id de cliente
                 if (filtrarCliente && idCliente != "")
                 {
-                    datos = datos.Where(m => m.CUSTNMBR.Contains(idCliente));
+                    datos = datos.Where(m => m.idImpuestoCliente.Contains(idCliente));
                 }
 
                 // Filtrado por referencia
@@ -248,5 +241,22 @@ namespace cfdiEntidadesGP
             return _DocVenta;
         }
 
+        public void ActualizaNumeroFiscalElectronico(short soptype, string nsfe, string sopnumbe, out string mensaje)
+        {
+            System.Data.Entity.Core.Objects.ObjectParameter msj = new System.Data.Entity.Core.Objects.ObjectParameter("MENS", typeof(string)) ;
+            using (var db = this.getDbContext())
+            {
+                if (!this.probarConexion())
+                {
+                    ErrorEventArgsEntidadesGP args = new ErrorEventArgsEntidadesGP();
+                    args.mensajeError = "No se pudo establecer la conexión con el servidor al tratar de actualizar los NFS-e.";
+                    OnErrorDB(args);
+                }
+
+                var ejecutaSp = db.spCfdiActualizaNumeroFiscalElectronico(soptype, nsfe, sopnumbe, msj);
+                mensaje = msj.Value.ToString();
+
+            }
+        }
     }
 }

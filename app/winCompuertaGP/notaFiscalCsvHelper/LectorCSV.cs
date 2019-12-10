@@ -2,6 +2,7 @@
 using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -25,15 +26,71 @@ namespace notaFiscalCsvHelper
             ProgressHandler?.Invoke(iAvance, sMsj);
         }
 
+        public static string DetectDelimiter(StreamReader reader)
+        {
+            // assume one of following delimiters
+            var possibleDelimiters = new List<string> { ",", ";"};
+            var headerLine = reader.ReadLine();
+
+            // reset the reader to initial position for outside reuse
+            // Eg. Csv helper won't find header line, because it has been read in the Reader
+            reader.BaseStream.Position = 0;
+            reader.DiscardBufferedData();
+
+            foreach (var possibleDelimiter in possibleDelimiters)
+            {
+                if (headerLine.Contains(possibleDelimiter))
+                {
+                    return possibleDelimiter;
+                }
+            }
+            return possibleDelimiters[0];
+        }
+
+        public List<NFSe> LeeArchivoCsv(string carpetaOrigen, string nombreArchivo, CultureInfo culInfo)
+        {
+            List<NFSe> records = new List<NFSe>();
+            try
+            {
+                    using (var reader = new StreamReader(Path.Combine(carpetaOrigen, nombreArchivo), Encoding.GetEncoding("windows-1254")))
+                    {
+                        var delimiter = DetectDelimiter(reader);
+
+                        using (var csv = new CsvReader(reader))
+                        {
+                            csv.Configuration.Delimiter = delimiter;
+                            csv.Read();
+                            csv.ReadHeader();
+                            while (csv.Read())
+                            {
+                                var record = new NFSe
+                                {
+                                    numNFSe = csv.GetField(1),
+                                    SeriedoRPS = csv.GetField(5),
+                                    NumerodoRPS = csv.GetField(6) 
+                                };
+                                if (!string.IsNullOrEmpty( record.NumerodoRPS))
+                                    records.Add(record);
+                            }
+                        }
+                    }
+            }
+            catch (Exception csv)
+            {
+                OnProgreso(0, csv.Message);
+            }
+            return records;
+
+        }
         /// <summary>
-        /// Convierte los archivos csv del parámetro lNombreArchivos a una lista de objetos excel
-        /// Los tipos RM y CUSTOM tienen el mismo formato
-        /// Los tipos RF, paxp, istock tienen el mismo formato
-        /// </summary>
-        /// <param name="carpetaOrigen"></param>
-        /// <param name="lNombreArchivos"></param>
-        /// <param name="culInfo"></param>
-        /// <returns></returns>
+                /// Convierte los archivos csv del parámetro lNombreArchivos a una lista de objetos excel
+                /// Los tipos RM y CUSTOM tienen el mismo formato
+                /// Los tipos RF, paxp, istock tienen el mismo formato
+                /// </summary>
+                /// <param name="carpetaOrigen"></param>
+                /// <param name="lNombreArchivos"></param>
+                /// <param name="culInfo"></param>
+                /// <returns></returns>
         public IEnumerable<ExcelPackage> ConvierteCsvAExcel(string carpetaOrigen, IEnumerable<string> lNombreArchivos, CultureInfo culInfo)
         {
             List<ExcelPackage> archivosXl = new List<ExcelPackage>();
