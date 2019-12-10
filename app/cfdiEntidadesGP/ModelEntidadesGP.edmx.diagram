@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="910dca8689c0445e910825c3ba9289ae" Name="Diagram1" ZoomLevel="109">
+      <Diagram DiagramId="910dca8689c0445e910825c3ba9289ae" Name="Diagram1" ZoomLevel="106">
         <EntityTypeShape EntityType="GBRAModel.vwCfdiTransaccionesDeVenta" Width="3.25" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="GBRAModel.vwCfdiGeneraDocumentoDeVentaBRA" Width="2.625" PointX="4.875" PointY="0.75" />
         <EntityTypeShape EntityType="GBRAModel.cfdLogFacturaXML" Width="1.5" PointX="8.375" PointY="0.75" />

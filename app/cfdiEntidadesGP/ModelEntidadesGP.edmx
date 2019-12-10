@@ -121,6 +121,7 @@ warning 6002: The table/view 'GBRA.dbo.vwCfdiTransaccionesDeVenta' does not have
           <Property Name="soptype" Type="smallint" Nullable="false" />
           <Property Name="docid" Type="varchar" MaxLength="15" />
           <Property Name="sopnumbe" Type="varchar" MaxLength="21" Nullable="false" />
+          <Property Name="cstponbr" Type="nvarchar(max)" />
           <Property Name="fechahora" Type="datetime" />
           <Property Name="CUSTNMBR" Type="char" MaxLength="15" Nullable="false" />
           <Property Name="nombreCliente" Type="nvarchar(max)" />
@@ -213,6 +214,7 @@ warning 6002: The table/view 'GBRA.dbo.vwCfdiTransaccionesDeVenta' does not have
     [vwCfdiTransaccionesDeVenta].[soptype] AS [soptype], 
     [vwCfdiTransaccionesDeVenta].[docid] AS [docid], 
     [vwCfdiTransaccionesDeVenta].[sopnumbe] AS [sopnumbe], 
+    [vwCfdiTransaccionesDeVenta].[cstponbr] AS [cstponbr], 
     [vwCfdiTransaccionesDeVenta].[fechahora] AS [fechahora], 
     [vwCfdiTransaccionesDeVenta].[CUSTNMBR] AS [CUSTNMBR], 
     [vwCfdiTransaccionesDeVenta].[nombreCliente] AS [nombreCliente], 
@@ -279,6 +281,7 @@ warning 6002: The table/view 'GBRA.dbo.vwCfdiTransaccionesDeVenta' does not have
           <Property Name="mensajeEA" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="isocurrc" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="addenda" Type="Int32" />
+          <Property Name="cstponbr" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityContainer Name="GBRAEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="vwCfdiTransaccionesDeVenta" EntityType="Self.vwCfdiTransaccionesDeVenta" />
@@ -374,6 +377,7 @@ warning 6002: The table/view 'GBRA.dbo.vwCfdiTransaccionesDeVenta' does not have
           <EntitySetMapping Name="vwCfdiTransaccionesDeVenta">
             <EntityTypeMapping TypeName="GBRAModel.vwCfdiTransaccionesDeVenta">
               <MappingFragment StoreEntitySet="vwCfdiTransaccionesDeVenta">
+                <ScalarProperty Name="cstponbr" ColumnName="cstponbr" />
                 <ScalarProperty Name="estadoContabilizado" ColumnName="estadoContabilizado" />
                 <ScalarProperty Name="soptype" ColumnName="soptype" />
                 <ScalarProperty Name="docid" ColumnName="docid" />

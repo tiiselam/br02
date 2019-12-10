@@ -26,15 +26,39 @@ namespace notaFiscalCsvHelper
             ProgressHandler?.Invoke(iAvance, sMsj);
         }
 
+        public static string DetectDelimiter(StreamReader reader)
+        {
+            // assume one of following delimiters
+            var possibleDelimiters = new List<string> { ",", ";"};
+            var headerLine = reader.ReadLine();
+
+            // reset the reader to initial position for outside reuse
+            // Eg. Csv helper won't find header line, because it has been read in the Reader
+            reader.BaseStream.Position = 0;
+            reader.DiscardBufferedData();
+
+            foreach (var possibleDelimiter in possibleDelimiters)
+            {
+                if (headerLine.Contains(possibleDelimiter))
+                {
+                    return possibleDelimiter;
+                }
+            }
+            return possibleDelimiters[0];
+        }
+
         public List<NFSe> LeeArchivoCsv(string carpetaOrigen, string nombreArchivo, CultureInfo culInfo)
         {
             List<NFSe> records = new List<NFSe>();
-                try
-                {
+            try
+            {
                     using (var reader = new StreamReader(Path.Combine(carpetaOrigen, nombreArchivo), Encoding.GetEncoding("windows-1254")))
                     {
+                        var delimiter = DetectDelimiter(reader);
+
                         using (var csv = new CsvReader(reader))
                         {
+                            csv.Configuration.Delimiter = delimiter;
                             csv.Read();
                             csv.ReadHeader();
                             while (csv.Read())
@@ -50,11 +74,11 @@ namespace notaFiscalCsvHelper
                             }
                         }
                     }
-                }
-                catch (Exception csv)
-                {
-                    OnProgreso(0, csv.Message);
-                }
+            }
+            catch (Exception csv)
+            {
+                OnProgreso(0, csv.Message);
+            }
             return records;
 
         }

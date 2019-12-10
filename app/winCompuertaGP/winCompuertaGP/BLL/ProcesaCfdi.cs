@@ -186,7 +186,8 @@ namespace cfd.FacturaElectronica
                 {
                     rutaYNombreArchivo = Path.Combine(carpetaOrigen.Trim(), nombreArchivo);
                     msj = String.Empty;
-                    var docVenta = bdGP.getFacturas(false, string.Empty, string.Empty,
+                    var docVenta = bdGP.getFacturas(
+                                                false, string.Empty, string.Empty,
                                                 false, DateTime.Today, DateTime.Today,
                                                 false, string.Empty,
                                                 false, string.Empty,
@@ -194,22 +195,29 @@ namespace cfd.FacturaElectronica
                                                 true, nfselectronica.Sopnumbe, nfselectronica.Sopnumbe).FirstOrDefault();
                     try
                     {
-                        string tipoMEstados = "DOCVENTA-" + docVenta.estadoContabilizado;
-                        nfselectronica.CicloDeVida = new Maquina(docVenta.estadoActual, docVenta.regimen, docVenta.voidstts, "emisor", tipoMEstados);
-                        if (nfselectronica.CicloDeVida.Transiciona(Maquina.eventoUploadTxtPrefectura, 1))
+                        if (docVenta!= null)
                         {
-                            bdGP.ActualizaNumeroFiscalElectronico(docVenta.soptype, nfselectronica.numNFSe, nfselectronica.Sopnumbe, out msj);
+                            string tipoMEstados = "DOCVENTA-" + docVenta.estadoContabilizado;
+                            nfselectronica.CicloDeVida = new Maquina(docVenta.estadoActual, docVenta.regimen, docVenta.voidstts, "emisor", tipoMEstados);
+                            if (nfselectronica.CicloDeVida.Transiciona(Maquina.eventoUploadTxtPrefectura, 1))
+                            {
+                                bdGP.ActualizaNumeroFiscalElectronico(docVenta.soptype, nfselectronica.numNFSe, nfselectronica.Sopnumbe, out msj);
 
-                            bdGP.CreaLogFactura(docVenta.soptype, nfselectronica.Sopnumbe, string.Empty, nfselectronica.CicloDeVida.idxTargetSingleStatus.ToString(), _usuario, string.Empty, nfselectronica.CicloDeVida.targetSingleStatus,
-                                                        nfselectronica.CicloDeVida.targetBinStatus, nfselectronica.CicloDeVida.EstadoEnPalabras(nfselectronica.CicloDeVida.targetBinStatus));
+                                bdGP.CreaLogFactura(docVenta.soptype, nfselectronica.Sopnumbe, string.Empty, nfselectronica.CicloDeVida.idxTargetSingleStatus.ToString(), _usuario, string.Empty, nfselectronica.CicloDeVida.targetSingleStatus,
+                                                            nfselectronica.CicloDeVida.targetBinStatus, nfselectronica.CicloDeVida.EstadoEnPalabras(nfselectronica.CicloDeVida.targetBinStatus));
 
-                            bdGP.ActualizaOCreaLogFactura(docVenta.soptype, nfselectronica.Sopnumbe, rutaYNombreArchivo, nfselectronica.CicloDeVida.idxTargetSingleStatus.ToString(), _usuario, string.Empty,
-                                                        Maquina.estadoBaseEmisor, Maquina.estadoBaseEmisor,
-                                                        nfselectronica.CicloDeVida.targetBinStatus, nfselectronica.CicloDeVida.EstadoEnPalabras(nfselectronica.CicloDeVida.targetBinStatus));
+                                bdGP.ActualizaOCreaLogFactura(docVenta.soptype, nfselectronica.Sopnumbe, rutaYNombreArchivo, nfselectronica.CicloDeVida.idxTargetSingleStatus.ToString(), _usuario, string.Empty,
+                                                            Maquina.estadoBaseEmisor, Maquina.estadoBaseEmisor,
+                                                            nfselectronica.CicloDeVida.targetBinStatus, nfselectronica.CicloDeVida.EstadoEnPalabras(nfselectronica.CicloDeVida.targetBinStatus));
+                            }
+                            else
+                            {
+                                msj += nfselectronica.CicloDeVida.sMsj;
+                            }
                         }
                         else
                         {
-                            msj += nfselectronica.CicloDeVida.sMsj;
+                            msj += "La nota "+nfselectronica.Sopnumbe+" no existe en GP.";
                         }
                     }
                     catch (Exception lo)

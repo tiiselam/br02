@@ -85,9 +85,11 @@ alter view dbo.vwCfdiTransaccionesDeVenta as
 --			El estado "inconsistente" indica que existe un problema en el folio o certificado, por tanto no puede ser generado.
 --			El estado "emitido" indica que el archivo xml ha sido generado y sellado por el PAC y está listo para ser impreso.
 --28/03/19 jcf Creación
+--10/12/19 jcf Ajusta la fechahora y agrega cstponbr
 --
 
-select tv.estadoContabilizado, tv.soptype, tv.docid, tv.sopnumbe, tv.fechahora, 
+select tv.estadoContabilizado, tv.soptype, tv.docid, tv.sopnumbe, tv.cstponbr,
+	cast(cast(tv.docdate as date) as datetime) + cast(cast(tv.fechahora as time) as datetime) fechahora,
 	tv.CUSTNMBR, tv.nombreCliente, tv.idImpuestoCliente, cast(tv.total as numeric(19,2)) total, tv.montoActualOriginal, tv.voidstts, 
 
 	isnull(lf.estado, isnull(fv.estado, 'inconsistente')) estado,

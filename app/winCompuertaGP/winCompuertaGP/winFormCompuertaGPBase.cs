@@ -251,7 +251,7 @@ namespace winCompuertaGP
             bool cbFechaMarcada = checkBoxFecha.Checked;
             DateTime fini = dtPickerDesde.Value.Date.AddHours(0).AddMinutes(0).AddSeconds(0);
             DateTime ffin = dtPickerHasta.Value.Date.AddHours(23).AddMinutes(59).AddSeconds(59);
-            if (!checkBoxPacientes_numero_pf.Checked && !checkBoxFecha.Checked && !checkBoxEstado.Checked && !checkBoxPacientes_nombre_cliente.Checked && !checkBoxPacientes_referencia.Checked && !checkBoxPacientes_sopnumbe.Checked)
+            if (!cboxNfse.Checked && !checkBoxFecha.Checked && !checkBoxEstado.Checked && !checkBoxPacientes_nombre_cliente.Checked && !checkBoxPacientes_referencia.Checked && !checkBoxPacientes_sopnumbe.Checked)
             {
                 cbFechaMarcada = true;
                 fini = fechaIni;
@@ -259,9 +259,9 @@ namespace winCompuertaGP
             }
 
             listaDeFacturas = mainController.getFacturas(
-                                                        checkBoxPacientes_numero_pf.Checked,
-                                                        textBoxPacientes_numero_pf_desde.Text,
-                                                        textBoxPacientes_numero_pf_hasta.Text,
+                                                        cboxNfse.Checked,
+                                                        tboxNfse_desde.Text,
+                                                        tBoxNfse_hasta.Text,
                                                         cbFechaMarcada,
                                                         fini,
                                                         ffin,
@@ -303,15 +303,15 @@ namespace winCompuertaGP
 
         private void limpiarFiltrosPreFacturas()
         {
-            checkBoxPacientes_numero_pf.Checked = false;
+            cboxNfse.Checked = false;
             checkBoxPacientes_nombre_cliente.Checked = false;
             checkBoxFecha.Checked = false;
             checkBoxEstado.Checked = false;
             checkBoxPacientes_sopnumbe.Checked = false;
             checkBoxPacientes_referencia.Checked = false;
 
-            textBoxPacientes_numero_pf_desde.Text = "";
-            textBoxPacientes_numero_pf_hasta.Text = "";
+            tboxNfse_desde.Text = "";
+            tBoxNfse_hasta.Text = "";
             textBoxPacientes_nombre_cliente.Text = "";
             dtPickerDesde.ResetText();
             dtPickerHasta.ResetText();
@@ -622,7 +622,9 @@ namespace winCompuertaGP
             fechaFin = DateTime.Today.AddHours(23).AddMinutes(59).AddSeconds(59);
             checkBoxFecha.Checked = false;
             tsDropDownFiltro.Text = ultimos7tsMenuItem6.Text;
-            filtrarFacturas();
+            var c = filtrarFacturas();
+            txtbxMensajes.Text = "";
+            txtbxMensajes.AppendText("Total de documentos encontrados: " + c + Environment.NewLine);
 
         }
 
@@ -632,7 +634,9 @@ namespace winCompuertaGP
             fechaFin = DateTime.Today.AddHours(23).AddMinutes(59).AddSeconds(59);
             checkBoxFecha.Checked = false;
             tsDropDownFiltro.Text = hoytsMenuItem4.Text;
-            filtrarFacturas();
+            var c = filtrarFacturas();
+            txtbxMensajes.Text = "";
+            txtbxMensajes.AppendText("Total de documentos encontrados: " + c + Environment.NewLine);
 
         }
 
@@ -642,7 +646,9 @@ namespace winCompuertaGP
             fechaFin = DateTime.Today.AddDays(-1).AddHours(23).AddMinutes(59).AddSeconds(59);
             checkBoxFecha.Checked = false;
             tsDropDownFiltro.Text = ayertsMenuItem5.Text;
-            filtrarFacturas();
+            var c = filtrarFacturas();
+            txtbxMensajes.Text = "";
+            txtbxMensajes.AppendText("Total de documentos encontrados: " + c + Environment.NewLine);
 
         }
 
@@ -652,7 +658,9 @@ namespace winCompuertaGP
             fechaFin = DateTime.Today.AddHours(23).AddMinutes(59).AddSeconds(59);
             checkBoxFecha.Checked = false;
             tsDropDownFiltro.Text = ultimos30tsMenuItem7.Text;
-            filtrarFacturas();
+            var c = filtrarFacturas();
+            txtbxMensajes.Text = "";
+            txtbxMensajes.AppendText("Total de documentos encontrados: " + c + Environment.NewLine);
 
         }
 
@@ -662,7 +670,9 @@ namespace winCompuertaGP
             fechaFin = DateTime.Today.AddHours(23).AddMinutes(59).AddSeconds(59);
             checkBoxFecha.Checked = false;
             tsDropDownFiltro.Text = ultimos60tsMenuItem8.Text;
-            filtrarFacturas();
+            var c = filtrarFacturas();
+            txtbxMensajes.Text = "";
+            txtbxMensajes.AppendText("Total de documentos encontrados: " + c + Environment.NewLine);
 
         }
 
@@ -674,7 +684,9 @@ namespace winCompuertaGP
             fechaFin = fechaFin.AddDays(-ultimoDia);
             checkBoxFecha.Checked = false;
             tsDropDownFiltro.Text = mesActualtsMenuItem9.Text;
-            filtrarFacturas();
+            var c = filtrarFacturas();
+            txtbxMensajes.Text = "";
+            txtbxMensajes.AppendText("Total de documentos encontrados: " + c + Environment.NewLine);
 
         }
 

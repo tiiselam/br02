@@ -236,8 +236,7 @@ namespace MaquinaDeEstados
             }
             catch(ArgumentException ioe)
             {
-                sMsj = "Excepción en la condición de guarda. ";
-                sMsj = sMsj + evento.ToString() + " [binStatus: " + _binStatus.ToString() + " targetBinStatus: " + _targetBinStatus.ToString() + " idxSingleStatus: " + _idxSingleStatus.ToString() + " estadoInicial: " + estadoInicial.ToString() + " voidStts: " + _voidStts.ToString() + "] " + ioe.Message;
+                sMsj = ioe.Message + "[Evento: " + evento.ToString() + " binStatus: " + _binStatus.ToString() + " targetBinStatus: " + _targetBinStatus.ToString() + " idxSingleStatus: " + _idxSingleStatus.ToString() + " estadoInicial: " + estadoInicial.ToString() + " voidStts: " + _voidStts.ToString() + "] " + ioe.TargetSite.ToString() ;
                 return false;
             }
             catch (Exception tr)
