@@ -6,19 +6,36 @@ GO
 
 --Propósito. Actualiza el NFS-e de una nota fiscal en el campo cstponbr de la factura en GP
 --06/12/19 p almada. Creación
+--16/12/19 jcf Agrega actualización de tablas rm
 --
-CREATE PROCEDURE dbo.spCfdiActualizaNumeroFiscalElectronico(@SOPTYPE SMALLINT,@NUMFAC VARCHAR(21),@SERNUM VARCHAR(21),@MENS VARCHAR(200) OUTPUT)
+create PROCEDURE dbo.spCfdiActualizaNumeroFiscalElectronico(@SOPTYPE SMALLINT,@NUMFAC VARCHAR(21),@SERNUM VARCHAR(21),@MENS VARCHAR(200) OUTPUT)
 AS
-	BEGIN TRY		
+	BEGIN TRY
+		declare @custnmbr varchar(15);
+		set @custnmbr = null;
 		IF EXISTS(SELECT * FROM sop10100 WHERE SOPTYPE = @SOPTYPE AND SOPNUMBE= @SERNUM)
 		BEGIN
 			UPDATE sop10100 SET cstponbr = @NUMFAC WHERE SOPTYPE = @SOPTYPE AND SOPNUMBE= @SERNUM			
 			SET @MENS = 'La factura fue actualizada con el NFS-e: ' +@NUMFAC+ ' (no contabilizada)'
 		END
 		ELSE			
-			IF EXISTS(SELECT * FROM SOP30200 WHERE SOPTYPE = @SOPTYPE AND SOPNUMBE= @SERNUM)
+			SELECT @custnmbr = custnmbr FROM SOP30200 WHERE SOPTYPE = @SOPTYPE AND SOPNUMBE= @SERNUM
+			IF isnull(@custnmbr, 'no-existe') != 'no-existe'
 			BEGIN
-				UPDATE SOP30200 SET cstponbr = @NUMFAC WHERE SOPTYPE = @SOPTYPE AND SOPNUMBE = @SERNUM			
+				UPDATE SOP30200 SET cstponbr = @NUMFAC 
+				WHERE SOPTYPE = @SOPTYPE 
+				AND SOPNUMBE = @SERNUM
+
+				update rm20101 set cspornbr = @NUMFAC 
+				where DOCNUMBR = @SERNUM
+				and CUSTNMBR = @custnmbr
+				and RMDTYPAL = @SOPTYPE + case when @SOPTYPE=3 then -2 else +4 end
+
+				update rm30101 set cspornbr = @NUMFAC 
+				where DOCNUMBR = @SERNUM
+				and CUSTNMBR = @custnmbr
+				and RMDTYPAL = @SOPTYPE + case when @SOPTYPE=3 then -2 else +4 end
+
 				SET @MENS = 'La factura fue actualizada con el NFS-e: ' +@NUMFAC+ ' (contabilizada)'
 			END
 			ELSE
