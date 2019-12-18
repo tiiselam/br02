@@ -29,12 +29,18 @@ AS
 				AND SOPNUMBE = @SERNUM
 
 				update rm20101 set cspornbr = @NUMFAC 
-				where DOCNUMBR like rtrim(@SERNUM)+'.%'
+				where (
+					DOCNUMBR = @SERNUM
+					or DOCNUMBR like rtrim(@SERNUM)+'.%'
+				)
 				and CUSTNMBR = @custnmbr
 				and RMDTYPAL = @SOPTYPE + case when @SOPTYPE=3 then -2 else +4 end
 
 				update rm30101 set cspornbr = @NUMFAC 
-				where DOCNUMBR like rtrim(@SERNUM)+'.%'
+				where (
+					DOCNUMBR = @SERNUM
+					or DOCNUMBR like rtrim(@SERNUM)+'.%'
+				)
 				and CUSTNMBR = @custnmbr
 				and RMDTYPAL = @SOPTYPE + case when @SOPTYPE=3 then -2 else +4 end
 
